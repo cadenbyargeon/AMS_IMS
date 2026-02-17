@@ -1,5 +1,4 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.sql.*;
 
 public class JDBCDemo {
     public static void main(String[] args) {
@@ -10,7 +9,19 @@ public class JDBCDemo {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
             Connection connection = DriverManager.getConnection(url, user, password);
-        } catch (Exception e) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("select * from demo");
+
+            while(resultSet.next())
+            {
+                System.out.println(resultSet.getInt(1)+" "+resultSet.getString(2)+" "+resultSet.getString(3)+resultSet.getInt(4));
+
+
+            }
+
+            connection.close();
+        } 
+        catch (Exception e) {
             System.out.println(e);
         }
         
