@@ -4,10 +4,20 @@ public class Non_Serialized_Test {
             "test1",
             "model",
             "part number",
+            100,
             10,
-            5,
-            1
+            20
         );
         System.out.println(test1);
+        checkAlert(test1.checkAlert());
+        
+    }
+
+    public static void checkAlert(int alert){
+        if(alert==2){
+            System.out.println("NOT ENOUGH FOR THIS SEMESTER");
+        }else if(alert==1){
+            System.out.println("NOT ENOUGH FOR NEXT SEMESTER");
+        }
     }
 }
