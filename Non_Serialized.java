@@ -87,12 +87,14 @@ public class Non_Serialized {
         if (qty<qty_next_semester){
             if(qty<qty_semester){
                 this.alert = 2;
+                return alert;
             }
             this.alert = 1;
+            return alert;
         }else{
             this.alert = 0;
+            return alert;
         }
-        return alert;
     }
 
     @Override
