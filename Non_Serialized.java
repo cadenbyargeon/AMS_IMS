@@ -67,14 +67,17 @@ public class Non_Serialized {
 
     public void setQty(int qty){
         this.qty = qty;
+        checkAlert();
     }
 
     public void setQtySemester(int qty_semester){
         this.qty_semester = qty_semester;
+        checkAlert();
     }
 
     public void setQtyNextSem(int qty_next_semester){
         this.qty_next_semester = qty_next_semester;
+        checkAlert();
     }
 
     public void setAlert(int alert){
