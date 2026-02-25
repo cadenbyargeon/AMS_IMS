@@ -94,4 +94,11 @@ public class Non_Serialized {
         }
         return alert;
     }
+
+    @Override
+    public String toString(){
+        return "Name: " + name + "\nModel: " + model + "\nPart Number: " + partNum + 
+        "\nQuantity in Stock: " + qty + "\nQuantity for this Semester: " + qty_semester + 
+        "\nQuantity for Next Semester: " + qty_next_semester;
+    }
 }

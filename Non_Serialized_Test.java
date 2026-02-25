@@ -6,8 +6,7 @@ public class Non_Serialized_Test {
             "part number",
             10,
             5,
-            1,
-            0
+            1
         );
         System.out.println(test1);
     }
