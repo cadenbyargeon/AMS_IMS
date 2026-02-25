@@ -5,16 +5,20 @@ public class Non_Serialized {
     private int qty;
     private int qty_semester;
     private int qty_next_semester;
-    private int alert //0 for no alert, 1 for not enough next semester, 2 for not enough this semester
+    private int alert;//0 for no alert, 1 for not enough next semester, 2 for not enough this semester
 
-    public Item(String name, String model, String partNum, int qty, int qty_semester, int qty_next_semester, int alert){
+    //Constructor 
+
+    public Non_Serialized(String name, String model, String partNum, int qty, int qty_semester, int qty_next_semester){
         this.name = name;
         this.model = model;
         this.partNum = partNum;
         this.qty = qty;
         this.qty_semester = qty_semester;
         this.qty_next_semester = qty_next_semester;
-        this.alert = 0;
+        
+        checkAlert();
+
     }
     
     //getters 
@@ -79,14 +83,15 @@ public class Non_Serialized {
 
 
 
-    public Boolean alerts(int qty_semester, int qty_next_semester, int qty, int alert){
-        if (qty>qty_next_semester){
-            if(qty>qty_semester){
-                alert = 2;
+    public int checkAlert(){
+        if (qty<qty_next_semester){
+            if(qty<qty_semester){
+                this.alert = 2;
             }
-            alert = 1;
+            this.alert = 1;
         }else{
-            alert = 0;
+            this.alert = 0;
         }
+        return alert;
     }
 }
