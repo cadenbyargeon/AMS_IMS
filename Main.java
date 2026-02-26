@@ -98,9 +98,9 @@ public static void create(){
     //Consumable
     if(choice == 3){
         String basic[] = basicItem();
-        int advanced[] = nonSerial();
         String consume = consumable();
-        Serialized newItem = new Serialized(
+        int advanced[] = nonSerial();
+        Consumable newItem = new Consumable(
         basic[0],
         basic[1],
         basic[2],

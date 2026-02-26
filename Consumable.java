@@ -17,9 +17,8 @@ public class Consumable extends Non_Serialized{
 
     @Override
     public String toString(){
-        return "Name: " + name + "\nModel: " + model + "\nPart Number: " + partNum + 
-        "\nQuantity in Stock: " + qty + " " + qtyType + "\nQuantity for this Semester: " + 
-        qty_semester + "\nQuantity for Next Semester: " + qty_next_semester;
+        return super.toString() + " " + qtyType + "\nQuantity for this Semester: " + 
+        qty_semester + " " + qtyType + "\nQuantity for Next Semester: " + qty_next_semester + " " + qtyType;
 
     }
 }
