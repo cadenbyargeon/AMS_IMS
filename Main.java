@@ -71,24 +71,61 @@ public static void create(){
         advanced[0],
         advanced[1]
         );
-
         checkAlert(newItem.checkAlert());
-        
+        System.out.println(newItem);
         return;
     }
 
     //Serialized
     if(choice == 2){
+        String basic[] = basicItem();
+        int advanced[] = nonSerial();
+        String serial = serial();
+        Serialized newItem = new Serialized(
+        basic[0],
+        basic[1],
+        basic[2],
+        Integer.parseInt(basic[3]),
+        advanced[0],
+        advanced[1],
+        serial
+        );
+        checkAlert(newItem.checkAlert());
+        System.out.println(newItem);
         return;
     }
 
     //Consumable
     if(choice == 3){
+        String basic[] = basicItem();
+        int advanced[] = nonSerial();
+        String consume = consumable();
+        Serialized newItem = new Serialized(
+        basic[0],
+        basic[1],
+        basic[2],
+        Integer.parseInt(basic[3]),
+        advanced[0],
+        advanced[1],
+        consume
+        );
+        checkAlert(newItem.checkAlert());
+        System.out.println(newItem);
         return;
     }
 
     //Manual
     if(choice ==4){
+        String basic[] = basicItem();
+        String manual = manual();
+        Manual newItem = new Manual(
+        basic[0],
+        basic[1],
+        basic[2],
+        Integer.parseInt(basic[3]),
+        manual
+        );
+        System.out.println(newItem);
         return;
     }
 
@@ -117,6 +154,27 @@ public static int[] nonSerial(){
     int next_sem = input.nextInt();
 
     return new int[]{this_sem, next_sem};
+}
+
+public static String serial(){
+    Scanner input = new Scanner(System.in);
+    System.out.println("What is the serial number?");
+    String cereal = input.nextLine();
+    return cereal;
+}
+
+public static String consumable(){
+    Scanner input = new Scanner(System.in);
+    System.out.println("What is the unit quantity type?");
+    String type = input.nextLine();
+    return type;
+}
+
+public static String manual(){
+    Scanner input = new Scanner(System.in);
+    System.out.println("What is the revision number?");
+    String rev = input.nextLine();
+    return rev;
 }
 
 public static void checkAlert(int alert){
