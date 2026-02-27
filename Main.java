@@ -9,6 +9,7 @@ public class Main {
 
         //exit
         if(choice == 1){
+            System.out.println("Exiting ALM IMS........");
             return;
         }
 
