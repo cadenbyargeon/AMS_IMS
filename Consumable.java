@@ -16,11 +16,11 @@ public class Consumable extends Non_Serialized{
     }
 
 
-    //need fix
+    //printing out info, can't inherant due to added qty type
     @Override
     public String toString(){
-        return super.toString() + " " + qtyType + "\nQuantity for this Semester: " + 
-        qty_semester + " " + qtyType + "\nQuantity for Next Semester: " + qty_next_semester + " " + qtyType;
-
+        return "Name: " + name + "\nModel: " + model + "\nPart Number: " + partNum + 
+        "\nQuantity in Stock: " + qty + " " + qtyType + "\nQuantity for this Semester: " + qty_semester + " " + qtyType + "\nQuantity for Next Semester: " 
+        + qty_next_semester + " " + qtyType;
     }
 }
