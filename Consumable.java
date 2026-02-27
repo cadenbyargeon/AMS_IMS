@@ -15,6 +15,8 @@ public class Consumable extends Non_Serialized{
         this.qtyType = qtyType;
     }
 
+
+    //need fix
     @Override
     public String toString(){
         return super.toString() + " " + qtyType + "\nQuantity for this Semester: " + 

@@ -65,6 +65,8 @@ public static void create(){
     //After the object is made checkAlert() is run and will display an alert if valid
     //Currently after creation it prints the object for T/S
 
+
+    //switches
     //Non-Serialized
     if(choice == 1){
         String basic[] = basicItem();
