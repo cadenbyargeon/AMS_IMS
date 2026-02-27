@@ -3,13 +3,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args){
-
-        //Statement statement = connection.createStatement();
-        //ResultSet non_serialized = statement.executeQuery();
-        //ResultSet serialized = statement.executeQuery();
-        //ResultSet consumable = statement.executeQuery();
-        //ResultSet manual = statement.executeQuery();
         
+        //menu choice selection, ran through a separate function
         int choice = menuSelection();
 
         //exit
@@ -35,6 +30,7 @@ public class Main {
         
     }
 
+    //menu selection, returns an int for choice of the following, ran in main
 public static int menuSelection(){
     Scanner input = new Scanner(System.in);
     System.out.println("========================");
@@ -48,6 +44,8 @@ public static int menuSelection(){
     return menu;
 }
 
+    //similar to menu in design, returns a choice as an integer to run through if statements
+    //can maybe break the menu into a separate function here
 public static void create(){
     Scanner input = new Scanner(System.in);
     System.out.println("========================");
@@ -59,6 +57,14 @@ public static void create(){
     System.out.println("========================");
     int choice = input.nextInt();
     
+
+    //The following are all similar, all share basicItem() to get the information all classes need
+    //advanced() is information both non-serialized and serialized share and consumables (qty_semester, qty_next_semester)
+    //Manuals, serialized, and consumables all have an additional function
+    //Functions are a basic IO with the user asking the information
+    //After the object is made checkAlert() is run and will display an alert if valid
+    //Currently after creation it prints the object for T/S
+
     //Non-Serialized
     if(choice == 1){
         String basic[] = basicItem();
@@ -131,6 +137,9 @@ public static void create(){
 
 }
 
+
+//Stores data in a string[], the int for qty is set to a string, then back to an int in the object creation
+//qty is still inputed as an int by the user to disallow invalid input
 public static String[] basicItem(){
     Scanner input = new Scanner(System.in);
     System.out.println("What is the name of the item?");
@@ -146,6 +155,7 @@ public static String[] basicItem(){
     return new String[]{name, model, part, strQty};
 }
 
+    //add qty_semester and qty_next_semester
 public static int[] nonSerial(){
     Scanner input = new Scanner(System.in);
     System.out.println("What is the quantity required per semester?");
@@ -156,6 +166,7 @@ public static int[] nonSerial(){
     return new int[]{this_sem, next_sem};
 }
 
+    //add serial number
 public static String serial(){
     Scanner input = new Scanner(System.in);
     System.out.println("What is the serial number?");
@@ -163,6 +174,7 @@ public static String serial(){
     return cereal;
 }
 
+    //add qty type
 public static String consumable(){
     Scanner input = new Scanner(System.in);
     System.out.println("What is the unit quantity type?");
@@ -170,6 +182,7 @@ public static String consumable(){
     return type;
 }
 
+    //add revision number
 public static String manual(){
     Scanner input = new Scanner(System.in);
     System.out.println("What is the revision number?");
@@ -177,6 +190,7 @@ public static String manual(){
     return rev;
 }
 
+    //checks the alert status of an object, and prints the message associated
 public static void checkAlert(int alert){
         if(alert==2){
             System.out.println("NOT ENOUGH FOR THIS SEMESTER");

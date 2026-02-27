@@ -46,6 +46,8 @@ public class Non_Serialized extends Item_Parent {
 
 
 
+    //returns an alert value, and only one based off severity (nested)
+    //checkAlert() is ran after every qty setter to update if any information changes
     public int checkAlert(){
         if (qty<qty_next_semester){
             if(qty<qty_semester){
@@ -60,6 +62,7 @@ public class Non_Serialized extends Item_Parent {
         }
     }
 
+    //adding on the new variables to the printing statement
     @Override
     public String toString(){
         return super.toString() + "\nQuantity for this Semester: " + qty_semester + "\nQuantity for Next Semester: " + qty_next_semester;

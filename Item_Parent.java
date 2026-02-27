@@ -53,6 +53,7 @@ public class Item_Parent{
         this.qty = qty;
     }
 
+    //for printing output
      @Override
     public String toString(){
         return "Name: " + name + "\nModel: " + model + "\nPart Number: " + partNum + 
