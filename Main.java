@@ -7,27 +7,27 @@ public class Main {
         //menu choice selection, ran through a separate function
         int choice = menuSelection();
 
+        switch(choice){
         //exit
-        if(choice == 1){
+        case 1:
             System.out.println("Exiting ALM IMS........");
-            return;
-        }
+            break;
 
         //edit an item
-        if(choice == 2){
-            return;
-        }
+        case 2:
+            break;
 
         //create an item
-        if(choice == 3){
+        case 3:
             create();
-            return;
-        }
+            break;
 
         //view an item
-        if(choice == 4){
-            return;
+        case 4:
+            break;
+
         }
+        return;
         
     }
 
@@ -67,9 +67,10 @@ public static void create(){
     //Currently after creation it prints the object for T/S
 
 
-    //switches
+    switch(choice){
+
     //Non-Serialized
-    if(choice == 1){
+    case 1:
         String basic[] = basicItem();
         int advanced[] = nonSerial();
         Non_Serialized newItem = new Non_Serialized(
@@ -82,11 +83,10 @@ public static void create(){
         );
         checkAlert(newItem.checkAlert());
         System.out.println(newItem);
-        return;
-    }
+        break;
 
     //Serialized
-    if(choice == 2){
+    case 2:
         String basic[] = basicItem();
         int advanced[] = nonSerial();
         String serial = serial();
@@ -101,11 +101,10 @@ public static void create(){
         );
         checkAlert(newItem.checkAlert());
         System.out.println(newItem);
-        return;
-    }
+        break;
 
     //Consumable
-    if(choice == 3){
+    case 3:
         String basic[] = basicItem();
         String consume = consumable();
         int advanced[] = nonSerial();
@@ -120,11 +119,10 @@ public static void create(){
         );
         checkAlert(newItem.checkAlert());
         System.out.println(newItem);
-        return;
-    }
+        break;
 
     //Manual
-    if(choice ==4){
+    case 4:
         String basic[] = basicItem();
         String manual = manual();
         Manual newItem = new Manual(
@@ -135,8 +133,9 @@ public static void create(){
         manual
         );
         System.out.println(newItem);
-        return;
+        break;
     }
+    return;
 
 }
 
