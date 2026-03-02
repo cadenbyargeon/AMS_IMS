@@ -4,6 +4,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args){
         
+        //hard coded for the demo for user/admin creation
         Scanner input = new Scanner(System.in);
         System.out.println("Enter first name: ");
         String firstName = input.nextLine();
@@ -23,7 +24,7 @@ public class Main {
         System.out.println(userDemo );
         System.out.println("\nAdmin:");
         System.out.println(adminDemo);
-
+        //
 
 
         //menu choice selection, ran through a separate function
