@@ -10,7 +10,10 @@ public class NonAdministrator extends User{
 
     }
 
-    
+    @Override
+    public String toString(){
+        return super.toString()+ isAdmin;
+    }    
 
 
 }

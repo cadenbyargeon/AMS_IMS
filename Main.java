@@ -4,6 +4,26 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args){
         
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter first name: ");
+        String firstName = input.nextLine();
+        System.out.println("Enter last name: ");
+        String lastName = input.nextLine();
+        System.out.println("Enter User username: ");
+        String userUser = input.nextLine();
+        System.out.println("Enter User password: ");
+        String userPass = input.nextLine();
+        System.out.println("Enter Admin username: ");
+        String adminUser = input.nextLine();
+        System.out.println("Enter Admin password: ");
+        String adminPass = input.nextLine();
+        NonAdministrator userDemo = new NonAdministrator(firstName, lastName, userUser, userPass);
+        Administrator adminDemo = new Administrator(firstName, lastName, adminUser, adminPass);
+        System.out.println(userDemo);
+        System.out.println(adminDemo);
+
+
+
         //menu choice selection, ran through a separate function
         int choice = menuSelection();
 

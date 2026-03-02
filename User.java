@@ -39,7 +39,8 @@ public abstract class User {
 
     public String toString()
     {
-        return "";
+        return "First Name: " + firstName + "\nLast Name: " + lastName + "\nUsername: " + 
+        username + "\nPassword: " + password + "\nAdmin Status: ";
     }
 
 }
