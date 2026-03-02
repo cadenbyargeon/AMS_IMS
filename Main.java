@@ -19,7 +19,9 @@ public class Main {
         String adminPass = input.nextLine();
         NonAdministrator userDemo = new NonAdministrator(firstName, lastName, userUser, userPass);
         Administrator adminDemo = new Administrator(firstName, lastName, adminUser, adminPass);
-        System.out.println(userDemo);
+        System.out.println("\nUser:");
+        System.out.println(userDemo );
+        System.out.println("\nAdmin:");
         System.out.println(adminDemo);
 
 
