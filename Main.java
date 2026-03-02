@@ -71,68 +71,68 @@ public static void create(){
 
     //Non-Serialized
     case 1:
-        String basic[] = basicItem();
-        int advanced[] = nonSerial();
-        Non_Serialized newItem = new Non_Serialized(
-        basic[0],
-        basic[1],
-        basic[2],
-        Integer.parseInt(basic[3]),
-        advanced[0],
-        advanced[1]
+        String basicNS[] = basicItem();
+        int advancedNS[] = nonSerial();
+        Non_Serialized newItemNS = new Non_Serialized(
+        basicNS[0],
+        basicNS[1],
+        basicNS[2],
+        Integer.parseInt(basicNS[3]),
+        advancedNS[0],
+        advancedNS[1]
         );
-        checkAlert(newItem.checkAlert());
-        System.out.println(newItem);
+        checkAlert(newItemNS.checkAlert());
+        System.out.println(newItemNS);
         break;
 
     //Serialized
     case 2:
-        String basic[] = basicItem();
-        int advanced[] = nonSerial();
+        String basicS[] = basicItem();
+        int advancedS[] = nonSerial();
         String serial = serial();
-        Serialized newItem = new Serialized(
-        basic[0],
-        basic[1],
-        basic[2],
-        Integer.parseInt(basic[3]),
-        advanced[0],
-        advanced[1],
+        Serialized newItemS = new Serialized(
+        basicS[0],
+        basicS[1],
+        basicS[2],
+        Integer.parseInt(basicS[3]),
+        advancedS[0],
+        advancedS[1],
         serial
         );
-        checkAlert(newItem.checkAlert());
-        System.out.println(newItem);
+        checkAlert(newItemS.checkAlert());
+        System.out.println(newItemS);
         break;
 
     //Consumable
     case 3:
-        String basic[] = basicItem();
+        String basicC[] = basicItem();
         String consume = consumable();
-        int advanced[] = nonSerial();
-        Consumable newItem = new Consumable(
-        basic[0],
-        basic[1],
-        basic[2],
-        Integer.parseInt(basic[3]),
-        advanced[0],
-        advanced[1],
+        int advancedC[] = nonSerial();
+        Consumable newItemC = new Consumable(
+        basicC[0],
+        basicC[1],
+        basicC[2],
+        Integer.parseInt(basicC[3]),
+        advancedC[0],
+        advancedC[1],
         consume
         );
-        checkAlert(newItem.checkAlert());
-        System.out.println(newItem);
+        checkAlert(newItemC.checkAlert());
+        System.out.println(newItemC);
         break;
 
     //Manual
     case 4:
-        String basic[] = basicItem();
+        String basicM[] = basicItem();
         String manual = manual();
-        Manual newItem = new Manual(
-        basic[0],
-        basic[1],
-        basic[2],
-        Integer.parseInt(basic[3]),
+        Manual newItemM = new Manual(
+        basicM[0],
+        basicM[1],
+        basicM[2],
+        Integer.parseInt(basicM[3]),
         manual
         );
-        System.out.println(newItem);
+        System.out.println(newItemM);
         break;
     }
     return;
