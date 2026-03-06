@@ -7,7 +7,7 @@ public class JDBCDemo {
         String password = System.getenv("DB_PASSWORD");
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-
+//test
             Connection connection = DriverManager.getConnection(url, user, password);
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery("select * from demo");
