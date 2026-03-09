@@ -5,6 +5,7 @@ public class Main {
     public static void main(String[] args){
         
         //hard coded for the demo for user/admin creation
+        /* 
         Scanner input = new Scanner(System.in);
         System.out.println("Enter first name: ");
         String firstName = input.nextLine();
@@ -24,7 +25,7 @@ public class Main {
         System.out.println(userDemo );
         System.out.println("\nAdmin:");
         System.out.println(adminDemo);
-        //
+         */
 
 
         //menu choice selection, ran through a separate function
@@ -38,6 +39,7 @@ public class Main {
 
         //edit an item
         case 2:
+            edit();
             break;
 
         //create an item
@@ -67,10 +69,7 @@ public static int menuSelection(){
     int menu = input.nextInt();
     return menu;
 }
-
-    //similar to menu in design, returns a choice as an integer to run through if statements
-    //can maybe break the menu into a separate function here
-public static void create(){
+public static int item_type_selection(){
     Scanner input = new Scanner(System.in);
     System.out.println("========================");
     System.out.println("Select what item type");
@@ -80,7 +79,13 @@ public static void create(){
     System.out.println("4. Manual");
     System.out.println("========================");
     int choice = input.nextInt();
-    
+    return choice;
+}
+    //similar to menu in design, returns a choice as an integer to run through if statements
+    //can maybe break the menu into a separate function here
+public static void create(){
+
+    int choice = item_type_selection();    
 
     //The following are all similar, all share basicItem() to get the information all classes need
     //advanced() is information both non-serialized and serialized share and consumables (qty_semester, qty_next_semester)
@@ -162,6 +167,104 @@ public static void create(){
 
 }
 
+public static void edit(){
+    int choice = item_type_selection();
+
+    //maybe separate method below
+    System.out.println("Which variable would you like to change?");
+    Scanner input = new Scanner(System.in);
+    int change = input.nextInt();
+
+    switch(choice){
+        //search for an object here*************
+        //Print object here with numbered lines*************
+        switch(choice){}
+        //non-serial
+        case 1:
+            if(choice <=4){
+            editBasic(change);
+            }else{
+            editQts(change);
+            }
+        //serialized
+        case 2:
+            if(choice <=4){
+            editBasic(change);
+            }else if(choice <=6){
+            editQts(change);
+            }else{
+            editSerial();
+            }   
+        //consumables
+        case 3:
+            if(choice <=4){
+            editBasics(change);
+            }else{
+            editQts(chocie);
+            }
+        //manual
+        case 4:
+            if(choice <=4){
+            editBasic(choice);
+            }else{
+            editRev();
+            }
+    }
+}
+
+public static String editBasic(int choice){
+    Scanner input = new Scanner(System.in);
+    switch(choice){
+        case 1:
+            System.out.println("What is the new name?");
+            String name = input.nextLine();
+            return name;
+        case 2:
+            System.out.println("What is the new model?");
+            String model = input.nextLine();
+            return model;
+        case 3:
+            System.out.println("What is the new part number?");
+            String partNum = input.nextLine();
+            return partNum;
+        case 4:
+            System.out.println("What is the new quantity?");
+            int qty = input.nextInt();
+            String strQty = String.valueOf(qty);
+            return strQty;
+    }
+    return void;
+}
+
+public static int editSerial(){
+    Scanner input = new Scanner(System.in);
+    System.out.println("What is the new serial number?");
+    int serial = input.nextInt();
+    return serial;
+}
+
+public static int editRev(){
+    Scanner input = new Scanner(System.in);
+    System.out.println("What is the new revision number?");
+    int rev = input.nextInt();
+    return rev;
+}
+
+public static int editQts(int choice){
+    Scanner input = new Scanner(System.in);
+    switch(choice){
+        case 1:
+            System.out.println("What is the new quantity for this semester?");
+            int qtyThis = input.nextInt();
+            return qtyThis;
+        case 2:
+            System.out.println("What is the new quantity for next semester?");
+            int qtyNext = input.nextInt();
+            return qtyNext;
+    }
+    return void;
+
+}
 
 //Stores data in a string[], the int for qty is set to a string, then back to an int in the object creation
 //qty is still inputed as an int by the user to disallow invalid input
