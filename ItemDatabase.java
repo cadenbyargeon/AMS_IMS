@@ -3,9 +3,9 @@ import java.sql.*;
 public class ItemDatabase {
 
     public static void main(String[] args) {
-        String url = "";
-        String user = "";
-        String password = "";
+        String url = "jdbc:mysql://avnadmin:AVNS_gYcciwH3FiHQ6J6WzGi@ams-ims-db-amsims.i.aivencloud.com:24455/defaultdb?ssl-mode=REQUIRED";
+        String user = "avnadmin";
+        String password = "AVNS_gYcciwH3FiHQ6J6WzGi";
 
         try {
             //Class.forName("com.mysql.cj.jdbc.Driver");
