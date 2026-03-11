@@ -43,7 +43,7 @@ public class Main {
         
     }
 
-    public int initialOptions(Scanner scan)
+    public static int initialOptions(Scanner scan)
     {
         System.out.println("1. Create an account.");
         System.out.println("2. Log in");
@@ -53,7 +53,7 @@ public class Main {
 
     }
 
-    public void processInitialOption(Scanner scan, int initialChoice, UserDatabase userDB)
+    public static void processInitialOption(Scanner scan, int initialChoice, UserDatabase userDB)
     {
         switch(initialChoice)
         {
