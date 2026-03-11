@@ -418,5 +418,5 @@ public static void checkAlert(int alert){
             System.out.println("NOT ENOUGH FOR NEXT SEMESTER");
         }
     }
-
+}
 
