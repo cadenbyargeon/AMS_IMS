@@ -185,7 +185,7 @@ public static void edit(){
             editBasic(change, editNon_Serialized);
             }else{
             editQts(change);
-            }
+            } 
             //pass back to DB
         //serialized
         case 2:
