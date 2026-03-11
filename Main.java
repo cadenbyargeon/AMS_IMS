@@ -64,7 +64,7 @@ public class Main {
         }
     }
 
-    public void createAccount(Scanner scan, UserDatabase userDB)
+    public static void createAccount(Scanner scan, UserDatabase userDB)
     {
         User user = null;
         System.out.print("Are you a professor or TA? (type P for professor and T for TA): ");
@@ -117,7 +117,7 @@ public class Main {
 
     }
 
-    public User logIn(Scanner scan, UserDatabase userDB)
+    public static User logIn(Scanner scan, UserDatabase userDB)
     {
         System.out.print("Username: ");
         String username = scan.nextLine();
