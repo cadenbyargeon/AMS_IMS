@@ -2,9 +2,9 @@ public class Administrator extends User
 {
     private boolean isAdmin;
 
-    public Administrator(String firstName, String lastName, String username, String password)
+    public Administrator(String firstName, String lastName, String username)
     {
-        super(firstName, lastName, username, password);
+        super(firstName, lastName, username);
         isAdmin = true;
 
     }

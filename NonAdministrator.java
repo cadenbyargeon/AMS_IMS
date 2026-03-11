@@ -3,9 +3,9 @@ public class NonAdministrator extends User{
     private boolean isAdmin;
     
     
-    public NonAdministrator(String firstName, String lastName, String username, String password)
+    public NonAdministrator(String firstName, String lastName, String username)
     {
-        super(firstName, lastName, username, password);
+        super(firstName, lastName, username);
         isAdmin = false;
 
     }
