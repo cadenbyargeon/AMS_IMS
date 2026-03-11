@@ -1,4 +1,3 @@
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 public class UserDatabase {
     ArrayList<User> users;
