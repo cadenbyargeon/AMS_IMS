@@ -18,6 +18,7 @@ public class Main {
         //menu choice selection, ran through a separate function
         int choice = menuSelection();
 
+        //break into a separate method
         switch(choice){
         //exit
         case 1:
