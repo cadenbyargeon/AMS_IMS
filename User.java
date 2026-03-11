@@ -6,12 +6,11 @@ public abstract class User {
     private boolean isAdmin;
 
 
-    public User(String firstName, String lastName, String username, String password)
+    public User(String firstName, String lastName, String username)
     {
         this.firstName = firstName;
         this.lastName = lastName;
         this.username = username;
-        this.password = password;
        
     }
 

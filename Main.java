@@ -3,29 +3,16 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        UserDatabase userDB = new UserDatabase();
+
+        int initialChoice = 0;
+        do{
+            initialChoice = initialOptions(scan);
+            processInitialOption(scan, initialChoice, userDB);
+        } while (initialChoice != 3);
         
-        //hard coded for the demo for user/admin creation
-        /* 
-        Scanner input = new Scanner(System.in);
-        System.out.println("Enter first name: ");
-        String firstName = input.nextLine();
-        System.out.println("Enter last name: ");
-        String lastName = input.nextLine();
-        System.out.println("Enter User username: ");
-        String userUser = input.nextLine();
-        System.out.println("Enter User password: ");
-        String userPass = input.nextLine();
-        System.out.println("Enter Admin username: ");
-        String adminUser = input.nextLine();
-        System.out.println("Enter Admin password: ");
-        String adminPass = input.nextLine();
-        NonAdministrator userDemo = new NonAdministrator(firstName, lastName, userUser, userPass);
-        Administrator adminDemo = new Administrator(firstName, lastName, adminUser, adminPass);
-        System.out.println("\nUser:");
-        System.out.println(userDemo );
-        System.out.println("\nAdmin:");
-        System.out.println(adminDemo);
-         */
+        scan.close();
 
 
         //menu choice selection, ran through a separate function
@@ -55,6 +42,108 @@ public class Main {
         return;
         
     }
+
+    public int initialOptions(Scanner scan)
+    {
+        System.out.println("1. Create an account.");
+        System.out.println("2. Log in");
+        String choiceStr = scan.nextLine();
+        int choice = Integer.parseInt(choiceStr);
+        return choice;
+
+    }
+
+    public void processInitialOption(Scanner scan, int initialChoice, UserDatabase userDB)
+    {
+        switch(initialChoice)
+        {
+            case 1: createAccount(scan, userDB); break;
+            case 2: User user = logIn(scan, userDB); break;
+            default: System.out.println("Invalid selection"); break;
+                     
+        }
+    }
+
+    public void createAccount(Scanner scan, UserDatabase userDB)
+    {
+        User user = null;
+        System.out.print("Are you an professor or TA? (type P for professor and T for TA): ");
+        String role = scan.nextLine().toUpperCase();
+        while(!(role.equals("P")) && !(role.equals("T")))
+        {
+            System.out.println("Enter only P or T: ");
+            role = scan.nextLine().toUpperCase();
+        }
+
+        System.out.print("Enter your first name: ");
+        String firstName = scan.nextLine();
+
+        System.out.print("Enter your last name: ");
+        String lastName = scan.nextLine();
+
+        System.out.print("Enter your username: ");
+        String username = scan.nextLine();
+
+        System.out.print("Enter your password: ");
+        String password = scan.nextLine();
+        while(password.length() < 16)
+        {
+            System.out.print("Password must be at least 16 characters: ");
+            password = scan.nextLine();
+        }
+        while(userDB.findUser(username) != -1)
+        {
+            System.out.print("There is already a user with that username. Try again: ");
+            password = scan.nextLine();
+        }
+
+        if(role.equals("P"))
+        {
+            user = new Administrator(firstName, lastName, username);
+            user.setPassword(password);
+
+        }
+        else if(role.equals("T"))
+        {
+            user = new NonAdministrator(firstName, lastName, username);
+            user.setPassword(password);
+        }
+        else{
+
+            user = null;
+            System.out.println("Type of user not specified. No account created.");
+            
+        }
+
+    }
+
+    public User logIn(Scanner scan, UserDatabase userDB)
+    {
+        System.out.print("Username: ");
+        String username = scan.nextLine();
+        
+
+        System.out.print("Password: ");
+        String password = scan.nextLine();
+
+        int userIndex = userDB.findUser(username);
+        User user = userDB.findUserByIndex(userIndex);
+
+
+        if(user.getUsername() != username || user.getPassword() != password)
+        {
+            System.out.println("Incorrect login credentials.");
+            return null;
+            
+        }
+
+        return user;
+
+    }
+
+
+
+
 
     //menu selection, returns an int for choice of the following, ran in main
 public static int menuSelection(){
@@ -327,8 +416,4 @@ public static void checkAlert(int alert){
         }
     }
 
-public static void users(){
-    
-}
 
-}
