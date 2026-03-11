@@ -256,6 +256,8 @@ public static void create(){
 
 }
 
+// Ru Works on this Section
+//Non - Serialized and Serialized Part
 public static void edit(){
     int choice = item_type_selection();
 
@@ -269,7 +271,7 @@ public static void edit(){
         switch(choice){
         //non-serial
         case 1:
-            Non_Serialized editNon_Serialized = //call method for DB item here 
+            Non_Serialized editNon_Serialized =//call method for DB item here 
             if(choice <=4){
             editBasic(change, editNon_Serialized);
             }else{
