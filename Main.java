@@ -67,7 +67,7 @@ public class Main {
     public void createAccount(Scanner scan, UserDatabase userDB)
     {
         User user = null;
-        System.out.print("Are you an professor or TA? (type P for professor and T for TA): ");
+        System.out.print("Are you a professor or TA? (type P for professor and T for TA): ");
         String role = scan.nextLine().toUpperCase();
         while(!(role.equals("P")) && !(role.equals("T")))
         {
