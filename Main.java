@@ -175,19 +175,21 @@ public static void edit(){
     Scanner input = new Scanner(System.in);
     int change = input.nextInt();
 
-    switch(choice){
         //search for an object here*************
         //Print object here with numbered lines*************
-        switch(choice){}
+        switch(choice){
         //non-serial
         case 1:
+            Non_Serialized editNon_Serialized = //call method for DB item here 
             if(choice <=4){
-            editBasic(change);
+            editBasic(change, editNon_Serialized);
             }else{
             editQts(change);
             }
+            //pass back to DB
         //serialized
         case 2:
+            Serialized editSerialized = //call method for DB item
             if(choice <=4){
             editBasic(change);
             }else if(choice <=6){
@@ -197,28 +199,30 @@ public static void edit(){
             }   
         //consumables
         case 3:
+            Consumable editConsumable = //call method for DB item
             if(choice <=4){
-            editBasics(change);
+            editBasic(change);
             }else{
-            editQts(chocie);
+            editQts(choice);
             }
         //manual
         case 4:
+            Manual editManual = //call method for DB item
             if(choice <=4){
             editBasic(choice);
             }else{
             editRev();
             }
-    }
+        }
 }
 
-public static String editBasic(int choice){
+public static Item_Parent editBasic(int choice, Item_Parent editItem){
     Scanner input = new Scanner(System.in);
     switch(choice){
         case 1:
             System.out.println("What is the new name?");
             String name = input.nextLine();
-            return name;
+            editItem.setName(name);
         case 2:
             System.out.println("What is the new model?");
             String model = input.nextLine();
@@ -230,29 +234,28 @@ public static String editBasic(int choice){
         case 4:
             System.out.println("What is the new quantity?");
             int qty = input.nextInt();
-            String strQty = String.valueOf(qty);
-            return strQty;
+            return Qty;
     }
-    return void;
+    return editItem;
 }
 
-public static int editSerial(){
+public static int editSerial(){//serialized class
     Scanner input = new Scanner(System.in);
     System.out.println("What is the new serial number?");
     int serial = input.nextInt();
     return serial;
 }
 
-public static int editRev(){
+public static int editRev(){//manuals
     Scanner input = new Scanner(System.in);
     System.out.println("What is the new revision number?");
     int rev = input.nextInt();
     return rev;
 }
 
-public static int editQts(int choice){
+public static int editQts(int choice){//non-serialized class
     Scanner input = new Scanner(System.in);
-    switch(choice){
+    switch(choice+4){
         case 1:
             System.out.println("What is the new quantity for this semester?");
             int qtyThis = input.nextInt();
