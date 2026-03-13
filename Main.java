@@ -5,20 +5,28 @@ public class Main {
     public static void main(String[] args){
         Scanner scan = new Scanner(System.in);
         UserDatabase userDB = new UserDatabase();
-
+        Administrator testAdmin = new Administrator("admin", "admin", "admin");
+        testAdmin.setPassword("admin");
+        userDB.addUser(testAdmin);
+        //probably change or delete
         int initialChoice = 0;
-        do{
-            initialChoice = initialOptions(scan);
-            processInitialOption(scan, initialChoice, userDB);
-        } while (initialChoice != 3);
-        
-        scan.close();
+        //do{
+        //    initialChoice = initialOptions(scan);
+        //    processInitialOption(scan, initialChoice, userDB);
+        //} while (initialChoice != 3);
 
+
+        User user = logIn(scan, userDB);
 
         //menu choice selection, ran through a separate function
-        //add if statement when user works
+        //add if statement when user works, WIP
+        if(user instanceof Administrator){
+        admin();
+        }
+        if(user instanceof NonAdministrator){
         nonAdmin();
-        //admin();
+        }
+        scan.close();
         return;
         
     }
@@ -33,6 +41,9 @@ public class Main {
 
     }
 
+
+
+    //delete later, will change way it works
     public static void processInitialOption(Scanner scan, int initialChoice, UserDatabase userDB)
     {
         switch(initialChoice)
@@ -97,6 +108,7 @@ public class Main {
 
     }
 
+    //add other cases
     public static void admin(){
         int choice = menuSelectionAdmin();
         switch(choice){
@@ -199,6 +211,7 @@ public static int menuSelectionAdmin(){
     System.out.println("4. View an item");
     System.out.println("5. View a user");
     System.out.println("6. Change a user");
+    System.out.println("7. Add an account");
     System.out.println( "========================");
     int menu = input.nextInt();
     return menu;
