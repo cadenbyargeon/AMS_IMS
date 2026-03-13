@@ -16,6 +16,10 @@ public class Non_Serialized extends Item_Parent {
     
     //getters 
 
+    public Non_Serialized() {
+        //TODO Auto-generated constructor stub
+    }
+
     public int getQtySemester(){
         return qty_semester;
     }
@@ -66,5 +70,10 @@ public class Non_Serialized extends Item_Parent {
     @Override
     public String toString(){
         return super.toString() + "\nQuantity for this Semester: " + qty_semester + "\nQuantity for Next Semester: " + qty_next_semester;
+    }
+    
+    public String Non_Serialized getItemFromDB(){
+        Non_Serialized item = new Non_Serialized();
+        return item;
     }
 }
