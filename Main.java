@@ -7,10 +7,10 @@ public class Main {
         UserDatabase userDB = new UserDatabase();
 
         int initialChoice = 0;
-        do{
+        //do{
             initialChoice = initialOptions(scan);
             processInitialOption(scan, initialChoice, userDB);
-        } while (initialChoice != 3);
+       // } while (initialChoice != 3);
         
         scan.close();
 
