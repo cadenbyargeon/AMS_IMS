@@ -160,7 +160,7 @@ public class Main {
         User user = userDB.findUserByIndex(userIndex);
 
 
-        if(user.getUsername() != username || user.getPassword() != password)
+        if(user.getUsername().equals(username) || user.getPassword().equals(password));
         {
             System.out.println("Incorrect login credentials.");
             return null;
