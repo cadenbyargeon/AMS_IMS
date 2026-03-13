@@ -5,40 +5,28 @@ public class Main {
     public static void main(String[] args){
         Scanner scan = new Scanner(System.in);
         UserDatabase userDB = new UserDatabase();
-
+        Administrator testAdmin = new Administrator("admin", "admin", "admin");
+        testAdmin.setPassword("admin");
+        userDB.addUser(testAdmin);
+        //probably change or delete
         int initialChoice = 0;
-        do{
-            initialChoice = initialOptions(scan);
-            processInitialOption(scan, initialChoice, userDB);
-        } while (initialChoice != 3);
-        
-        scan.close();
+        //do{
+        //    initialChoice = initialOptions(scan);
+        //    processInitialOption(scan, initialChoice, userDB);
+        //} while (initialChoice != 3);
 
+
+        User user = logIn(scan, userDB);
 
         //menu choice selection, ran through a separate function
-        int choice = menuSelection();
-
-        switch(choice){
-        //exit
-        case 1:
-            System.out.println("Exiting ALM IMS........");
-            break;
-
-        //edit an item
-        case 2:
-            edit();
-            break;
-
-        //create an item
-        case 3:
-            create();
-            break;
-
-        //view an item
-        case 4:
-            break;
-
+        //add if statement when user works, WIP
+        if(user instanceof Administrator){
+        admin();
         }
+        if(user instanceof NonAdministrator){
+        nonAdmin();
+        }
+        scan.close();
         return;
         
     }
@@ -53,6 +41,9 @@ public class Main {
 
     }
 
+
+
+    //delete later, will change way it works
     public static void processInitialOption(Scanner scan, int initialChoice, UserDatabase userDB)
     {
         switch(initialChoice)
@@ -117,6 +108,57 @@ public class Main {
 
     }
 
+    //add other cases
+    public static void admin(){
+        int choice = menuSelectionAdmin();
+        switch(choice){
+        //exit
+        case 1:
+            System.out.println("Exiting ALM IMS........");
+            break;
+
+        //edit an item
+        case 2:
+            edit();
+            break;
+
+        //create an item
+        case 3:
+            create();
+            break;
+
+        //view an item
+        case 4:
+            break;
+
+        }
+    }
+
+    public static void nonAdmin(){
+        int choice = menuSelection();
+        switch(choice){
+        //exit
+        case 1:
+            System.out.println("Exiting ALM IMS........");
+            break;
+
+        //edit an item
+        case 2:
+            edit();
+            break;
+
+        //create an item
+        case 3:
+            create();
+            break;
+
+        //view an item
+        case 4:
+            break;
+
+        }
+}
+
     public static User logIn(Scanner scan, UserDatabase userDB)
     {
         System.out.print("Username: ");
@@ -130,7 +172,7 @@ public class Main {
         User user = userDB.findUserByIndex(userIndex);
 
 
-        if(user.getUsername() != username || user.getPassword() != password)
+        if(!(user.getUsername().equals(username))|| !(user.getPassword().equals(password)))
         {
             System.out.println("Incorrect login credentials.");
             return null;
@@ -158,6 +200,23 @@ public static int menuSelection(){
     int menu = input.nextInt();
     return menu;
 }
+
+public static int menuSelectionAdmin(){
+    Scanner input = new Scanner(System.in);
+    System.out.println("========================");
+    System.out.println("Select one of the following:");
+    System.out.println("1. Exit IMS");
+    System.out.println("2. Edit an item");
+    System.out.println("3. Create an item");
+    System.out.println("4. View an item");
+    System.out.println("5. View a user");
+    System.out.println("6. Change a user");
+    System.out.println("7. Add an account");
+    System.out.println( "========================");
+    int menu = input.nextInt();
+    return menu;
+}
+
 public static int item_type_selection(){
     Scanner input = new Scanner(System.in);
     System.out.println("========================");
@@ -430,4 +489,3 @@ public static void checkAlert(int alert){
         }
     }
 }
-
