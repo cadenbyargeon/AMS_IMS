@@ -11,17 +11,9 @@ public class Main {
         //probably change or delete
         int initialChoice = 0;
         //do{
-<<<<<<< HEAD
         //    initialChoice = initialOptions(scan);
         //    processInitialOption(scan, initialChoice, userDB);
         //} while (initialChoice != 3);
-=======
-            initialChoice = initialOptions(scan);
-            processInitialOption(scan, initialChoice, userDB);
-       // } while (initialChoice != 3);
-        
-        scan.close();
->>>>>>> 47e7723ca4af44514a20ae866dc56f34d7b99c84
 
 
         User user = logIn(scan, userDB);
