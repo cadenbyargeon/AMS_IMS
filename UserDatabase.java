@@ -28,7 +28,7 @@ public class UserDatabase {
         for (int i = 0; i < users.size(); i++)
         {
             User user = users.get(i);
-            if(username == user.getUsername())
+            if(username.equals(user.getUsername()))
             {
                 return i;
             }
