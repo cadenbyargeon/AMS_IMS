@@ -315,6 +315,8 @@ public static void create(){
 
 }
 
+// Ru Works on this Section
+//Non - Serialized and Serialized Part
 public static void edit(){
     int choice = item_type_selection();
 
@@ -328,23 +330,32 @@ public static void edit(){
         switch(choice){
         //non-serial
         case 1:
-            Non_Serialized editNon_Serialized = //call method for DB item here 
-            if(choice <=4){
-            editBasic(change, editNon_Serialized);
-            }else{
-            editQts(change);
+            Non_Serialized editNon_Serialized = getItemFromDB());//call method for DB item here 
+            if(choice <=4)
+            {
+                editBasic(change, editNon_Serialized);
+            }else
+            {
+                editQts(change, editNon_Serialized);
             } 
+            updateItemInDB(editNon_Serialized);
+            break;
             //pass back to DB
         //serialized
         case 2:
-            Serialized editSerialized = //call method for DB item
-            if(choice <=4){
-            editBasic(change);
-            }else if(choice <=6){
-            editQts(change);
-            }else{
-            editSerial();
-            }   
+            SerializedItem editSerialized = getItemFromDB();//call method for DB item
+            if(choice <=4)
+            {
+                editBasic(change, editSerialized);
+            }else if(choice <=6)
+            {
+                editQts(change, editSerialized);
+            }else
+            {
+                editSerial(change, editSerialized);
+            }
+            updateItemInDB(editSerialized);
+            break;
         //consumables
         case 3:
             Consumable editConsumable = //call method for DB item
