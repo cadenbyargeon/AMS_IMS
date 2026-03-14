@@ -16,9 +16,6 @@ public class Non_Serialized extends Item_Parent {
     
     //getters 
 
-    public Non_Serialized() {
-        //TODO Auto-generated constructor stub
-    }
 
     public int getQtySemester(){
         return qty_semester;

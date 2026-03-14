@@ -15,7 +15,7 @@ public class Serialized extends Non_Serialized{
     }
 
     //setter
-    public void setSerialNum(){
+    public void setSerialNum(String serialNum){
         this.serialNum = serialNum;
     }
 

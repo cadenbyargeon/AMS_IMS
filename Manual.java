@@ -14,7 +14,7 @@ public class Manual extends Item_Parent{
     }
 
     //setter
-    public void setRevision(){
+    public void setRevision(String revision){
         this.revision = revision;
     }
 

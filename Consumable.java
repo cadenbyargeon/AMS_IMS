@@ -11,7 +11,7 @@ public class Consumable extends Non_Serialized{
         return qtyType;
     }
 
-    public void setQtyType(){
+    public void setQtyType(String qtyType){
         this.qtyType = qtyType;
     }
 

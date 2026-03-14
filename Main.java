@@ -131,6 +131,17 @@ public class Main {
         case 4:
             break;
 
+        //view a user
+        case 5:
+            break;
+
+        //change a user
+        case 6:
+            break;
+
+        //add an account
+        case 7:
+            break;
         }
     }
 
@@ -343,7 +354,7 @@ public static void edit(){
             //pass back to DB
         //serialized
         case 2:
-            SerializedItem editSerialized = getItemFromDB();//call method for DB item
+            Serialized editSerialized = getItemFromDB();//call method for DB item
             if(choice <=4)
             {
                 editBasic(change, editSerialized);
@@ -352,26 +363,30 @@ public static void edit(){
                 editQts(change, editSerialized);
             }else
             {
-                editSerial(change, editSerialized);
+                editSerial(editSerialized);
             }
             updateItemInDB(editSerialized);
             break;
         //consumables
         case 3:
-            Consumable editConsumable = //call method for DB item
+            Consumable editConsumable = getItemFromDB();
             if(choice <=4){
-            editBasic(change);
+            editBasic(change, editConsumable);
             }else{
-            editQts(choice);
+            editQts(choice, editConsumable);
             }
+            updateItemInDB(editConsumable);
+            break;
         //manual
         case 4:
-            Manual editManual = //call method for DB item
+            Manual editManual = getItemFromDB();
             if(choice <=4){
-            editBasic(choice);
+            editBasic(choice, editManual);
             }else{
-            editRev();
+            editRev(editManual);
             }
+            updateItemInDB(editManual);
+            break;
         }
 }
 
@@ -385,46 +400,46 @@ public static Item_Parent editBasic(int choice, Item_Parent editItem){
         case 2:
             System.out.println("What is the new model?");
             String model = input.nextLine();
-            return model;
+            editItem.setModel(model);
         case 3:
             System.out.println("What is the new part number?");
             String partNum = input.nextLine();
-            return partNum;
+            editItem.setPartNum(partNum);
         case 4:
             System.out.println("What is the new quantity?");
             int qty = input.nextInt();
-            return Qty;
+            editItem.setQty(qty);
     }
     return editItem;
 }
 
-public static int editSerial(){//serialized class
+public static void editSerial(Serialized editSerial){//serialized class
     Scanner input = new Scanner(System.in);
     System.out.println("What is the new serial number?");
-    int serial = input.nextInt();
-    return serial;
+    String serial = input.nextLine();
+    editSerial.setSerialNum(serial);
 }
 
-public static int editRev(){//manuals
+public static void editRev(Manual editManual){//manuals
     Scanner input = new Scanner(System.in);
     System.out.println("What is the new revision number?");
-    int rev = input.nextInt();
-    return rev;
+    String rev = input.nextLine();
+    editManual.setRevision(rev);
 }
 
-public static int editQts(int choice){//non-serialized class
+public static int editQts(int choice, Non_Serialized editItem){//non-serialized class
     Scanner input = new Scanner(System.in);
     switch(choice+4){
         case 1:
             System.out.println("What is the new quantity for this semester?");
             int qtyThis = input.nextInt();
-            return qtyThis;
+            editItem.setQtySemester(qtyThis);
         case 2:
             System.out.println("What is the new quantity for next semester?");
             int qtyNext = input.nextInt();
-            return qtyNext;
+            editItem.setQtyNextSem(qtyNext);
     }
-    return void;
+    return 0;
 
 }
 
