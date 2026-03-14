@@ -4,12 +4,16 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args){
         Scanner scan = new Scanner(System.in);
+        boolean testUsers = true;
         UserDatabase userDB = new UserDatabase();
+
+        if(testUsers){
         Administrator testAdmin = new Administrator("admin", "admin", "admin");
         testAdmin.setPassword("admin");
         userDB.addUser(testAdmin);
-        //probably change or delete
-        int initialChoice = 0;
+        }
+
+        //int initialChoice = 0;
         //do{
         //    initialChoice = initialOptions(scan);
         //    processInitialOption(scan, initialChoice, userDB);
@@ -21,10 +25,10 @@ public class Main {
         //menu choice selection, ran through a separate function
         //add if statement when user works, WIP
         if(user instanceof Administrator){
-        admin();
+        admin(scan);
         }
         if(user instanceof NonAdministrator){
-        nonAdmin();
+        nonAdmin(scan);
         }
         scan.close();
         return;
@@ -108,68 +112,6 @@ public class Main {
 
     }
 
-    //add other cases
-    public static void admin(){
-        int choice = menuSelectionAdmin();
-        switch(choice){
-        //exit
-        case 1:
-            System.out.println("Exiting ALM IMS........");
-            break;
-
-        //edit an item
-        case 2:
-            edit();
-            break;
-
-        //create an item
-        case 3:
-            create();
-            break;
-
-        //view an item
-        case 4:
-            break;
-
-        //view a user
-        case 5:
-            break;
-
-        //change a user
-        case 6:
-            break;
-
-        //add an account
-        case 7:
-            break;
-        }
-    }
-
-    public static void nonAdmin(){
-        int choice = menuSelection();
-        switch(choice){
-        //exit
-        case 1:
-            System.out.println("Exiting ALM IMS........");
-            break;
-
-        //edit an item
-        case 2:
-            edit();
-            break;
-
-        //create an item
-        case 3:
-            create();
-            break;
-
-        //view an item
-        case 4:
-            break;
-
-        }
-}
-
     public static User logIn(Scanner scan, UserDatabase userDB)
     {
         System.out.print("Username: ");
@@ -194,13 +136,71 @@ public class Main {
 
     }
 
+    //add other cases
+    public static void admin(Scanner scan){
+        int choice = menuSelectionAdmin(scan);
+        switch(choice){
+        //exit
+        case 1:
+            System.out.println("Exiting ALM IMS........");
+            break;
 
+        //edit an item
+        case 2:
+            edit(scan);
+            break;
 
+        //create an item
+        case 3:
+            create(scan);
+            break;
+
+        //view an item
+        case 4:
+            break;
+
+        //view a user
+        case 5:
+            break;
+
+        //change a user
+        case 6:
+            break;
+
+        //add an account
+        case 7:
+            break;
+        }
+    }
+
+    public static void nonAdmin(Scanner scan){
+        int choice = menuSelection(scan);
+        switch(choice){
+        //exit
+        case 1:
+            System.out.println("Exiting ALM IMS........");
+            break;
+
+        //edit an item
+        case 2:
+            edit(scan);
+            break;
+
+        //create an item
+        case 3:
+            create(scan);
+            break;
+
+        //view an item
+        case 4:
+            break;
+
+        }
+}
 
 
     //menu selection, returns an int for choice of the following, ran in main
-public static int menuSelection(){
-    Scanner input = new Scanner(System.in);
+public static int menuSelection(Scanner scan){
     System.out.println("========================");
     System.out.println("Select one of the following:");
     System.out.println("1. Exit IMS");
@@ -208,12 +208,11 @@ public static int menuSelection(){
     System.out.println("3. Create an item");
     System.out.println("4. View an item");
     System.out.println( "========================");
-    int menu = input.nextInt();
+    int menu = scan.nextInt();
     return menu;
 }
 
-public static int menuSelectionAdmin(){
-    Scanner input = new Scanner(System.in);
+public static int menuSelectionAdmin(Scanner scan){
     System.out.println("========================");
     System.out.println("Select one of the following:");
     System.out.println("1. Exit IMS");
@@ -224,12 +223,11 @@ public static int menuSelectionAdmin(){
     System.out.println("6. Change a user");
     System.out.println("7. Add an account");
     System.out.println( "========================");
-    int menu = input.nextInt();
+    int menu = scan.nextInt();
     return menu;
 }
 
-public static int item_type_selection(){
-    Scanner input = new Scanner(System.in);
+public static int item_type_selection(Scanner scan){
     System.out.println("========================");
     System.out.println("Select what item type");
     System.out.println("1. Non-Serialized");
@@ -237,14 +235,14 @@ public static int item_type_selection(){
     System.out.println("3. Consumable");
     System.out.println("4. Manual");
     System.out.println("========================");
-    int choice = input.nextInt();
+    int choice = scan.nextInt();
     return choice;
 }
     //similar to menu in design, returns a choice as an integer to run through if statements
     //can maybe break the menu into a separate function here
-public static void create(){
+public static void create(Scanner scan){
 
-    int choice = item_type_selection();    
+    int choice = item_type_selection(scan);    
 
     //The following are all similar, all share basicItem() to get the information all classes need
     //advanced() is information both non-serialized and serialized share and consumables (qty_semester, qty_next_semester)
@@ -258,8 +256,8 @@ public static void create(){
 
     //Non-Serialized
     case 1:
-        String basicNS[] = basicItem();
-        int advancedNS[] = nonSerial();
+        String basicNS[] = basicItem(scan);
+        int advancedNS[] = nonSerial(scan);
         Non_Serialized newItemNS = new Non_Serialized(
         basicNS[0],
         basicNS[1],
@@ -274,9 +272,9 @@ public static void create(){
 
     //Serialized
     case 2:
-        String basicS[] = basicItem();
-        int advancedS[] = nonSerial();
-        String serial = serial();
+        String basicS[] = basicItem(scan);
+        int advancedS[] = nonSerial(scan);
+        String serial = serial(scan);
         Serialized newItemS = new Serialized(
         basicS[0],
         basicS[1],
@@ -292,9 +290,9 @@ public static void create(){
 
     //Consumable
     case 3:
-        String basicC[] = basicItem();
-        String consume = consumable();
-        int advancedC[] = nonSerial();
+        String basicC[] = basicItem(scan);
+        String consume = consumable(scan);
+        int advancedC[] = nonSerial(scan);
         Consumable newItemC = new Consumable(
         basicC[0],
         basicC[1],
@@ -310,8 +308,8 @@ public static void create(){
 
     //Manual
     case 4:
-        String basicM[] = basicItem();
-        String manual = manual();
+        String basicM[] = basicItem(scan);
+        String manual = manual(scan);
         Manual newItemM = new Manual(
         basicM[0],
         basicM[1],
@@ -326,28 +324,26 @@ public static void create(){
 
 }
 
-// Ru Works on this Section
 //Non - Serialized and Serialized Part
-public static void edit(){
-    int choice = item_type_selection();
+public static void edit(Scanner scan){
+    int choice = item_type_selection(scan);
 
     //maybe separate method below
     System.out.println("Which variable would you like to change?");
-    Scanner input = new Scanner(System.in);
-    int change = input.nextInt();
+    int change = scan.nextInt();
 
         //search for an object here*************
         //Print object here with numbered lines*************
         switch(choice){
         //non-serial
         case 1:
-            Non_Serialized editNon_Serialized = getItemFromDB());//call method for DB item here 
+            Non_Serialized editNon_Serialized = getItemFromDB();//call method for DB item here 
             if(choice <=4)
             {
-                editBasic(change, editNon_Serialized);
+                editBasic(scan, change, editNon_Serialized);
             }else
             {
-                editQts(change, editNon_Serialized);
+                editQts(scan, change, editNon_Serialized);
             } 
             updateItemInDB(editNon_Serialized);
             break;
@@ -357,13 +353,13 @@ public static void edit(){
             Serialized editSerialized = getItemFromDB();//call method for DB item
             if(choice <=4)
             {
-                editBasic(change, editSerialized);
+                editBasic(scan, change, editSerialized);
             }else if(choice <=6)
             {
-                editQts(change, editSerialized);
+                editQts(scan, change, editSerialized);
             }else
             {
-                editSerial(editSerialized);
+                editSerial(scan, editSerialized);
             }
             updateItemInDB(editSerialized);
             break;
@@ -371,9 +367,9 @@ public static void edit(){
         case 3:
             Consumable editConsumable = getItemFromDB();
             if(choice <=4){
-            editBasic(change, editConsumable);
+            editBasic(scan, change, editConsumable);
             }else{
-            editQts(choice, editConsumable);
+            editQts(scan, choice, editConsumable);
             }
             updateItemInDB(editConsumable);
             break;
@@ -381,62 +377,58 @@ public static void edit(){
         case 4:
             Manual editManual = getItemFromDB();
             if(choice <=4){
-            editBasic(choice, editManual);
+            editBasic(scan, choice, editManual);
             }else{
-            editRev(editManual);
+            editRev(scan, editManual);
             }
             updateItemInDB(editManual);
             break;
         }
 }
 
-public static Item_Parent editBasic(int choice, Item_Parent editItem){
-    Scanner input = new Scanner(System.in);
+public static Item_Parent editBasic(Scanner scan, int choice, Item_Parent editItem){
     switch(choice){
         case 1:
             System.out.println("What is the new name?");
-            String name = input.nextLine();
+            String name = scan.nextLine();
             editItem.setName(name);
         case 2:
             System.out.println("What is the new model?");
-            String model = input.nextLine();
+            String model = scan.nextLine();
             editItem.setModel(model);
         case 3:
             System.out.println("What is the new part number?");
-            String partNum = input.nextLine();
+            String partNum = scan.nextLine();
             editItem.setPartNum(partNum);
         case 4:
             System.out.println("What is the new quantity?");
-            int qty = input.nextInt();
+            int qty = scan.nextInt();
             editItem.setQty(qty);
     }
     return editItem;
 }
 
-public static void editSerial(Serialized editSerial){//serialized class
-    Scanner input = new Scanner(System.in);
+public static void editSerial(Scanner scan, Serialized editSerial){//serialized class
     System.out.println("What is the new serial number?");
-    String serial = input.nextLine();
+    String serial = scan.nextLine();
     editSerial.setSerialNum(serial);
 }
 
-public static void editRev(Manual editManual){//manuals
-    Scanner input = new Scanner(System.in);
+public static void editRev(Scanner scan, Manual editManual){//manuals
     System.out.println("What is the new revision number?");
-    String rev = input.nextLine();
+    String rev = scan.nextLine();
     editManual.setRevision(rev);
 }
 
-public static int editQts(int choice, Non_Serialized editItem){//non-serialized class
-    Scanner input = new Scanner(System.in);
+public static int editQts(Scanner scan, int choice, Non_Serialized editItem){//non-serialized class
     switch(choice+4){
         case 1:
             System.out.println("What is the new quantity for this semester?");
-            int qtyThis = input.nextInt();
+            int qtyThis = scan.nextInt();
             editItem.setQtySemester(qtyThis);
         case 2:
             System.out.println("What is the new quantity for next semester?");
-            int qtyNext = input.nextInt();
+            int qtyNext = scan.nextInt();
             editItem.setQtyNextSem(qtyNext);
     }
     return 0;
@@ -445,53 +437,48 @@ public static int editQts(int choice, Non_Serialized editItem){//non-serialized 
 
 //Stores data in a string[], the int for qty is set to a string, then back to an int in the object creation
 //qty is still inputed as an int by the user to disallow invalid input
-public static String[] basicItem(){
-    Scanner input = new Scanner(System.in);
+public static String[] basicItem(Scanner scan){
     System.out.println("What is the name of the item?");
-    String name = input.nextLine();
+    String name = scan.nextLine();
     System.out.println("What is the model number of the item");
-    String model = input.nextLine();
+    String model = scan.nextLine();
     System.out.println("What is the part number of the item?");
-    String part = input.nextLine();
+    String part = scan.nextLine();
     System.out.println("What is the quantity of the item?");
-    int qty = input.nextInt();
+    int qty = scan.nextInt();
     String strQty = String.valueOf(qty);
 
     return new String[]{name, model, part, strQty};
 }
 
     //add qty_semester and qty_next_semester
-public static int[] nonSerial(){
-    Scanner input = new Scanner(System.in);
+public static int[] nonSerial(Scanner scan){
     System.out.println("What is the quantity required per semester?");
-    int this_sem = input.nextInt();
+    int this_sem = scan.nextInt();
     System.out.println("What is the quantity required for next semester?");
-    int next_sem = input.nextInt();
+    int next_sem = scan.nextInt();
 
     return new int[]{this_sem, next_sem};
 }
 
     //add serial number
-public static String serial(){
-    Scanner input = new Scanner(System.in);
+public static String serial(Scanner scan){
     System.out.println("What is the serial number?");
-    String cereal = input.nextLine();
+    String cereal = scan.nextLine();
     return cereal;
 }
 
     //add qty type
-public static String consumable(){
-    Scanner input = new Scanner(System.in);
+public static String consumable(Scanner scan){
     System.out.println("What is the unit quantity type?");
-    String type = input.nextLine();
+    String type = scan.nextLine();
     return type;
 }
 
     //add revision number
-public static String manual(){
-    Scanner input = new Scanner(System.in);
+public static String manual(Scanner scan){
     System.out.println("What is the revision number?");
-    String rev = input.nextLine();
+    String rev = scan.nextLine();
     return rev;
 }
 
