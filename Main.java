@@ -4,8 +4,8 @@ import java.util.Scanner;
  * The app assumes a default admin account exists
  * Requires successful login of the admin account to do anything
  * The app is currently not connected to the database
- * Working functionalities: login, account creation, view, and modification,
- * item creation
+ * Working functionalities: login, account creation, view user, and item creation,
+ * 
  */
 public class Main {
     public static void main(String[] args){
@@ -19,47 +19,70 @@ public class Main {
         userDB.addUser(testAdmin);
         }
 
-        //int initialChoice = 0;
-        //do{
-        //    initialChoice = initialOptions(scan);
-        //    processInitialOption(scan, initialChoice, userDB);
-        //} while (initialChoice != 3);
+        
+        initialLogin(scan, userDB);
+            
 
 
-        User user = logIn(scan, userDB);
+        /*User user = logIn(scan, userDB);
 
         //menu choice selection, ran through a separate function
         //add if statement when user works, WIP
-        if(user instanceof Administrator){
+        if(user.isAdmin() == true){
         admin(scan, userDB);
         }
-        if(user instanceof NonAdministrator){
+        if(user.isAdmin() == false){
         nonAdmin(scan);
-        }
+        }*/
         scan.close();
         return;
         
     }
 
-    /*public static int initialOptions(Scanner scan)
+    public static void initialLogin(Scanner scan, UserDatabase userDB)
     {
-        System.out.println("1. Create an account.");
-        System.out.println("2. Log in");
-        String choiceStr = scan.nextLine();
-        int choice = Integer.parseInt(choiceStr);
-        return choice;
+        while(true)
+        {
+            System.out.print("Press any key to log in: ");
+            String input = scan.nextLine();
+          
+            User user = logIn(scan, userDB); 
+            if(user.isAdmin() == true)
+            {
+                admin(scan, userDB);
+            }
+            if(user.isAdmin() == false)
+            {
+                nonAdmin(scan);
+            }
 
-    }*/
+            break;
 
+            
+        }
+
+    }
+        
+
+    
 
 
     //delete later, will change way it works
-    /*public static void processInitialOption(Scanner scan, int initialChoice, UserDatabase userDB)
+    /*public static void processInitialOption(Scanner scan)
     {
         switch(initialChoice)
         {
-            case 1: createAccount(scan, userDB); break;
-            case 2: User user = logIn(scan, userDB); break;
+            case 1: User user = logIn(scan, userDB); 
+                    if(user.isAdmin() == true)
+                    {
+                        admin(scan, userDB);
+                    }
+                    if(user.isAdmin() == false)
+                    {
+                        nonAdmin(scan);
+                    }
+                    break;
+            case 2: createAccount(scan, userDB); break;
             default: System.out.println("Invalid selection"); break;
                      
         }
@@ -84,9 +107,9 @@ public class Main {
         System.out.print("Enter the password: ");
         String password = scan.nextLine();
         System.out.println();
-        while(password.length() < 16)
+        while(password.length() < 8)
         {
-            System.out.print("Password must be at least 16 characters: ");
+            System.out.print("Password must be at least 8 characters: ");
             password = scan.nextLine();
         }
         while(userDB.findUser(username) != -1)
@@ -99,6 +122,8 @@ public class Main {
         user = new NonAdministrator(firstName, lastName, username);
         user.setPassword(password);
         userDB.addUser(user);
+
+        System.out.println(user.getFirstName() + " " + user.getLastName() + " has been successfully added to the system.");
         
     }
 
@@ -154,54 +179,62 @@ public class Main {
 
     //add other cases
     public static void admin(Scanner scan, UserDatabase userDatabase){
-        int choice = menuSelectionAdmin(scan);
-        switch(choice){
-        //exit
-        case 1:
-            System.out.println("Exiting ALM IMS........");
-            break;
+        while(true)
+        {
+            int choice = menuSelectionAdmin(scan);
+            switch(choice){
+            //exit
+            case 1:
+                System.out.println("Exiting ALM IMS........");
+                return;
+                
 
-        //edit an item
-        case 2:
-            edit(scan);
-            break;
+            //edit an item
+            case 2:
+                edit(scan);
+                break;
 
-        //create an item
-        case 3:
-            create(scan);
-            break;
+            //create an item
+            case 3:
+                create(scan);
+                break;
 
-        //view an item
-        case 4:
-            break;
+            //view an item
+            case 4:
+                break;
 
-        //view a user
-        case 5:
-            //viewUser(scan, userDatabase);
-            break;
+            //view a user
+            case 5:
+                viewUser(scan, userDatabase);
+                break;
 
-        //change a user
-        case 6:
-            //changeUser(scan, userDatabase);
-            break;
+            //change a user
+            case 6:
+                //changeUser(scan, userDatabase);
+                break;
 
-        //add an account
-        case 7:
-            createAccount(scan, userDatabase);
-            break;
-        default:
-            System.out.println("Invalid option.");
-            break;
+            //add an account
+            case 7:
+                createAccount(scan, userDatabase);
+                break;
+            default:
+                System.out.println("Invalid option.");
+                break;
+            }
+
         }
+        
     }
 
     public static void nonAdmin(Scanner scan){
+    while(true)
+    {
         int choice = menuSelection(scan);
         switch(choice){
         //exit
         case 1:
             System.out.println("Exiting ALM IMS........");
-            break;
+            return;
 
         //edit an item
         case 2:
@@ -221,6 +254,9 @@ public class Main {
             break;
 
         }
+
+    }
+        
 }
 
 
@@ -234,6 +270,7 @@ public static int menuSelection(Scanner scan){
     System.out.println("4. View an item");
     System.out.println( "========================");
     int menu = scan.nextInt();
+    scan.nextLine();
     return menu;
 }
 
@@ -249,8 +286,72 @@ public static int menuSelectionAdmin(Scanner scan){
     System.out.println("7. Add an account");
     System.out.println( "========================");
     int menu = scan.nextInt();
+    scan.nextLine();
     return menu;
 }
+
+public static User viewUser(Scanner scan, UserDatabase userDB)
+{   try 
+    {
+        User user = null;
+        System.out.print("Enter the username: "); 
+        String username= scan.nextLine();
+        if(username.equals("") || username.equals(null))
+        {
+            System.out.println("No username entered. Returning to main menu...");
+            return null;
+        }
+        else if(userDB.findUser(username) == -1)
+        {
+            System.out.println("No user with that username exists. Returning to main menu...");
+            return null;
+        }
+        else{
+            user = userDB.findUserByIndex(userDB.findUser(username));
+            System.out.println(user);
+        }
+
+        return user;
+    } catch (Exception e) {
+        System.out.println(e);
+        return null;
+    }
+    
+
+}
+
+//finish changeUser method next sprint:
+
+/*public static User changeUser(Scanner scan, UserDatabase userDB)
+{
+    try {
+        User user = null;
+        System.out.print("Enter the username: "); 
+        String username= scan.nextLine();
+        if(username.equals("") || !username.equals(null))
+        {
+            System.out.println("No username entered. Returning to main menu...");
+            return null;
+        }
+        else if(userDB.findUser(username) == -1)
+        {
+            System.out.println("No user with that username exists. Returning to main menu...");
+            return null;
+        }
+        else{
+            user = userDB.findUserByIndex(userDB.findUser(username));
+            System.out.print("What would you like to change? ");
+            //make another switch-case here (Next Sprint)
+        }
+
+        return user;
+    } catch (Exception e) {
+        System.out.println(e);
+    }
+
+
+}*/
+
 
 public static int item_type_selection(Scanner scan){
     System.out.println("========================");
@@ -261,6 +362,7 @@ public static int item_type_selection(Scanner scan){
     System.out.println("4. Manual");
     System.out.println("========================");
     int choice = scan.nextInt();
+    scan.nextLine();
     return choice;
 }
     //similar to menu in design, returns a choice as an integer to run through if statements
