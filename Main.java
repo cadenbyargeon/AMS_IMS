@@ -71,15 +71,19 @@ public class Main {
         
         System.out.print("Enter the first name: ");
         String firstName = scan.nextLine();
+        System.out.println();
 
         System.out.print("Enter the last name: ");
         String lastName = scan.nextLine();
+        System.out.println();
 
         System.out.print("Enter the username: ");
         String username = scan.nextLine();
+        System.out.println();
 
         System.out.print("Enter the password: ");
         String password = scan.nextLine();
+        System.out.println();
         while(password.length() < 16)
         {
             System.out.print("Password must be at least 16 characters: ");
