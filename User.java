@@ -3,7 +3,6 @@ public abstract class User {
     private String lastName;
     private String username; 
     private String password;
-    private boolean isAdmin;
 
 
     public User(String firstName, String lastName, String username)
@@ -33,6 +32,11 @@ public abstract class User {
     public void setPassword(String password)
     {
         this.password = password;
+    }
+
+    public boolean isAdmin()
+    {
+        return false;
     }
 
 

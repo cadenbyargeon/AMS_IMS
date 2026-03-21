@@ -92,44 +92,53 @@ public class Main {
         while(userDB.findUser(username) != -1)
         {
             System.out.print("There is already a user with that username. Try again: ");
-            password = scan.nextLine();
+            username = scan.nextLine();
         }
 
         
         user = new NonAdministrator(firstName, lastName, username);
         user.setPassword(password);
+        userDB.addUser(user);
         
     }
 
     public static User logIn(Scanner scan, UserDatabase userDB)
     {
         try{
-            System.out.print("Username: ");
-            String username = scan.nextLine();
+            while(true)
+            {
+                System.out.print("Username: ");
+                String username = scan.nextLine();
         
 
-            System.out.print("Password: ");
-            String password = scan.nextLine();
+                System.out.print("Password: ");
+                String password = scan.nextLine();
 
-            int userIndex = userDB.findUser(username);
+                int userIndex = userDB.findUser(username);
 
-            if (userIndex == -1) 
-            {
-                System.out.println("Incorrect login credentials. Exiting ALM IMS...");
-                return null;
+                if (userIndex == -1) 
+                {
+                    System.out.println("Incorrect login credentials. Try again.");
+                    continue;
+                }
+
+                User user = userDB.findUserByIndex(userIndex);
+
+                if (user == null || !user.getPassword().equals(password))
+                {
+                    System.out.println("Incorrect login credentials. Try again.");
+                    continue;
+                
+                }
+
+                return user;
+
             }
-
-            User user = userDB.findUserByIndex(userIndex);
-
-            if (user == null || !user.getPassword().equals(password))
-            {
-                System.out.println("Incorrect login credentials. Exiting ALM IMS...");
-                return null;
-            }
+            
 
 
 
-            return user;
+            
 
         }
         catch (Exception e) {
@@ -180,6 +189,9 @@ public class Main {
         case 7:
             createAccount(scan, userDatabase);
             break;
+        default:
+            System.out.println("Invalid option.");
+            break;
         }
     }
 
@@ -203,6 +215,9 @@ public class Main {
 
         //view an item
         case 4:
+            break;
+        default:
+            System.out.println("Invalid selection.");
             break;
 
         }
