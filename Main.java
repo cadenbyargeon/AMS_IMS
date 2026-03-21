@@ -1,6 +1,12 @@
 import java.sql.*;
 import java.util.Scanner;
-
+/**
+ * The app assumes a default admin account exists
+ * Requires successful login of the admin account to do anything
+ * The app is currently not connected to the database
+ * Working functionalities: login, account creation, view, and modification,
+ * item creation
+ */
 public class Main {
     public static void main(String[] args){
         Scanner scan = new Scanner(System.in);
@@ -25,7 +31,7 @@ public class Main {
         //menu choice selection, ran through a separate function
         //add if statement when user works, WIP
         if(user instanceof Administrator){
-        admin(scan);
+        admin(scan, userDB);
         }
         if(user instanceof NonAdministrator){
         nonAdmin(scan);
@@ -35,7 +41,7 @@ public class Main {
         
     }
 
-    public static int initialOptions(Scanner scan)
+    /*public static int initialOptions(Scanner scan)
     {
         System.out.println("1. Create an account.");
         System.out.println("2. Log in");
@@ -43,12 +49,12 @@ public class Main {
         int choice = Integer.parseInt(choiceStr);
         return choice;
 
-    }
+    }*/
 
 
 
     //delete later, will change way it works
-    public static void processInitialOption(Scanner scan, int initialChoice, UserDatabase userDB)
+    /*public static void processInitialOption(Scanner scan, int initialChoice, UserDatabase userDB)
     {
         switch(initialChoice)
         {
@@ -57,29 +63,22 @@ public class Main {
             default: System.out.println("Invalid selection"); break;
                      
         }
-    }
+    }*/
 
     public static void createAccount(Scanner scan, UserDatabase userDB)
     {
         User user = null;
-        System.out.print("Are you a professor or TA? (type P for professor and T for TA): ");
-        String role = scan.nextLine().toUpperCase();
-        while(!(role.equals("P")) && !(role.equals("T")))
-        {
-            System.out.println("Enter only P or T: ");
-            role = scan.nextLine().toUpperCase();
-        }
-
-        System.out.print("Enter your first name: ");
+        
+        System.out.print("Enter the first name: ");
         String firstName = scan.nextLine();
 
-        System.out.print("Enter your last name: ");
+        System.out.print("Enter the last name: ");
         String lastName = scan.nextLine();
 
-        System.out.print("Enter your username: ");
+        System.out.print("Enter the username: ");
         String username = scan.nextLine();
 
-        System.out.print("Enter your password: ");
+        System.out.print("Enter the password: ");
         String password = scan.nextLine();
         while(password.length() < 16)
         {
@@ -92,52 +91,56 @@ public class Main {
             password = scan.nextLine();
         }
 
-        if(role.equals("P"))
-        {
-            user = new Administrator(firstName, lastName, username);
-            user.setPassword(password);
-
-        }
-        else if(role.equals("T"))
-        {
-            user = new NonAdministrator(firstName, lastName, username);
-            user.setPassword(password);
-        }
-        else{
-
-            user = null;
-            System.out.println("Type of user not specified. No account created.");
-            
-        }
-
+        
+        user = new NonAdministrator(firstName, lastName, username);
+        user.setPassword(password);
+        
     }
 
     public static User logIn(Scanner scan, UserDatabase userDB)
     {
-        System.out.print("Username: ");
-        String username = scan.nextLine();
+        try{
+            System.out.print("Username: ");
+            String username = scan.nextLine();
         
 
-        System.out.print("Password: ");
-        String password = scan.nextLine();
+            System.out.print("Password: ");
+            String password = scan.nextLine();
 
-        int userIndex = userDB.findUser(username);
-        User user = userDB.findUserByIndex(userIndex);
+            int userIndex = userDB.findUser(username);
+
+            if (userIndex == -1) 
+            {
+                System.out.println("Incorrect login credentials. Exiting ALM IMS...");
+                return null;
+            }
+
+            User user = userDB.findUserByIndex(userIndex);
+
+            if (user == null || !user.getPassword().equals(password))
+            {
+                System.out.println("Incorrect login credentials. Exiting ALM IMS...");
+                return null;
+            }
 
 
-        if(!(user.getUsername().equals(username))|| !(user.getPassword().equals(password)))
-        {
-            System.out.println("Incorrect login credentials.");
-            return null;
-            
+
+            return user;
+
         }
+        catch (Exception e) {
+            System.out.println(e);
+            return null;
+        }
+        
 
-        return user;
+
+        
 
     }
 
     //add other cases
-    public static void admin(Scanner scan){
+    public static void admin(Scanner scan, UserDatabase userDatabase){
         int choice = menuSelectionAdmin(scan);
         switch(choice){
         //exit
@@ -161,14 +164,17 @@ public class Main {
 
         //view a user
         case 5:
+            //viewUser(scan, userDatabase);
             break;
 
         //change a user
         case 6:
+            //changeUser(scan, userDatabase);
             break;
 
         //add an account
         case 7:
+            createAccount(scan, userDatabase);
             break;
         }
     }
