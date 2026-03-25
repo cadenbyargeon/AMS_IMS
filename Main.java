@@ -322,13 +322,13 @@ public static User viewUser(Scanner scan, UserDatabase userDB)
 
 //finish changeUser method next sprint:
 
-/*public static User changeUser(Scanner scan, UserDatabase userDB)
+public static User changeUser(Scanner scan, UserDatabase userDB)
 {
     try {
         User user = null;
         System.out.print("Enter the username: "); 
-        String username= scan.nextLine();
-        if(username.equals("") || !username.equals(null))
+        String username = scan.nextLine();
+        if(username.equals("") || username.equals(null))
         {
             System.out.println("No username entered. Returning to main menu...");
             return null;
@@ -340,8 +340,24 @@ public static User viewUser(Scanner scan, UserDatabase userDB)
         }
         else{
             user = userDB.findUserByIndex(userDB.findUser(username));
-            System.out.print("What would you like to change? ");
-            //make another switch-case here (Next Sprint)
+            System.out.print("Enter the new username: ");
+            String newUsername = scan.nextLine();
+                
+            while(userDB.findUser(newUsername) != -1)
+            {
+                System.out.print("There is already a user with that username. Try again: ");
+                newUsername = scan.nextLine();
+            }
+
+            user.setUsername(newUsername);
+            System.out.print("Enter the new password: ");
+            String newPassword = scan.nextLine();
+            while(newPassword.length() < 8)
+            {
+                System.out.print("Password must be at least 8 characters: ");
+                newPassword = scan.nextLine();
+            }
+            user.setPassword(newPassword);
         }
 
         return user;
@@ -350,7 +366,7 @@ public static User viewUser(Scanner scan, UserDatabase userDB)
     }
 
 
-}*/
+}
 
 
 public static int item_type_selection(Scanner scan){
