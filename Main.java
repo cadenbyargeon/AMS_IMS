@@ -358,11 +358,13 @@ public static User changeUser(Scanner scan, UserDatabase userDB)
                 newPassword = scan.nextLine();
             }
             user.setPassword(newPassword);
+            return user;
+
         }
 
-        return user;
     } catch (Exception e) {
         System.out.println(e);
+        return null;
     }
 
 
