@@ -210,7 +210,7 @@ public class Main {
 
             //change a user
             case 6:
-                //changeUser(scan, userDatabase);
+                changeUser(scan, userDatabase);
                 break;
 
             //add an account
