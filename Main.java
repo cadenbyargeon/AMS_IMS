@@ -485,6 +485,7 @@ public static void edit(Scanner scan){
         //non-serial
         case 1:
             Non_Serialized editNon_Serialized = getItemFromDB();//call method for DB item here 
+            System.out.println(editNon_Serialized);
             if(choice <=4)
             {
                 editBasic(scan, change, editNon_Serialized);
@@ -498,6 +499,7 @@ public static void edit(Scanner scan){
         //serialized
         case 2:
             Serialized editSerialized = getItemFromDB();//call method for DB item
+            System.out.println(editSerialized);
             if(choice <=4)
             {
                 editBasic(scan, change, editSerialized);
@@ -513,6 +515,7 @@ public static void edit(Scanner scan){
         //consumables
         case 3:
             Consumable editConsumable = getItemFromDB();
+            System.out.println(editConsumable);
             if(choice <=4){
             editBasic(scan, change, editConsumable);
             }else{
@@ -523,6 +526,7 @@ public static void edit(Scanner scan){
         //manual
         case 4:
             Manual editManual = getItemFromDB();
+            System.out.println(editManual);
             if(choice <=4){
             editBasic(scan, choice, editManual);
             }else{
