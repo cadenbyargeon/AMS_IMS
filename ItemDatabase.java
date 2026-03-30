@@ -24,6 +24,18 @@ public class ItemDatabase {
        try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             Connection conn = DriverManager.getConnection(url, user, password);
+            Statement statement = conn.createStatement();
+
+            //test
+            ResultSet resultSet = statement.executeQuery("select * from demo");
+
+            while(resultSet.next())
+            {
+                System.out.println(resultSet.getInt(1)+" "+resultSet.getString(2)+" "+resultSet.getString(3)+resultSet.getInt(4));
+
+
+            }
+
             System.out.println("Connected successfully!");
             conn.close();
         } catch (Exception e) {
@@ -33,12 +45,60 @@ public class ItemDatabase {
         
     } // end main
 
-    /*public void non_serialized_object_to_database(Non_Serialized n)
+    public void non_serialized_object_to_database(Non_Serialized n)
     {
+        /**************************************************
+         * SQL Query to insert the item into the database:
+         * INSERT INTO non_serialized(name, model, partNum, qty, qty_semester, qty_next_semester, alert)
+         * VALUES (n.name, n.model, n.partNum, n.qty, n.qty_semester, n.qty_next_semester, n.alert);
+
+        */ 
         
 
         
-    }*/
+    }
+
+    public void serialized_object_to_database(Serialized s)
+    {
+        /**************************************************
+         * SQL Query to insert the item into the database:
+         * INSERT INTO non_serialized(name, model, partNum, qty, qty_semester, qty_next_semester, serialNum, alert)
+         * VALUES (s.name, s.model, s.partNum, s.qty, s.qty_semester, s.qty_next_semester, s.serialNum, s.alert);
+
+        */
+        
+
+        
+    }
+
+    public void consumable_object_to_database(Consumable c)
+    {
+        /**************************************************
+         * SQL Query to insert the item into the database:
+         * INSERT INTO non_serialized(name, model, partNum, qty, qty_semester, qty_next_semester, qtyType, alert)
+         * VALUES (c.name, c.model, c.partNum, c.qty, c.qty_semester, c.qty_next_semester, c.qtyType, c.alert);
+
+        */ 
+        
+
+        
+    }
+
+    public void manual_object_to_database(Manual m)
+    {
+        /**************************************************
+         * SQL Query to insert the item into the database:
+         * INSERT INTO non_serialized(name, model, partNum, qty, qty_semester, qty_next_semester, revision, alert)
+         * VALUES (m.name, m.model, m.partNum, m.qty, m.qty_semester, m.qty_next_semester, m.revision, m.alert);
+
+        */ 
+        
+
+        
+    }
+
+
+
 
 
 }
