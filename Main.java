@@ -590,6 +590,22 @@ public static int editQts(Scanner scan, int choice, Non_Serialized editItem){//n
 
 }
 
+public static String search(Scanner scan)
+{
+    String item;
+    System.out.println("Enter the item name: ");
+    String input = scan.nextLine();
+
+    // run select query with the value of item on the itemName column
+
+    item = ""; // string format which displays the row in the table with the item that was searched
+
+    return item;
+
+
+
+}
+
 //Stores data in a string[], the int for qty is set to a string, then back to an int in the object creation
 //qty is still inputed as an int by the user to disallow invalid input
 public static String[] basicItem(Scanner scan){
