@@ -494,6 +494,7 @@ public static void edit(Scanner scan){
                 editQts(scan, change, editNon_Serialized);
             } 
             updateItemInDB(editNon_Serialized);
+            System.out.println(editNon_Serialized);
             break;
             //pass back to DB
         //serialized
@@ -511,6 +512,7 @@ public static void edit(Scanner scan){
                 editSerial(scan, editSerialized);
             }
             updateItemInDB(editSerialized);
+            System.out.println(editSerialized);
             break;
         //consumables
         case 3:
@@ -522,6 +524,7 @@ public static void edit(Scanner scan){
             editQts(scan, choice, editConsumable);
             }
             updateItemInDB(editConsumable);
+            System.out.println(editConsumable);
             break;
         //manual
         case 4:
@@ -533,6 +536,7 @@ public static void edit(Scanner scan){
             editRev(scan, editManual);
             }
             updateItemInDB(editManual);
+            System.out.println(editManual);
             break;
         }
 }
