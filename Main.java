@@ -1,6 +1,7 @@
 import java.sql.*;
 import java.util.Scanner;
-/**
+import java.util.InputMismatchException;
+/*
  * The app assumes a default admin account exists
  * Requires successful login of the admin account to do anything
  * The app is currently not connected to the database
@@ -374,15 +375,28 @@ public static User changeUser(Scanner scan, UserDatabase userDB)
 
 
 public static int item_type_selection(Scanner scan){
+    int menu;
+    while(true){
     System.out.println("========================");
     System.out.println("Select what item type");
     System.out.println("1. Non-Serialized");
     System.out.println("2. Serialized");
     System.out.println("3. Consumable");
     System.out.println("4. Manual");
-    System.out.println("========================");
-    int choice;
-    boolean error=false;
+    System.out.println("========================"); 
+
+     try {
+            menu = Integer.parseInt(scan.nextLine()); // safer than nextInt()
+            if (menu >= 1 && menu <= 4) {
+                break; // valid input
+            } else {
+                System.out.println("Enter a number between 1 and 4.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Enter a number.");
+        }
+    }
+    /*boolean error=false;
     do{
     choice = scan.nextInt();
     error = integerCheck(choice);
@@ -394,7 +408,7 @@ public static int item_type_selection(Scanner scan){
     }
     scan.nextLine();
     }while(error==false);
-    return choice;
+    return choice;*/
 }
     //similar to menu in design, returns a choice as an integer to run through if statements
     //can maybe break the menu into a separate function here
