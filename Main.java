@@ -381,8 +381,19 @@ public static int item_type_selection(Scanner scan){
     System.out.println("3. Consumable");
     System.out.println("4. Manual");
     System.out.println("========================");
-    int choice = scan.nextInt();
+    int choice;
+    boolean error=false;
+    do{
+    choice = scan.nextInt();
+    error = integerCheck(choice);
+    if(error==true){
+        if(choice>4 || choice<1){
+            System.out.println("Enter a value between 1 and 4");
+            error=false;
+        }
+    }
     scan.nextLine();
+    }while(error==false);
     return choice;
 }
     //similar to menu in design, returns a choice as an integer to run through if statements
@@ -669,6 +680,14 @@ public static void checkAlert(int alert){
         }
     }
 }
+
+public static boolean integerCheck(Integer input){
+    if(input == null){
+        return false;
+    }else{
+        return true;
+    }
+} 
 
 public static Non_Serialized convertNon_Serialized (String[] database){
     Non_Serialized converted= new Non_Serialized(database[1],database[2], database[3], Double.parseDouble(database[4]), Double.parseDouble(database[5]), Double.parseDouble(database[6]));
