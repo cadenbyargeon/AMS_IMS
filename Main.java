@@ -557,7 +557,7 @@ public static Item_Parent editBasic(Scanner scan, int choice, Item_Parent editIt
             editItem.setPartNum(partNum);
         case 4:
             System.out.println("What is the new quantity?");
-            int qty = scan.nextInt();
+            double qty = scan.nextDouble();
             editItem.setQty(qty);
     }
     return editItem;
@@ -579,11 +579,11 @@ public static int editQts(Scanner scan, int choice, Non_Serialized editItem){//n
     switch(choice+4){
         case 1:
             System.out.println("What is the new quantity for this semester?");
-            int qtyThis = scan.nextInt();
+            double qtyThis = scan.nextInt();
             editItem.setQtySemester(qtyThis);
         case 2:
             System.out.println("What is the new quantity for next semester?");
-            int qtyNext = scan.nextInt();
+            double qtyNext = scan.nextDouble();
             editItem.setQtyNextSem(qtyNext);
     }
     return 0;
@@ -616,7 +616,7 @@ public static String[] basicItem(Scanner scan){
     System.out.println("What is the part number of the item?");
     String part = scan.nextLine();
     System.out.println("What is the quantity of the item?");
-    int qty = scan.nextInt();
+    double qty = scan.nextDouble();
     String strQty = String.valueOf(qty);
 
     return new String[]{name, model, part, strQty};
@@ -671,21 +671,21 @@ public static void checkAlert(int alert){
 }
 
 public static Non_Serialized convertNon_Serialized (String[] database){
-    Non_Serialized converted= new Non_Serialized(database[1],database[2], database[3], Integer.parseInt(database[4]), Integer.parseInt(database[5]), Integer.parseInt(database[6]));
+    Non_Serialized converted= new Non_Serialized(database[1],database[2], database[3], Double.parseDouble(database[4]), Double.parseDouble(database[5]), Double.parseDouble(database[6]));
     return converted;
 }
 
 public static Serialized convertSerialized (String[] database){
-    Serialized converted= new Serialized(database[1],database[2], database[3], Integer.parseInt(database[4]), Integer.parseInt(database[5]), Integer.parseInt(database[6]), database[7]);
+    Serialized converted= new Serialized(database[1],database[2], database[3], Double.parseDouble(database[4]), Double.parseDouble(database[5]), Double.parseDouble(database[6]), database[7]);
     return converted;
 }
 
 public static Consumable convertConsumable (String[] database){
-    Consumable converted= new Consumable(database[1],database[2], database[3], Integer.parseInt(database[4]), Integer.parseInt(database[5]), Integer.parseInt(database[6]), database[7]);
+    Consumable converted= new Consumable(database[1],database[2], database[3], Double.parseDouble(database[4]), Double.parseDouble(database[5]), Double.parseDouble(database[6]), database[7]);
     return converted;
 }
 
 public static Manual convertManual (String[] database){
-    Manual converted= new Manual(database[1],database[2], database[3], Integer.parseInt(database[4]), database[5]);
+    Manual converted= new Manual(database[1],database[2], database[3], Double.parseDouble(database[4]), database[5]);
     return converted;
 }

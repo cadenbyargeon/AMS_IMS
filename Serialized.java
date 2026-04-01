@@ -3,10 +3,12 @@ public class Serialized extends Non_Serialized{
     private String serialNum;
 
     //constructor
-    public Serialized(String name, String model, String partNum, int qty, int qty_semester, int qty_next_semester, String serialNum){
+    public Serialized(String name, String model, String partNum, double qty, double qty_semester, double qty_next_semester, String serialNum){
 
         super(name, model, partNum, qty, qty_semester, qty_next_semester);
         this.serialNum = serialNum;
+
+        checkAlert();
     }
 
     //getter

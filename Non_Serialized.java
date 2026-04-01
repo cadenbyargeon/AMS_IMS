@@ -1,11 +1,11 @@
 public class Non_Serialized extends Item_Parent {
-    protected int qty_semester;
-    protected int qty_next_semester;
+    protected double qty_semester;
+    protected double qty_next_semester;
     protected int alert;//0 for no alert, 1 for not enough next semester, 2 for not enough this semester
 
     //Constructor 
 
-    public Non_Serialized(String name, String model, String partNum, int qty, int qty_semester, int qty_next_semester){
+    public Non_Serialized(String name, String model, String partNum, double qty, double qty_semester, double qty_next_semester){
         super(name, model, partNum, qty);
         this.qty_semester = qty_semester;
         this.qty_next_semester = qty_next_semester;
@@ -17,11 +17,11 @@ public class Non_Serialized extends Item_Parent {
     //getters 
 
 
-    public int getQtySemester(){
+    public double getQtySemester(){
         return qty_semester;
     }
 
-    public int getQtyNextSem(){
+    public double getQtyNextSem(){
         return qty_next_semester;
     }
 
@@ -31,12 +31,12 @@ public class Non_Serialized extends Item_Parent {
 
     //setters
 
-    public void setQtySemester(int qty_semester){
+    public void setQtySemester(double qty_semester){
         this.qty_semester = qty_semester;
         checkAlert();
     }
 
-    public void setQtyNextSem(int qty_next_semester){
+    public void setQtyNextSem(double qty_next_semester){
         this.qty_next_semester = qty_next_semester;
         checkAlert();
     }

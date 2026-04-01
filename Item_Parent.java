@@ -2,12 +2,12 @@ public class Item_Parent{
     protected String name;
     protected String model;
     protected String partNum;
-    protected int qty;
+    protected double qty;
 
 
     //constructor
 
-    public Item_Parent(String name, String model, String partNum, int qty){
+    public Item_Parent(String name, String model, String partNum, double qty){
         this.name = name;
         this.model = model;
         this.partNum = partNum;
@@ -29,7 +29,7 @@ public class Item_Parent{
         return partNum;
     }
 
-    public int getQty(){
+    public double getQty(){
         return qty;
     }
 
@@ -49,7 +49,7 @@ public class Item_Parent{
         this.partNum = partNum;
     }
 
-    public void setQty(int qty){
+    public void setQty(double qty){
         this.qty = qty;
     }
 
