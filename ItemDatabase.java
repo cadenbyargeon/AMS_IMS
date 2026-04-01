@@ -6,16 +6,21 @@ import java.sql.*;
 public class ItemDatabase {
 
     public static void main(String[] args) {
+        File certFile = new File("ca.pem");
+        System.out.println("Absolute path: " + certFile.getAbsolutePath());
+        System.out.println("Exists? " + certFile.exists());
+
+        String path = certFile.getAbsolutePath();
 
         //File f = new File("/workspaces/my-java-project/ca.pem");
         // System.out.println("Exists? " + f.exists());
-        String path = new File("ca.pem").getAbsolutePath();
+        //String path = new File("ca.pem").getAbsolutePath();
 
-        String url = "jdbc:mysql://ams-ims-db-amsims.i.aivencloud.com:24455/ams-ims-db"
-           + "?sslMode=VERIFY_CA"
+        String url = "jdbc:mysql://ams-ims-db-amsims.i.aivencloud.com:24455/defaultdb"
+           + "?sslMode=REQUIRED"
            + "&sslCa=" + path;
 
-        /*String url = "jdbc:mysql://ams-ims-db-amsims.i.aivencloud.com:24455/ams-ims-db"
+        /*String url = "jdbc:mysql://ams-ims-db-amsims.i.aivencloud.com:24455/defaultdb"
            + "?sslMode=VERIFY_CA"
            + "&sslCa=/workspaces/AMS_IMS/ca.pem";*/
         String user = "avnadmin";
@@ -27,7 +32,7 @@ public class ItemDatabase {
             Statement statement = conn.createStatement();
 
             //test
-            ResultSet resultSet = statement.executeQuery("select * from demo");
+            ResultSet resultSet = statement.executeQuery("SHOW TABLES");
 
             while(resultSet.next())
             {
