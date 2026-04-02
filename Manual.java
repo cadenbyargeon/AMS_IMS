@@ -2,7 +2,7 @@ public class Manual extends Item_Parent{
     private String revision;
 
     //constructor
-    public Manual(String name, String model, String partNum, double qty, String revision){
+    public Manual(String name, String model, String partNum, int qty, String revision){
 
         super(name, model, partNum, qty);
         this.revision = revision;

@@ -16,8 +16,11 @@ public class Main {
 
         if(testUsers){
         Administrator testAdmin = new Administrator("admin", "admin", "admin");
-        testAdmin.setPassword("admin");
-        userDB.addUser(testAdmin);
+        //testAdmin.setPassword("admin");
+        //userDB.addUser(testAdmin);
+        NonAdministrator testUser = new NonAdministrator("user", "user", "user" );
+        testUser.setPassword("user");
+        userDB.addUser(testUser);
         }
 
         
@@ -180,15 +183,15 @@ public class Main {
 
     //add other cases
     public static void admin(Scanner scan, UserDatabase userDatabase){
-        while(true)
+        boolean run = true;
+        while(run)
         {
             int choice = menuSelectionAdmin(scan);
             switch(choice){
             //exit
             case 1:
                 System.out.println("Exiting ALM IMS........");
-                return;
-                
+                run = false;
 
             //edit an item
             case 2:
@@ -225,22 +228,23 @@ public class Main {
             }
 
         }
+        return;
         
     }
 
     public static void nonAdmin(Scanner scan){
-    while(true)
+        boolean run = true;
+    while(run)
     {
         int choice = menuSelection(scan);
         switch(choice){
         //exit
         case 1:
             System.out.println("Exiting ALM IMS........");
-            return;
-
+            run = false;
         //edit an item
         case 2:
-            edit(scan);
+            //edit(scan);
             break;
 
         //create an item
@@ -257,14 +261,16 @@ public class Main {
             break;
 
         }
-
     }
+    return;
         
 }
 
 
     //menu selection, returns an int for choice of the following, ran in main
 public static int menuSelection(Scanner scan){
+    int menu;
+    while(true){
     System.out.println("========================");
     System.out.println("Select one of the following:");
     System.out.println("1. Exit IMS");
@@ -272,12 +278,24 @@ public static int menuSelection(Scanner scan){
     System.out.println("3. Create an item");
     System.out.println("4. View an item");
     System.out.println( "========================");
-    int menu = scan.nextInt();
-    scan.nextLine();
+    try {
+            menu = scan.nextInt();
+            if (menu >= 1 && menu <= 4) {
+                break;
+            } else {
+                System.out.println("Enter a number between 1 and 4.");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Enter a number.");
+            scan.nextLine();
+        }
+    }
     return menu;
 }
 
 public static int menuSelectionAdmin(Scanner scan){
+    int menu;
+    while(true){
     System.out.println("========================");
     System.out.println("Select one of the following:");
     System.out.println("1. Exit IMS");
@@ -288,8 +306,18 @@ public static int menuSelectionAdmin(Scanner scan){
     System.out.println("6. Change a user");
     System.out.println("7. Add an account");
     System.out.println( "========================");
-    int menu = scan.nextInt();
-    scan.nextLine();
+        try {
+            menu = scan.nextInt();
+            if (menu >= 1 && menu <= 7) {
+                break;
+            } else {
+                System.out.println("Enter a number between 1 and 7.");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Enter a number.");
+            scan.nextLine();
+        }
+    }
     return menu;
 }
 
@@ -384,31 +412,19 @@ public static int item_type_selection(Scanner scan){
     System.out.println("3. Consumable");
     System.out.println("4. Manual");
     System.out.println("========================"); 
-
-     try {
-            menu = Integer.parseInt(scan.nextLine()); // safer than nextInt()
+    try {
+            menu = scan.nextInt();
             if (menu >= 1 && menu <= 4) {
-                break; // valid input
+                break;
             } else {
                 System.out.println("Enter a number between 1 and 4.");
             }
-        } catch (NumberFormatException e) {
+        } catch (InputMismatchException e) {
             System.out.println("Invalid input. Enter a number.");
+            scan.nextLine();
         }
     }
-    /*boolean error=false;
-    do{
-    choice = scan.nextInt();
-    error = integerCheck(choice);
-    if(error==true){
-        if(choice>4 || choice<1){
-            System.out.println("Enter a value between 1 and 4");
-            error=false;
-        }
-    }
-    scan.nextLine();
-    }while(error==false);
-    return choice;*/
+    return menu;
 }
     //similar to menu in design, returns a choice as an integer to run through if statements
     //can maybe break the menu into a separate function here
@@ -429,12 +445,12 @@ public static void create(Scanner scan){
     //Non-Serialized
     case 1:
         String basicNS[] = basicItem(scan);
-        int advancedNS[] = nonSerial(scan);
+        double advancedNS[] = nonSerial(scan);
         Non_Serialized newItemNS = new Non_Serialized(
         basicNS[0],
         basicNS[1],
         basicNS[2],
-        Integer.parseInt(basicNS[3]),
+        Double.parseDouble(basicNS[3]),
         advancedNS[0],
         advancedNS[1]
         );
@@ -445,13 +461,13 @@ public static void create(Scanner scan){
     //Serialized
     case 2:
         String basicS[] = basicItem(scan);
-        int advancedS[] = nonSerial(scan);
+        double advancedS[] = nonSerial(scan);
         String serial = serial(scan);
         Serialized newItemS = new Serialized(
         basicS[0],
         basicS[1],
         basicS[2],
-        Integer.parseInt(basicS[3]),
+        Double.parseDouble(basicS[3]),
         advancedS[0],
         advancedS[1],
         serial
@@ -464,12 +480,12 @@ public static void create(Scanner scan){
     case 3:
         String basicC[] = basicItem(scan);
         String consume = consumable(scan);
-        int advancedC[] = nonSerial(scan);
+        double advancedC[] = nonSerial(scan);
         Consumable newItemC = new Consumable(
         basicC[0],
         basicC[1],
         basicC[2],
-        Integer.parseInt(basicC[3]),
+        Double.parseDouble(basicC[3]),
         advancedC[0],
         advancedC[1],
         consume
@@ -486,7 +502,7 @@ public static void create(Scanner scan){
         basicM[0],
         basicM[1],
         basicM[2],
-        Integer.parseInt(basicM[3]),
+        (int)(Double.parseDouble(basicM[3])),
         manual
         );
         System.out.println(newItemM);
@@ -496,7 +512,7 @@ public static void create(Scanner scan){
 
 }
 
-//Non - Serialized and Serialized Part
+//Non - Serialized and Serialized Parts
 public static void edit(Scanner scan){
     int choice = item_type_selection(scan);
 
@@ -572,18 +588,33 @@ public static Item_Parent editBasic(Scanner scan, int choice, Item_Parent editIt
             System.out.println("What is the new name?");
             String name = scan.nextLine();
             editItem.setName(name);
+            break;
         case 2:
             System.out.println("What is the new model?");
             String model = scan.nextLine();
             editItem.setModel(model);
+            break;
         case 3:
             System.out.println("What is the new part number?");
             String partNum = scan.nextLine();
             editItem.setPartNum(partNum);
+            break;
         case 4:
             System.out.println("What is the new quantity?");
-            double qty = scan.nextDouble();
+            while(true){
+            double qty = 0;
+            try {
+                qty = scan.nextDouble();
+                scan.nextLine();
+                break;
+                }
+            catch (InputMismatchException e) {
+                System.out.println("Invalid input. Enter a number.");
+                scan.nextLine();
+            }
             editItem.setQty(qty);
+            break;
+        }
     }
     return editItem;
 }
@@ -603,13 +634,37 @@ public static void editRev(Scanner scan, Manual editManual){//manuals
 public static int editQts(Scanner scan, int choice, Non_Serialized editItem){//non-serialized class
     switch(choice+4){
         case 1:
+            double qtyThis = 0;
+            while(true){
             System.out.println("What is the new quantity for this semester?");
-            double qtyThis = scan.nextInt();
+            try {
+                qtyThis = scan.nextDouble();
+                scan.nextLine();
+                break;
+                }
+            catch (InputMismatchException e) {
+                System.out.println("Invalid input. Enter a number.");
+                scan.nextLine();
+            }
             editItem.setQtySemester(qtyThis);
+            }
+            break;
         case 2:
+            double qtyNext = 0;
+            while(true){
             System.out.println("What is the new quantity for next semester?");
-            double qtyNext = scan.nextDouble();
+            try {
+                qtyNext = scan.nextDouble();
+                scan.nextLine();
+                break;
+                }
+            catch (InputMismatchException e) {
+                System.out.println("Invalid input. Enter a number.");
+                scan.nextLine();
+            }
             editItem.setQtyNextSem(qtyNext);
+            }
+            break;
     }
     return 0;
 
@@ -634,6 +689,7 @@ public static String search(Scanner scan)
 //Stores data in a string[], the int for qty is set to a string, then back to an int in the object creation
 //qty is still inputed as an int by the user to disallow invalid input
 public static String[] basicItem(Scanner scan){
+    scan.nextLine();
     System.out.println("What is the name of the item?");
     String name = scan.nextLine();
     System.out.println("What is the model number of the item");
@@ -641,20 +697,50 @@ public static String[] basicItem(Scanner scan){
     System.out.println("What is the part number of the item?");
     String part = scan.nextLine();
     System.out.println("What is the quantity of the item?");
-    double qty = scan.nextDouble();
+    double qty =0;
+    while(true){
+    try {
+                qty = scan.nextDouble();
+                break;
+                }
+            catch (InputMismatchException e) {
+                System.out.println("Invalid input. Enter a number.");
+                scan.nextLine();
+            }
+        }
     String strQty = String.valueOf(qty);
-
     return new String[]{name, model, part, strQty};
 }
 
     //add qty_semester and qty_next_semester
-public static int[] nonSerial(Scanner scan){
+public static double[] nonSerial(Scanner scan){
+    double this_sem = 0;
+    while(true){
     System.out.println("What is the quantity required per semester?");
-    int this_sem = scan.nextInt();
+    try {
+                this_sem = scan.nextDouble();
+                scan.nextLine();
+                break;
+                }
+            catch (InputMismatchException e) {
+                System.out.println("Invalid input. Enter a number.");
+                scan.nextLine();
+            }
+        }
     System.out.println("What is the quantity required for next semester?");
-    int next_sem = scan.nextInt();
-
-    return new int[]{this_sem, next_sem};
+    double next_sem = 0;
+    while(true){
+    try {
+                next_sem = scan.nextDouble();
+                scan.nextLine();
+                break;
+                }
+            catch (InputMismatchException e) {
+                System.out.println("Invalid input. Enter a number.");
+                scan.nextLine();
+            }
+        }
+    return new double[]{this_sem, next_sem};
 }
 
     //add serial number
@@ -666,6 +752,7 @@ public static String serial(Scanner scan){
 
     //add qty type
 public static String consumable(Scanner scan){
+    scan.nextLine();
     System.out.println("What is the unit quantity type?");
     String type = scan.nextLine();
     return type;
@@ -673,6 +760,7 @@ public static String consumable(Scanner scan){
 
     //add revision number
 public static String manual(Scanner scan){
+    scan.nextLine();
     System.out.println("What is the revision number?");
     String rev = scan.nextLine();
     return rev;
@@ -681,8 +769,8 @@ public static String manual(Scanner scan){
 public static void view(Scanner scan){
     System.out.println("Enter item to view: ");
     String item = scan.nextLine();
-    newItem = searchDB(item);
-    System.out.println(newItem);
+    //newItem = searchDB(item);
+    //System.out.println(newItem);
 }
 
     //checks the alert status of an object, and prints the message associated
@@ -693,7 +781,6 @@ public static void checkAlert(int alert){
             System.out.println("NOT ENOUGH FOR NEXT SEMESTER");
         }
     }
-}
 
 public static boolean integerCheck(Integer input){
     if(input == null){
@@ -721,4 +808,5 @@ public static Consumable convertConsumable (String[] database){
 public static Manual convertManual (String[] database){
     Manual converted= new Manual(database[1],database[2], database[3], Double.parseDouble(database[4]), database[5]);
     return converted;
+}
 }
