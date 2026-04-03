@@ -16,8 +16,8 @@ public class Main {
 
         if(testUsers){
         Administrator testAdmin = new Administrator("admin", "admin", "admin");
-        //testAdmin.setPassword("admin");
-        //userDB.addUser(testAdmin);
+        testAdmin.setPassword("admin");
+        userDB.addUser(testAdmin);
         NonAdministrator testUser = new NonAdministrator("user", "user", "user" );
         testUser.setPassword("user");
         userDB.addUser(testUser);
@@ -357,6 +357,7 @@ public static User changeUser(Scanner scan, UserDatabase userDB)
 {
     try {
         User user = null;
+        scan.nextLine();
         System.out.print("Enter the username: "); 
         String username = scan.nextLine();
         if(username.equals("") || username.equals(null))
@@ -389,6 +390,7 @@ public static User changeUser(Scanner scan, UserDatabase userDB)
                 newPassword = scan.nextLine();
             }
             user.setPassword(newPassword);
+            System.out.println(user);
             return user;
 
         }
