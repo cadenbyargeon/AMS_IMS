@@ -607,6 +607,10 @@ public static Item_Parent editBasic(Scanner scan, int choice, Item_Parent editIt
             double qty = 0;
             try {
                 qty = scan.nextDouble();
+                while(qty<0){
+                    System.out.println("Please enter a positive number: ");
+                    qty = scan.nextDouble();
+                }
                 scan.nextLine();
                 break;
                 }
