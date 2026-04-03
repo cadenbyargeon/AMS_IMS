@@ -195,7 +195,7 @@ public class Main {
 
             //edit an item
             case 2:
-                edit(scan);
+                //edit(scan);
                 break;
 
             //create an item
@@ -515,7 +515,7 @@ public static void create(Scanner scan){
 }
 
 //Non - Serialized and Serialized Parts
-public static void edit(Scanner scan){
+/*public static void edit(Scanner scan){
     int choice = item_type_selection(scan);
 
     //maybe separate method below
@@ -582,7 +582,7 @@ public static void edit(Scanner scan){
             System.out.println(editManual);
             break;
         }
-}
+}*/
 
 public static Item_Parent editBasic(Scanner scan, int choice, Item_Parent editItem){
     switch(choice){
@@ -807,8 +807,8 @@ public static Consumable convertConsumable (String[] database){
     return converted;
 }
 
-public static Manual convertManual (String[] database){
-    Manual converted= new Manual(database[1],database[2], database[3], Double.parseDouble(database[4]), database[5]);
-    return converted;
-}
+/*public static Manual convertManual (String[] database){
+   // Manual converted= new Manual(database[1],database[2], database[3], Double.parseDouble(database[4]), database[5]);
+    //return converted;
+}*/
 }
