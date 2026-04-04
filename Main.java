@@ -791,7 +791,7 @@ public static Non_Serialized convertNon_Serialized (String[] database){
 }
 
 public static Serialized convertSerialized (String[] database){
-    Serialized converted= new Serialized(database[1],database[2], database[3], Double.parseDouble(database[4]), Double.parseDouble(database[5]), Double.parseDouble(database[6]), database[7]);
+    Serialized converted= new Serialized(database[1],database[2], database[3], database[7]);
     return converted;
 }
 
