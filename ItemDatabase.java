@@ -16,7 +16,7 @@ public class ItemDatabase {
         // System.out.println("Exists? " + f.exists());
         //String path = new File("ca.pem").getAbsolutePath();
 
-        String url = "jdbc:mysql://ams-ims-db-amsims.i.aivencloud.com:24455/defaultdb"
+        String url = "jdbc:mysql://ams-ims-db-amsims.i.aivencloud.com:24455/AMS-IMS"
            + "?sslMode=REQUIRED"
            + "&sslCa=" + path;
 
@@ -36,10 +36,13 @@ public class ItemDatabase {
 
             while(resultSet.next())
             {
-                System.out.println(resultSet.getInt(1)+" "+resultSet.getString(2)+" "+resultSet.getString(3)+resultSet.getInt(4));
+                //System.out.println(resultSet.getInt(1)+" "+resultSet.getString(2)+" "+resultSet.getString(3)+resultSet.getInt(4));
+                System.out.println("Table found: " + resultSet.getString(1));
 
 
             }
+
+            System.out.println("Done iterating.");
 
             System.out.println("Connected successfully!");
             conn.close();
