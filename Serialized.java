@@ -1,14 +1,12 @@
-public class Serialized extends Non_Serialized{
+public class Serialized extends Item_Parent{
     //extends Non_serialized bc has qty_semester and qty_next_semester
     private String serialNum;
 
     //constructor
-    public Serialized(String name, String model, String partNum, double qty, double qty_semester, double qty_next_semester, String serialNum){
+    public Serialized(String name, String model, String partNum, String serialNum){
 
-        super(name, model, partNum, qty, qty_semester, qty_next_semester);
+        super(name, model, partNum);
         this.serialNum = serialNum;
-
-        checkAlert();
     }
 
     //getter

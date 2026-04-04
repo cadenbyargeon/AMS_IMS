@@ -2,16 +2,14 @@ public class Item_Parent{
     protected String name;
     protected String model;
     protected String partNum;
-    protected double qty;
 
 
     //constructor
 
-    public Item_Parent(String name, String model, String partNum, double qty){
+    public Item_Parent(String name, String model, String partNum){
         this.name = name;
         this.model = model;
         this.partNum = partNum;
-        this.qty = qty;
 
     }
 
@@ -27,10 +25,6 @@ public class Item_Parent{
 
     public String getPartNum(){
         return partNum;
-    }
-
-    public double getQty(){
-        return qty;
     }
 
 
@@ -49,14 +43,9 @@ public class Item_Parent{
         this.partNum = partNum;
     }
 
-    public void setQty(double qty){
-        this.qty = qty;
-    }
-
     //for printing output
      @Override
     public String toString(){
-        return "Name: " + name + "\nModel: " + model + "\nPart Number: " + partNum + 
-        "\nQuantity in Stock: " + qty;
+        return "Name: " + name + "\nModel: " + model + "\nPart Number: " + partNum;
     }
 }

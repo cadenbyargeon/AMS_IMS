@@ -452,9 +452,9 @@ public static void create(Scanner scan){
         basicNS[0],
         basicNS[1],
         basicNS[2],
-        Double.parseDouble(basicNS[3]),
         advancedNS[0],
-        advancedNS[1]
+        advancedNS[1],
+        advancedNS[2]
         );
         checkAlert(newItemNS.checkAlert());
         System.out.println(newItemNS);
@@ -463,18 +463,13 @@ public static void create(Scanner scan){
     //Serialized
     case 2:
         String basicS[] = basicItem(scan);
-        double advancedS[] = nonSerial(scan);
         String serial = serial(scan);
         Serialized newItemS = new Serialized(
         basicS[0],
         basicS[1],
         basicS[2],
-        Double.parseDouble(basicS[3]),
-        advancedS[0],
-        advancedS[1],
         serial
         );
-        checkAlert(newItemS.checkAlert());
         System.out.println(newItemS);
         break;
 
@@ -487,9 +482,9 @@ public static void create(Scanner scan){
         basicC[0],
         basicC[1],
         basicC[2],
-        Double.parseDouble(basicC[3]),
         advancedC[0],
         advancedC[1],
+        advancedC[2],
         consume
         );
         checkAlert(newItemC.checkAlert());
@@ -529,7 +524,7 @@ public static void create(Scanner scan){
         case 1:
             Non_Serialized editNon_Serialized = getItemFromDB();//call method for DB item here 
             System.out.println(editNon_Serialized);
-            if(choice <=4)
+            if(choice <=3)
             {
                 editBasic(scan, change, editNon_Serialized);
             }else
@@ -544,14 +539,10 @@ public static void create(Scanner scan){
         case 2:
             Serialized editSerialized = getItemFromDB();//call method for DB item
             System.out.println(editSerialized);
-            if(choice <=4)
+            if(choice <=3)
             {
                 editBasic(scan, change, editSerialized);
-            }else if(choice <=6)
-            {
-                editQts(scan, change, editSerialized);
-            }else
-            {
+            }else{
                 editSerial(scan, editSerialized);
             }
             updateItemInDB(editSerialized);
@@ -561,7 +552,7 @@ public static void create(Scanner scan){
         case 3:
             Consumable editConsumable = getItemFromDB();
             System.out.println(editConsumable);
-            if(choice <=4){
+            if(choice <=3){
             editBasic(scan, change, editConsumable);
             }else{
             editQts(scan, choice, editConsumable);
@@ -573,7 +564,7 @@ public static void create(Scanner scan){
         case 4:
             Manual editManual = getItemFromDB();
             System.out.println(editManual);
-            if(choice <=4){
+            if(choice <=3){
             editBasic(scan, choice, editManual);
             }else{
             editRev(scan, editManual);
@@ -601,26 +592,6 @@ public static Item_Parent editBasic(Scanner scan, int choice, Item_Parent editIt
             String partNum = scan.nextLine();
             editItem.setPartNum(partNum);
             break;
-        case 4:
-            System.out.println("What is the new quantity?");
-            while(true){
-            double qty = 0;
-            try {
-                qty = scan.nextDouble();
-                while(qty<0){
-                    System.out.println("Please enter a positive number: ");
-                    qty = scan.nextDouble();
-                }
-                scan.nextLine();
-                break;
-                }
-            catch (InputMismatchException e) {
-                System.out.println("Invalid input. Enter a number.");
-                scan.nextLine();
-            }
-            editItem.setQty(qty);
-            break;
-        }
     }
     return editItem;
 }
@@ -640,6 +611,26 @@ public static void editRev(Scanner scan, Manual editManual){//manuals
 public static int editQts(Scanner scan, int choice, Non_Serialized editItem){//non-serialized class
     switch(choice+4){
         case 1:
+            System.out.println("What is the new quantity?");
+            while(true){
+            double qty = 0;
+            try {
+                qty = scan.nextDouble();
+                while(qty<0){
+                    System.out.println("Please enter a positive number: ");
+                    qty = scan.nextDouble();
+                }
+                scan.nextLine();
+                break;
+                }
+            catch (InputMismatchException e) {
+                System.out.println("Invalid input. Enter a number.");
+                scan.nextLine();
+            }
+            editItem.setQty(qty);
+        }
+            break;
+        case 2:
             double qtyThis = 0;
             while(true){
             System.out.println("What is the new quantity for this semester?");
@@ -655,7 +646,7 @@ public static int editQts(Scanner scan, int choice, Non_Serialized editItem){//n
             editItem.setQtySemester(qtyThis);
             }
             break;
-        case 2:
+        case 3:
             double qtyNext = 0;
             while(true){
             System.out.println("What is the new quantity for next semester?");
@@ -702,9 +693,15 @@ public static String[] basicItem(Scanner scan){
     String model = scan.nextLine();
     System.out.println("What is the part number of the item?");
     String part = scan.nextLine();
-    System.out.println("What is the quantity of the item?");
-    double qty =0;
-    while(true){
+    return new String[]{name, model, part};
+}
+
+    //add qty_semester and qty_next_semester
+public static double[] nonSerial(Scanner scan){
+    double this_sem = 0;
+    double next_sem = 0;
+    double qty = 0;
+        while(true){
     try {
                 qty = scan.nextDouble();
                 break;
@@ -714,13 +711,6 @@ public static String[] basicItem(Scanner scan){
                 scan.nextLine();
             }
         }
-    String strQty = String.valueOf(qty);
-    return new String[]{name, model, part, strQty};
-}
-
-    //add qty_semester and qty_next_semester
-public static double[] nonSerial(Scanner scan){
-    double this_sem = 0;
     while(true){
     System.out.println("What is the quantity required per semester?");
     try {
@@ -734,7 +724,6 @@ public static double[] nonSerial(Scanner scan){
             }
         }
     System.out.println("What is the quantity required for next semester?");
-    double next_sem = 0;
     while(true){
     try {
                 next_sem = scan.nextDouble();
@@ -746,7 +735,7 @@ public static double[] nonSerial(Scanner scan){
                 scan.nextLine();
             }
         }
-    return new double[]{this_sem, next_sem};
+    return new double[]{qty, this_sem, next_sem};
 }
 
     //add serial number
