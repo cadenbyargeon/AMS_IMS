@@ -67,10 +67,6 @@ public class Main {
 
     }
         
-
-    
-
-
     //delete later, will change way it works
     /*public static void processInitialOption(Scanner scan)
     {
@@ -266,7 +262,6 @@ public class Main {
         
 }
 
-
     //menu selection, returns an int for choice of the following, ran in main
 public static int menuSelection(Scanner scan){
     int menu;
@@ -351,13 +346,11 @@ public static User viewUser(Scanner scan, UserDatabase userDB)
 
 }
 
-//finish changeUser method next sprint:
-
 public static User changeUser(Scanner scan, UserDatabase userDB)
 {
     try {
         User user = null;
-        scan.nextLine();
+        //scan.nextLine();
         System.out.print("Enter the username: "); 
         String username = scan.nextLine();
         if(username.equals("") || username.equals(null))
@@ -402,7 +395,6 @@ public static User changeUser(Scanner scan, UserDatabase userDB)
 
 
 }
-
 
 public static int item_type_selection(Scanner scan){
     int menu;
@@ -494,13 +486,13 @@ public static void create(Scanner scan){
     //Manual
     case 4:
         String basicM[] = basicItem(scan);
-        String manual = manual(scan);
+        String manualIn[] = manual(scan);
         Manual newItemM = new Manual(
         basicM[0],
         basicM[1],
         basicM[2],
-        (int)(Double.parseDouble(basicM[3])),
-        manual
+        Double.parseDouble(manualIn[0]),
+        manualIn[1]
         );
         System.out.println(newItemM);
         break;
@@ -701,9 +693,14 @@ public static double[] nonSerial(Scanner scan){
     double this_sem = 0;
     double next_sem = 0;
     double qty = 0;
+    System.out.println("What is the quantity of the item?");
         while(true){
     try {
                 qty = scan.nextDouble();
+                if(qty<0){
+                    System.out.println("Must be a positive number. What is the quantity?");
+                    continue;
+                }
                 break;
                 }
             catch (InputMismatchException e) {
@@ -711,11 +708,14 @@ public static double[] nonSerial(Scanner scan){
                 scan.nextLine();
             }
         }
-    while(true){
     System.out.println("What is the quantity required per semester?");
+    while(true){
     try {
                 this_sem = scan.nextDouble();
-                scan.nextLine();
+                if(this_sem<0){
+                    System.out.println("Must be a positive number. What is the quantity required per semester?");
+                    continue;
+                }
                 break;
                 }
             catch (InputMismatchException e) {
@@ -727,7 +727,10 @@ public static double[] nonSerial(Scanner scan){
     while(true){
     try {
                 next_sem = scan.nextDouble();
-                scan.nextLine();
+                if(next_sem<0){
+                    System.out.println("Must be a positive number. What is the quantity required for next semester?");
+                    continue;
+                }
                 break;
                 }
             catch (InputMismatchException e) {
@@ -747,21 +750,39 @@ public static String serial(Scanner scan){
 
     //add qty type
 public static String consumable(Scanner scan){
-    scan.nextLine();
     System.out.println("What is the unit quantity type?");
     String type = scan.nextLine();
     return type;
 }
 
     //add revision number
-public static String manual(Scanner scan){
+public static String[] manual(Scanner scan){
+    String qty;
+    Double qtyInput;
+    System.out.println("What is the quantity of the item?");
+    while(true){
+        try {
+                qtyInput = scan.nextDouble();
+                if(qtyInput<0){
+                    System.out.println("Must be a positive number. What is the quantity?");
+                    continue;
+                }
+                qty = Double.toString(qtyInput);
+                break;
+                }
+            catch (InputMismatchException e) {
+                System.out.println("Invalid input. Enter a number.");
+                scan.nextLine();
+            }
+        }
     scan.nextLine();
     System.out.println("What is the revision number?");
     String rev = scan.nextLine();
-    return rev;
+    return new String[]{qty, rev};
 }
 
 public static void view(Scanner scan){
+    scan.nextLine();
     System.out.println("Enter item to view: ");
     String item = scan.nextLine();
     //newItem = searchDB(item);
@@ -776,14 +797,6 @@ public static void checkAlert(int alert){
             System.out.println("NOT ENOUGH FOR NEXT SEMESTER");
         }
     }
-
-public static boolean integerCheck(Integer input){
-    if(input == null){
-        return false;
-    }else{
-        return true;
-    }
-} 
 
 public static Non_Serialized convertNon_Serialized (String[] database){
     Non_Serialized converted= new Non_Serialized(database[1],database[2], database[3], Double.parseDouble(database[4]), Double.parseDouble(database[5]), Double.parseDouble(database[6]));
@@ -800,8 +813,8 @@ public static Consumable convertConsumable (String[] database){
     return converted;
 }
 
-/*public static Manual convertManual (String[] database){
-   // Manual converted= new Manual(database[1],database[2], database[3], Double.parseDouble(database[4]), database[5]);
-    //return converted;
-}*/
+public static Manual convertManual (String[] database){
+    Manual converted= new Manual(database[1],database[2], database[3], Double.parseDouble(database[4]), database[5]);
+    return converted;
+}
 }
