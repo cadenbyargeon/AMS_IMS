@@ -1,59 +1,125 @@
 import java.io.File;
 import java.sql.*;
-//import java.io.File;
-
 
 public class ItemDatabase {
 
-    public static void main(String[] args) {
-        File certFile = new File("ca.pem");
-        System.out.println("Absolute path: " + certFile.getAbsolutePath());
-        System.out.println("Exists? " + certFile.exists());
+    private static final String URL = "jdbc:mysql://ams-ims-db-amsims.i.aivencloud.com:24455/AMS-IMS"
+        + "?sslMode=REQUIRED"
+        + "&sslCa=/workspaces/AMS_IMS/ca.pem";
+    private static final String USER = "avnadmin";
+    private static final String PASSWORD = "AVNS_gYcciwH3FiHQ6J6WzGi";
 
-        String path = certFile.getAbsolutePath();
+    private Connection getConnection() throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        return DriverManager.getConnection(URL, USER, PASSWORD);
+    }
 
-        //File f = new File("/workspaces/my-java-project/ca.pem");
-        // System.out.println("Exists? " + f.exists());
-        //String path = new File("ca.pem").getAbsolutePath();
+    public Non_Serialized getNonSerialized(String name) throws SQLException, ClassNotFoundException {
+        String sql = "SELECT itemName, model, partNum, qty, qty_semester, qty_next_semester "
+                   + "FROM non_serialized WHERE itemName = ?";
 
-        String url = "jdbc:mysql://ams-ims-db-amsims.i.aivencloud.com:24455/AMS-IMS"
-           + "?sslMode=REQUIRED"
-           + "&sslCa=" + path;
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
 
-        /*String url = "jdbc:mysql://ams-ims-db-amsims.i.aivencloud.com:24455/defaultdb"
-           + "?sslMode=VERIFY_CA"
-           + "&sslCa=/workspaces/AMS_IMS/ca.pem";*/
-        String user = "avnadmin";
-        String password = "AVNS_gYcciwH3FiHQ6J6WzGi";
-        
-       try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection(url, user, password);
-            Statement statement = conn.createStatement();
+            ps.setString(1, name);
 
-            //test
-            ResultSet resultSet = statement.executeQuery("SHOW TABLES");
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) {
+                    return null;
+                }
+                String itemName = rs.getString("itemName");
+                String model = rs.getString("model");   
+                String partNum = rs.getString("partNum");
+                double qty = rs.getDouble("qty");
+                double qty_semester = rs.getDouble("qty_semester");
+                double qty_next_semester = rs.getDouble("qty_next_semester");
+                           
+                Non_Serialized result = new Non_Serialized(itemName, model, partNum, qty, qty_semester, qty_next_semester);
+                return result;
+            }
+        }
+    }
 
-            while(resultSet.next())
-            {
-                //System.out.println(resultSet.getInt(1)+" "+resultSet.getString(2)+" "+resultSet.getString(3)+resultSet.getInt(4));
-                System.out.println("Table found: " + resultSet.getString(1));
+    public Serialized getSerialized(String name) throws SQLException, ClassNotFoundException {
+        String sql = "SELECT itemName, model, partNum, serialNum "
+                   + "FROM serialized WHERE itemName = ?";
 
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, name);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) {
+                    return null;
+                }
+                String itemName = rs.getString("itemName");
+                String model = rs.getString("model");   
+                String partNum = rs.getString("partNum");
+                String serialNum = rs.getString("serialNum");
+
+                Serialized result = new Serialized(itemName, model, partNum, serialNum);
+                return result; 
+            }
+        }
+    }
+
+    public Consumable getConsumable(String name) throws SQLException, ClassNotFoundException {
+        String sql = "SELECT itemName, model, partNum, qty, qty_semester, qty_next_semester, qtyType "
+                   + "FROM consumable WHERE itemName = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, name);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) {
+                    return null;
+                }
+                String itemName = rs.getString("itemName");
+                String model = rs.getString("model");   
+                String partNum = rs.getString("partNum");
+                double qty = rs.getDouble("qty");
+                double qty_semester = rs.getDouble("qty_semester");
+                double qty_next_semester = rs.getDouble("qty_next_semester");
+                String qtyType = rs.getString("qtyType");
+
+                Consumable result = new Consumable(itemName, model, partNum, qty, qty_semester, qty_next_semester, qtyType);
+                return result;
 
             }
-
-            System.out.println("Done iterating.");
-
-            System.out.println("Connected successfully!");
-            conn.close();
-        } catch (Exception e) {
-            System.out.println("Connection failed!");
-            e.printStackTrace();
         }
-        
-    } // end main
+    }
 
-    public void non_serialized_object_to_database(Non_Serialized n)
+    public Manual getManual(String manualName) throws SQLException, ClassNotFoundException {
+        String sql = "SELECT name, model, partNum, qty, revision "
+                   + "FROM manual WHERE name = ?";
+
+        try (Connection conn = getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+
+            ps.setString(1, manualName);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                if (!rs.next()) {
+                    return null;
+                }
+                String name = rs.getString("name");
+                String model = rs.getString("model");
+                String partNum = rs.getString("partNum");
+                int qty = rs.getInt("qty");
+                String revision = rs.getString("revision");
+
+                Manual result = new Manual(name, model, partNum, qty, revision);
+                return result;
+
+            }
+        }
+    }
+
+
+public void non_serialized_object_to_database(Non_Serialized n)
     {
         /**************************************************
          * SQL Query to insert the item into the database:
@@ -64,9 +130,9 @@ public class ItemDatabase {
         
 
         
-    }
+    //}
 
-    public void serialized_object_to_database(Serialized s)
+    /*public void serialized_object_to_database(Serialized s)
     {
         /**************************************************
          * SQL Query to insert the item into the database:
@@ -105,9 +171,4 @@ public class ItemDatabase {
         
     }
 
-
-
-
-
 }
-
