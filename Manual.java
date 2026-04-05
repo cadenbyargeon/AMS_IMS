@@ -1,10 +1,12 @@
 public class Manual extends Item_Parent{
     private String revision;
+    private int qty;
 
     //constructor
     public Manual(String name, String model, String partNum, int qty, String revision){
 
-        super(name, model, partNum, qty);
+        super(name, model, partNum);
+        this.qty = qty;
         this.revision = revision;
     }
 
