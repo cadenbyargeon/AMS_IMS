@@ -814,7 +814,7 @@ public static Consumable convertConsumable (String[] database){
 }
 
 public static Manual convertManual (String[] database){
-    Manual converted= new Manual(database[1],database[2], database[3], Double.parseDouble(database[4]), database[5]);
+    Manual converted= new Manual(database[1],database[2], database[3], Integer.parseInt(database[4]), database[5]);
     return converted;
 }
 }
