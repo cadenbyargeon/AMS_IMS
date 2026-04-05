@@ -1,9 +1,9 @@
 public class Manual extends Item_Parent{
     private String revision;
-    private int qty;
+    private double qty;
 
     //constructor
-    public Manual(String name, String model, String partNum, int qty, String revision){
+    public Manual(String name, String model, String partNum, double qty, String revision){
 
         super(name, model, partNum);
         this.qty = qty;
