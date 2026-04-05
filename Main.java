@@ -491,7 +491,7 @@ public static void create(Scanner scan){
         basicM[0],
         basicM[1],
         basicM[2],
-        Double.parseDouble(manualIn[0]),
+        Integer.parseInt(manualIn[0]),
         manualIn[1]
         );
         System.out.println(newItemM);
@@ -755,19 +755,19 @@ public static String consumable(Scanner scan){
     return type;
 }
 
-    //add revision number
+    //add revision/qty number
 public static String[] manual(Scanner scan){
     String qty;
-    Double qtyInput;
+    int qtyInput;
     System.out.println("What is the quantity of the item?");
     while(true){
         try {
-                qtyInput = scan.nextDouble();
+                qtyInput = scan.nextInt();
                 if(qtyInput<0){
                     System.out.println("Must be a positive number. What is the quantity?");
                     continue;
                 }
-                qty = Double.toString(qtyInput);
+                qty = Integer.toString(qtyInput);
                 break;
                 }
             catch (InputMismatchException e) {
