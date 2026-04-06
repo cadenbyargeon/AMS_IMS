@@ -16,7 +16,7 @@ public class ItemDatabase {
 
     public Non_Serialized getNonSerialized(String name) throws SQLException, ClassNotFoundException {
         String sql = "SELECT itemName, model, partNum, qty, qty_semester, qty_next_semester "
-                   + "FROM non_serialized WHERE itemName = ?";
+                   + "FROM non_serialized WHERE LOWER(itemName) = LOWER(?)";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -42,7 +42,7 @@ public class ItemDatabase {
 
     public Serialized getSerialized(String name) throws SQLException, ClassNotFoundException {
         String sql = "SELECT itemName, model, partNum, serialNum "
-                   + "FROM serialized WHERE itemName = ?";
+                   + "FROM serialized WHERE LOWER(itemName) = LOWER(?)";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -66,7 +66,7 @@ public class ItemDatabase {
 
     public Consumable getConsumable(String name) throws SQLException, ClassNotFoundException {
         String sql = "SELECT itemName, model, partNum, qty, qty_semester, qty_next_semester, qtyType "
-                   + "FROM consumable WHERE itemName = ?";
+                   + "FROM consumable WHERE LOWER(itemName) = LOWER(?)";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -94,7 +94,7 @@ public class ItemDatabase {
 
     public Manual getManual(String manualName) throws SQLException, ClassNotFoundException {
         String sql = "SELECT name, model, partNum, qty, revision "
-                   + "FROM manual WHERE name = ?";
+                   + "FROM manual WHERE LOWER(name) = LOWER(?)";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
