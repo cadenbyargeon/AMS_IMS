@@ -13,6 +13,7 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         boolean testUsers = true;
         UserDatabase userDB = new UserDatabase();
+        ItemDatabase itemDB = new ItemDatabase();
 
         if(testUsers){
         Administrator testAdmin = new Administrator("admin", "admin", "admin");
@@ -659,18 +660,48 @@ public static int editQts(Scanner scan, int choice, Non_Serialized editItem){//n
 
 }
 
-public static String search(Scanner scan)
-{
-    String item;
+
+public static String search(Scanner scan, ItemDatabase itemDB) {
+    String item = "";
+
     System.out.println("Enter the item name: ");
     String input = scan.nextLine();
 
-    // run select query with the value of item on the itemName column
+    try {
+        Consumable consumable = itemDB.getConsumable(input);
 
-    item = ""; // string format which displays the row in the table with the item that was searched
+        if (consumable != null) {
+            item = consumable.toString();
+        } 
+
+        Non_Serialized nonSerialized = itemDB.getNonSerialized(input);
+
+        if (nonSerialized != null){
+            item = nonSerialized.toString();
+        }
+
+        Serialized serialized = itemDB.getSerialized(input);
+        if(serialized != null){
+            item = serialized.toString();
+
+        }
+
+        Manual manual = itemDB.getManual(input);
+        if(manual != null){
+            item = manual.toString();
+        }
+        else{
+            item = "Item not found.";
+        }
+
+        return item;
+    } catch (SQLException e) {
+        item = "Database error: " + e.getMessage();
+    } catch (ClassNotFoundException e) {
+        item = "Driver error: " + e.getMessage();
+    }
 
     return item;
-
 
 
 }
