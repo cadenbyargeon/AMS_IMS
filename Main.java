@@ -202,7 +202,7 @@ public class Main {
 
             //view an item
             case 4:
-                view(scan, itemDB);
+                System.out.println(view(scan, itemDB));
                 break;
 
             //view a user
@@ -251,7 +251,7 @@ public class Main {
 
         //view an item
         case 4:
-            view(scan, itemDB);
+            System.out.println(view(scan, itemDB));
             break;
         default:
             System.out.println("Invalid selection.");
@@ -276,6 +276,7 @@ public static int menuSelection(Scanner scan){
     System.out.println( "========================");
     try {
             menu = scan.nextInt();
+            scan.nextLine();
             if (menu >= 1 && menu <= 4) {
                 break;
             } else {
