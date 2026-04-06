@@ -438,6 +438,8 @@ public static void create(Scanner scan){
 
     switch(choice){
 
+    //returns an for class type to DB
+
     //Non-Serialized
     case 1:
         String basicNS[] = basicItem(scan);
