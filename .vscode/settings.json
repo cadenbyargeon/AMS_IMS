@@ -1,8 +1,7 @@
 {
     "java.debug.settings.onBuildFailureProceed": true,
     "java.project.referencedLibraries": [
-      "/workspaces/AMS_IMS/mysql-connector-j-8.4.0.jar",
-      "/workspaces/AMS_IMS/mysql-connector-j-8.0.33.jar"
+      "C:/Users/caden/AMS_IMS/mysql-connector-j-8.4.0.jar"
     ],
   "java.project.sourcePaths": [
     "."
