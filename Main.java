@@ -25,7 +25,7 @@ public class Main {
         }
 
         
-        initialLogin(scan, userDB);
+        initialLogin(scan, userDB, itemDB);
             
 
 
@@ -44,7 +44,7 @@ public class Main {
         
     }
 
-    public static void initialLogin(Scanner scan, UserDatabase userDB)
+    public static void initialLogin(Scanner scan, UserDatabase userDB, ItemDatabase itemDB)
     {
         while(true)
         {
@@ -54,11 +54,11 @@ public class Main {
             User user = logIn(scan, userDB); 
             if(user.isAdmin() == true)
             {
-                admin(scan, userDB);
+                admin(scan, userDB, itemDB);
             }
             if(user.isAdmin() == false)
             {
-                nonAdmin(scan);
+                nonAdmin(scan, itemDB);
             }
 
             break;
@@ -179,7 +179,7 @@ public class Main {
     }
 
     //add other cases
-    public static void admin(Scanner scan, UserDatabase userDatabase){
+    public static void admin(Scanner scan, UserDatabase userDatabase, ItemDatabase itemDB){
         boolean run = true;
         while(run)
         {
@@ -202,7 +202,7 @@ public class Main {
 
             //view an item
             case 4:
-                view(scan);
+                view(scan, itemDB);
                 break;
 
             //view a user
@@ -229,7 +229,7 @@ public class Main {
         
     }
 
-    public static void nonAdmin(Scanner scan){
+    public static void nonAdmin(Scanner scan, ItemDatabase itemDB){
         boolean run = true;
     while(run)
     {
@@ -251,7 +251,7 @@ public class Main {
 
         //view an item
         case 4:
-            view(scan);
+            view(scan, itemDB);
             break;
         default:
             System.out.println("Invalid selection.");
@@ -661,51 +661,6 @@ public static int editQts(Scanner scan, int choice, Non_Serialized editItem){//n
 }
 
 
-public static String search(Scanner scan, ItemDatabase itemDB) {
-    String item = "";
-
-    System.out.println("Enter the item name: ");
-    String input = scan.nextLine();
-
-    try {
-        Consumable consumable = itemDB.getConsumable(input);
-
-        if (consumable != null) {
-            item = consumable.toString();
-        } 
-
-        Non_Serialized nonSerialized = itemDB.getNonSerialized(input);
-
-        if (nonSerialized != null){
-            item = nonSerialized.toString();
-        }
-
-        Serialized serialized = itemDB.getSerialized(input);
-        if(serialized != null){
-            item = serialized.toString();
-
-        }
-
-        Manual manual = itemDB.getManual(input);
-        if(manual != null){
-            item = manual.toString();
-        }
-        else{
-            item = "Item not found.";
-        }
-
-        return item;
-    } catch (SQLException e) {
-        item = "Database error: " + e.getMessage();
-    } catch (ClassNotFoundException e) {
-        item = "Driver error: " + e.getMessage();
-    }
-
-    return item;
-
-
-}
-
 //Stores data in a string[], the int for qty is set to a string, then back to an int in the object creation
 //qty is still inputed as an int by the user to disallow invalid input
 public static String[] basicItem(Scanner scan){
@@ -812,13 +767,50 @@ public static String[] manual(Scanner scan){
     return new String[]{qty, rev};
 }
 
-public static void view(Scanner scan){
-    scan.nextLine();
-    System.out.println("Enter item to view: ");
-    String item = scan.nextLine();
-    //newItem = searchDB(item);
-    //System.out.println(newItem);
+public static String view(Scanner scan, ItemDatabase itemDB){
+    String item = "";
+
+    System.out.println("Enter the item name: ");
+    String input = scan.nextLine();
+
+    try {
+        Consumable consumable = itemDB.getConsumable(input);
+
+        if (consumable != null) {
+            item = consumable.toString();
+        } 
+
+        Non_Serialized nonSerialized = itemDB.getNonSerialized(input);
+
+        if (nonSerialized != null){
+            item = nonSerialized.toString();
+        }
+
+        Serialized serialized = itemDB.getSerialized(input);
+        if(serialized != null){
+            item = serialized.toString();
+
+        }
+
+        Manual manual = itemDB.getManual(input);
+        if(manual != null){
+            item = manual.toString();
+        }
+        else{
+            item = "Item not found.";
+        }
+
+        
+    } catch (SQLException e) {
+        item = "Database error: " + e.getMessage();
+    } catch (ClassNotFoundException e) {
+        item = "Driver error: " + e.getMessage();
+    }
+
+    return item;
+
 }
+
 
     //checks the alert status of an object, and prints the message associated
 public static void checkAlert(int alert){
