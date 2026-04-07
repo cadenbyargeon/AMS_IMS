@@ -1,3 +1,4 @@
+import java.io.Serial;
 import java.sql.*;
 import java.util.Scanner;
 import java.util.InputMismatchException;
@@ -192,7 +193,7 @@ public class Main {
 
             //edit an item
             case 2:
-                //edit(scan);
+                edit(scan, itemDB);
                 break;
 
             //create an item
@@ -241,7 +242,7 @@ public class Main {
             run = false;
         //edit an item
         case 2:
-            //edit(scan);
+            edit(scan, itemDB);
             break;
 
         //create an item
@@ -506,105 +507,158 @@ public static void create(Scanner scan){
 }
 
 //Non - Serialized and Serialized Parts
-/*public static void edit(Scanner scan){
+public static void edit(Scanner scan, ItemDatabase itemDB){
     int choice = item_type_selection(scan);
+    scan.nextLine();
+    System.out.println("What is the item to edit?");
+    String search = scan.nextLine();
+    try{
+    switch(choice){
+        case 1: 
+        {
+            Non_Serialized item = itemDB.getNonSerialized(search);
+            System.out.println(item);
+            editValues(scan, item, choice);
+        }
+        case 2: 
+        {
+            Serialized item = itemDB.getSerialized(search);
+            System.out.println(item);
+            editValues(scan, item, choice);
+        }
+        case 3:
+        {
+            Consumable item = itemDB.getConsumable(search);
+            System.out.println(item);
+            editValues(scan, item, choice);
+        }
+        case 4:
+        {
+            Manual item = itemDB.getManual(search);
+            System.out.println(item);
+            editValues(scan, item, choice);
+        }
+    }
+    }catch(SQLException | ClassNotFoundException e){
+    System.out.println("Database error");
+    }
+}
 
-    //maybe separate method below
+public static void editValues(Scanner scan, Item_Parent item, int typeItem){
+
     System.out.println("Which variable would you like to change?");
-    int change = scan.nextInt();
-
+    //int choice = scan.nextInt();
+    int choice;
+    while (true) {
+        try {
+            choice = scan.nextInt();
+            break;
+        } catch (InputMismatchException e) {
+            System.out.println("Invalid input. Enter a number.");
+            scan.nextLine(); // clear bad input
+        }
+    }
         //search for an object here*************
         //Print object here with numbered lines*************
-        switch(choice){
+        if(choice <=3){
+            String basic = editBasic(scan, choice);
+            if(choice ==1){
+                //name
+                System.out.println("Testing purposes");
+            }
+            if(choice == 2){
+                //model
+            }
+            if(choice == 3){
+                //part number
+            }
+        }else{
+        switch(typeItem){
         //non-serial
         case 1:
-            Non_Serialized editNon_Serialized = getItemFromDB();//call method for DB item here 
-            System.out.println(editNon_Serialized);
-            if(choice <=3)
             {
-                editBasic(scan, change, editNon_Serialized);
-            }else
-            {
-                editQts(scan, change, editNon_Serialized);
-            } 
-            updateItemInDB(editNon_Serialized);
-            System.out.println(editNon_Serialized);
+                double newQty = editQts(scan, choice);
+                if(choice == 4){
+                    //qty
+                }
+                if(choice == 5){
+                    //qty this sem
+                }
+                if(choice == 6){
+                    //qty next sem
+                }
+            }
+
             break;
             //pass back to DB
         //serialized
         case 2:
-            Serialized editSerialized = getItemFromDB();//call method for DB item
-            System.out.println(editSerialized);
-            if(choice <=3)
             {
-                editBasic(scan, change, editSerialized);
-            }else{
-                editSerial(scan, editSerialized);
+                String serial = editSerial(scan);
+                //serial number
             }
-            updateItemInDB(editSerialized);
-            System.out.println(editSerialized);
             break;
         //consumables
         case 3:
-            Consumable editConsumable = getItemFromDB();
-            System.out.println(editConsumable);
-            if(choice <=3){
-            editBasic(scan, change, editConsumable);
-            }else{
-            editQts(scan, choice, editConsumable);
+            {
+            double newQty = editQts(scan, choice);
+                if(choice == 4){
+                    //qty
+                }
+                if(choice == 5){
+                    //qty this sem
+                }
+                if(choice == 6){
+                    //qty next sem
+                }
             }
-            updateItemInDB(editConsumable);
-            System.out.println(editConsumable);
             break;
         //manual
         case 4:
-            Manual editManual = getItemFromDB();
-            System.out.println(editManual);
-            if(choice <=3){
-            editBasic(scan, choice, editManual);
-            }else{
-            editRev(scan, editManual);
+            {
+            String rev = editRev(scan);
+            //rev
             }
-            updateItemInDB(editManual);
-            System.out.println(editManual);
             break;
         }
-}*/
+    }
+}
 
-public static Item_Parent editBasic(Scanner scan, int choice, Item_Parent editItem){
+public static String editBasic(Scanner scan, int choice){
+    String editItem="";
+    scan.nextLine();
     switch(choice){
         case 1:
             System.out.println("What is the new name?");
-            String name = scan.nextLine();
-            editItem.setName(name);
+            editItem = scan.nextLine();
             break;
         case 2:
             System.out.println("What is the new model?");
-            String model = scan.nextLine();
-            editItem.setModel(model);
+            editItem = scan.nextLine();
             break;
         case 3:
             System.out.println("What is the new part number?");
-            String partNum = scan.nextLine();
-            editItem.setPartNum(partNum);
+            editItem = scan.nextLine();
             break;
     }
+
     return editItem;
 }
 
-public static void editSerial(Scanner scan, Serialized editSerial){//serialized class
+public static String editSerial(Scanner scan){//serialized class
     System.out.println("What is the new serial number?");
     String serial = scan.nextLine();
-    editSerial.setSerialNum(serial);
+    return serial;
 }
 
-public static void editRev(Scanner scan, Manual editManual){//manuals
+public static String editRev(Scanner scan){//manuals
     System.out.println("What is the new revision number?");
     String rev = scan.nextLine();
-    editManual.setRevision(rev);
+    return rev;
 }
 
-public static int editQts(Scanner scan, int choice, Non_Serialized editItem){//non-serialized class
+public static double editQts(Scanner scan, int choice){//non-serialized class
+    double qtyReturned = 0;
     switch(choice+4){
         case 1:
             System.out.println("What is the new quantity?");
@@ -623,7 +677,7 @@ public static int editQts(Scanner scan, int choice, Non_Serialized editItem){//n
                 System.out.println("Invalid input. Enter a number.");
                 scan.nextLine();
             }
-            editItem.setQty(qty);
+            qtyReturned = qty;
         }
             break;
         case 2:
@@ -639,7 +693,7 @@ public static int editQts(Scanner scan, int choice, Non_Serialized editItem){//n
                 System.out.println("Invalid input. Enter a number.");
                 scan.nextLine();
             }
-            editItem.setQtySemester(qtyThis);
+            qtyReturned = qtyThis;
             }
             break;
         case 3:
@@ -655,11 +709,11 @@ public static int editQts(Scanner scan, int choice, Non_Serialized editItem){//n
                 System.out.println("Invalid input. Enter a number.");
                 scan.nextLine();
             }
-            editItem.setQtyNextSem(qtyNext);
+            qtyReturned = qtyNext;
             }
             break;
     }
-    return 0;
+    return qtyReturned;
 
 }
 
@@ -824,23 +878,4 @@ public static void checkAlert(int alert){
         }
     }
 
-public static Non_Serialized convertNon_Serialized (String[] database){
-    Non_Serialized converted= new Non_Serialized(database[1],database[2], database[3], Double.parseDouble(database[4]), Double.parseDouble(database[5]), Double.parseDouble(database[6]));
-    return converted;
-}
-
-public static Serialized convertSerialized (String[] database){
-    Serialized converted= new Serialized(database[1],database[2], database[3], database[7]);
-    return converted;
-}
-
-public static Consumable convertConsumable (String[] database){
-    Consumable converted= new Consumable(database[1],database[2], database[3], Double.parseDouble(database[4]), Double.parseDouble(database[5]), Double.parseDouble(database[6]), database[7]);
-    return converted;
-}
-
-public static Manual convertManual (String[] database){
-    Manual converted= new Manual(database[1],database[2], database[3], Integer.parseInt(database[4]), database[5]);
-    return converted;
-}
 }
