@@ -858,7 +858,7 @@ public static String[] manual(Scanner scan){
     return new String[]{qty, rev};
 }
 
-public static String view(Scanner scan, ItemDatabase itemDB){
+public static void view(Scanner scan, ItemDatabase itemDB){
     String item = "";
 
     System.out.println("Enter the item name: ");
