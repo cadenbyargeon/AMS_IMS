@@ -190,6 +190,7 @@ public class Main {
             case 1:
                 System.out.println("Exiting ALM IMS........");
                 run = false;
+                break;
 
             //edit an item
             case 2:
@@ -240,6 +241,7 @@ public class Main {
         case 1:
             System.out.println("Exiting ALM IMS........");
             run = false;
+            break;
         //edit an item
         case 2:
             edit(scan, itemDB);
@@ -519,24 +521,28 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
             Non_Serialized item = itemDB.getNonSerialized(search);
             System.out.println(item);
             editValues(scan, item, choice);
+            break;
         }
         case 2: 
         {
             Serialized item = itemDB.getSerialized(search);
             System.out.println(item);
             editValues(scan, item, choice);
+            break;
         }
         case 3:
         {
             Consumable item = itemDB.getConsumable(search);
             System.out.println(item);
             editValues(scan, item, choice);
+            break;
         }
         case 4:
         {
             Manual item = itemDB.getManual(search);
             System.out.println(item);
             editValues(scan, item, choice);
+            break;
         }
     }
     }catch(SQLException | ClassNotFoundException e){
