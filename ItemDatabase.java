@@ -16,12 +16,12 @@ public class ItemDatabase {
 
     public Non_Serialized getNonSerialized(String name) throws SQLException, ClassNotFoundException {
         String sql = "SELECT itemName, model, partNum, qty, qty_semester, qty_next_semester "
-                   + "FROM non_serialized WHERE LOWER(itemName) = LOWER(?)";
+                   + "FROM non_serialized WHERE LOWER(itemName) LIKE LOWER(?)";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, name);
+            ps.setString(1, "%" +  name + "%");
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (!rs.next()) {
@@ -42,12 +42,12 @@ public class ItemDatabase {
 
     public Serialized getSerialized(String name) throws SQLException, ClassNotFoundException {
         String sql = "SELECT itemName, model, partNum, serialNum "
-                   + "FROM serialized WHERE LOWER(itemName) = LOWER(?)";
+                   + "FROM serialized WHERE LOWER(itemName) LIKE LOWER(?)";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, name);
+            ps.setString(1, "%" +  name + "%");
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (!rs.next()) {
@@ -66,12 +66,12 @@ public class ItemDatabase {
 
     public Consumable getConsumable(String name) throws SQLException, ClassNotFoundException {
         String sql = "SELECT itemName, model, partNum, qty, qty_semester, qty_next_semester, qtyType "
-                   + "FROM consumable WHERE LOWER(itemName) = LOWER(?)";
+                   + "FROM consumable WHERE LOWER(itemName) LIKE LOWER(?)";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, name);
+            ps.setString(1, "%" +  name + "%");
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (!rs.next()) {
@@ -94,12 +94,12 @@ public class ItemDatabase {
 
     public Manual getManual(String manualName) throws SQLException, ClassNotFoundException {
         String sql = "SELECT name, model, partNum, qty, revision "
-                   + "FROM manual WHERE LOWER(name) = LOWER(?)";
+                   + "FROM manual WHERE LOWER(name) LIKE LOWER(?)";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
-            ps.setString(1, manualName);
+            ps.setString(1, "%" +  manualName + "%");
 
             try (ResultSet rs = ps.executeQuery()) {
                 if (!rs.next()) {
