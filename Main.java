@@ -204,7 +204,7 @@ public class Main {
 
             //view an item
             case 4:
-                System.out.println(view(scan, itemDB));
+                view(scan, itemDB);
                 break;
 
             //view a user
@@ -254,7 +254,7 @@ public class Main {
 
         //view an item
         case 4:
-            System.out.println(view(scan, itemDB));
+            view(scan, itemDB);
             break;
         default:
             System.out.println("Invalid selection.");
@@ -868,27 +868,27 @@ public static String view(Scanner scan, ItemDatabase itemDB){
         Consumable consumable = itemDB.getConsumable(input);
 
         if (consumable != null) {
-            item = consumable.toString();
+            System.out.println(consumable.toString());
         } 
 
         Non_Serialized nonSerialized = itemDB.getNonSerialized(input);
 
         if (nonSerialized != null){
-            item = nonSerialized.toString();
+            System.out.println(nonSerialized.toString());
         }
 
         Serialized serialized = itemDB.getSerialized(input);
         if(serialized != null){
-            item = serialized.toString();
+            System.out.println(serialized.toString());
 
         }
 
         Manual manual = itemDB.getManual(input);
         if(manual != null){
-            item = manual.toString();
+            System.out.println(manual.toString());
         }
         else{
-            item = "Item not found.";
+            System.out.println("Item not found.");
         }
 
         
