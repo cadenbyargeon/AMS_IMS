@@ -308,6 +308,7 @@ public static int menuSelectionAdmin(Scanner scan){
     System.out.println( "========================");
         try {
             menu = scan.nextInt();
+            scan.nextLine();
             if (menu >= 1 && menu <= 7) {
                 break;
             } else {
