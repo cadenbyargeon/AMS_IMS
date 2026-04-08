@@ -570,7 +570,6 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem){
             String basic = editBasic(scan, choice);
             if(choice ==1){
                 //name
-                System.out.println("Testing purposes");
             }
             if(choice == 2){
                 //model
