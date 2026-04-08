@@ -553,7 +553,6 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
 public static void editValues(Scanner scan, Item_Parent item, int typeItem){
 
     System.out.println("Which variable would you like to change?");
-    //int choice = scan.nextInt();
     int choice;
     while (true) {
         try {
@@ -621,10 +620,16 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem){
         //manual
         case 4:
             {
-            String rev = editRev(scan);
+            if(choice == 4){
+                Double qty = editManQty(scan);
+            //qty
+            }
+            if(choice ==5){
+                String rev = editRev(scan);
             //rev
             }
             break;
+            }
         }
     }
 }
@@ -651,20 +656,43 @@ public static String editBasic(Scanner scan, int choice){
 }
 
 public static String editSerial(Scanner scan){//serialized class
+    scan.nextLine();
     System.out.println("What is the new serial number?");
     String serial = scan.nextLine();
     return serial;
 }
 
 public static String editRev(Scanner scan){//manuals
+    scan.nextLine();
     System.out.println("What is the new revision number?");
     String rev = scan.nextLine();
     return rev;
 }
 
+public static double editManQty(Scanner scan){
+    double qty;
+     System.out.println("What is the new quantity?");
+            while(true){
+            try {
+                qty = scan.nextDouble();
+                while(qty<0){
+                    System.out.println("Please enter a positive number: ");
+                    qty = scan.nextDouble();
+                }
+                scan.nextLine();
+                break;
+                }
+            catch (InputMismatchException e) {
+                System.out.println("Invalid input. Enter a number.");
+                scan.nextLine();
+            }
+    }
+    return qty;
+}
+
 public static double editQts(Scanner scan, int choice){//non-serialized class
     double qtyReturned = 0;
-    switch(choice+4){
+    switch(choice-3){
         case 1:
             System.out.println("What is the new quantity?");
             while(true){
