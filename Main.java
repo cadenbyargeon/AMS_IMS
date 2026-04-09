@@ -1,6 +1,7 @@
 import java.io.Serial;
 import java.sql.*;
 import java.util.Scanner;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
 /*
  * The app assumes a default admin account exists
@@ -859,47 +860,87 @@ public static String[] manual(Scanner scan){
 }
 
 public static void view(Scanner scan, ItemDatabase itemDB){
-    String item = "";
-
+    ArrayList<String> foundItems = new ArrayList<String>();
     System.out.println("Enter the item name: ");
     String input = scan.nextLine();
 
     try {
-        Consumable consumable = itemDB.getConsumable(input);
+        ArrayList<Consumable> consumables = itemDB.getConsumable(input);
 
-        if (consumable != null) {
-            System.out.println(consumable.toString());
+        if (consumables != null) {
+            for(Consumable c : consumables){
+                if (c != null)
+                {
+                    foundItems.add(c.toString());
+                }
+            }
+            
         } 
 
-        Non_Serialized nonSerialized = itemDB.getNonSerialized(input);
+        ArrayList<Non_Serialized> nonSerialized = itemDB.getNonSerialized(input);
 
         if (nonSerialized != null){
-            System.out.println(nonSerialized.toString());
+            for(Non_Serialized n : nonSerialized)
+            {
+                if(n != null)
+                {
+                    foundItems.add(n.toString());
+
+                }
+            }
+            
         }
 
-        Serialized serialized = itemDB.getSerialized(input);
+        ArrayList<Serialized> serialized = itemDB.getSerialized(input);
         if(serialized != null){
-            System.out.println(serialized.toString());
+            for(Serialized s : serialized)
+            {
+                if(s != null)
+                {
+                    foundItems.add(s.toString());
+
+                }
+            }
+            
 
         }
 
-        Manual manual = itemDB.getManual(input);
-        if(manual != null){
-            System.out.println(manual.toString());
+        ArrayList<Manual> manuals = itemDB.getManual(input);
+        if(manuals != null){
+            for(Manual m : manuals)
+            {
+                if(m != null)
+                {
+                    foundItems.add(m.toString());
+
+                }
+            }
+            
         }
-        else{
+
+        if(foundItems.isEmpty())
+        {
             System.out.println("Item not found.");
+        } 
+        else{
+            for (String item : foundItems) {
+                System.out.println(item);
+                System.out.println("***************************");
+            }
+
         }
+        
+        
 
         
     } catch (SQLException e) {
-        item = "Database error: " + e.getMessage();
+        System.out.println("Database error: " + e.getMessage());
     } catch (ClassNotFoundException e) {
-        item = "Driver error: " + e.getMessage();
+        System.out.println("Driver error: " + e.getMessage());
     }
 
-    return item;
-
+    
+    
 }
 
 

@@ -1,5 +1,6 @@
 import java.io.File;
 import java.sql.*;
+import java.util.ArrayList;
 
 public class ItemDatabase {
 
@@ -14,7 +15,9 @@ public class ItemDatabase {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
 
-    public Non_Serialized getNonSerialized(String name) throws SQLException, ClassNotFoundException {
+    public ArrayList<Non_Serialized> getNonSerialized(String name) throws SQLException, ClassNotFoundException {
+        ArrayList<Non_Serialized> nonSerializedList = new ArrayList<Non_Serialized>();
+        
         String sql = "SELECT itemName, model, partNum, qty, qty_semester, qty_next_semester "
                    + "FROM non_serialized WHERE LOWER(itemName) LIKE LOWER(?)";
 
@@ -24,23 +27,28 @@ public class ItemDatabase {
             ps.setString(1, "%" +  name + "%");
 
             try (ResultSet rs = ps.executeQuery()) {
-                if (!rs.next()) {
-                    return null;
+                while (rs.next()) {
+                    String itemName = rs.getString("itemName");
+                    String model = rs.getString("model");   
+                    String partNum = rs.getString("partNum");
+                    double qty = rs.getDouble("qty");
+                    double qty_semester = rs.getDouble("qty_semester");
+                    double qty_next_semester = rs.getDouble("qty_next_semester");
+
+                    Non_Serialized result = new Non_Serialized(itemName, model, partNum, qty, qty_semester, qty_next_semester);
+                    nonSerializedList.add(result);
+
                 }
-                String itemName = rs.getString("itemName");
-                String model = rs.getString("model");   
-                String partNum = rs.getString("partNum");
-                double qty = rs.getDouble("qty");
-                double qty_semester = rs.getDouble("qty_semester");
-                double qty_next_semester = rs.getDouble("qty_next_semester");
+                
                            
-                Non_Serialized result = new Non_Serialized(itemName, model, partNum, qty, qty_semester, qty_next_semester);
-                return result;
             }
+
+            return nonSerializedList;
         }
     }
 
-    public Serialized getSerialized(String name) throws SQLException, ClassNotFoundException {
+    public ArrayList<Serialized> getSerialized(String name) throws SQLException, ClassNotFoundException {
+        ArrayList<Serialized> serializedList = new ArrayList<Serialized>();
         String sql = "SELECT itemName, model, partNum, serialNum "
                    + "FROM serialized WHERE LOWER(itemName) LIKE LOWER(?)";
 
@@ -50,21 +58,25 @@ public class ItemDatabase {
             ps.setString(1, "%" +  name + "%");
 
             try (ResultSet rs = ps.executeQuery()) {
-                if (!rs.next()) {
-                    return null;
-                }
-                String itemName = rs.getString("itemName");
-                String model = rs.getString("model");   
-                String partNum = rs.getString("partNum");
-                String serialNum = rs.getString("serialNum");
+                while (rs.next()) {
+                    String itemName = rs.getString("itemName");
+                    String model = rs.getString("model");   
+                    String partNum = rs.getString("partNum");
+                    String serialNum = rs.getString("serialNum");
 
-                Serialized result = new Serialized(itemName, model, partNum, serialNum);
-                return result; 
+                    Serialized result = new Serialized(itemName, model, partNum, serialNum);
+                    serializedList.add(result);
+                    
+
+                    
+                }
+                return serializedList; 
             }
         }
     }
 
-    public Consumable getConsumable(String name) throws SQLException, ClassNotFoundException {
+    public ArrayList<Consumable> getConsumable(String name) throws SQLException, ClassNotFoundException {
+        ArrayList<Consumable> consumables = new ArrayList<Consumable>();
         String sql = "SELECT itemName, model, partNum, qty, qty_semester, qty_next_semester, qtyType "
                    + "FROM consumable WHERE LOWER(itemName) LIKE LOWER(?)";
 
@@ -74,25 +86,27 @@ public class ItemDatabase {
             ps.setString(1, "%" +  name + "%");
 
             try (ResultSet rs = ps.executeQuery()) {
-                if (!rs.next()) {
-                    return null;
-                }
-                String itemName = rs.getString("itemName");
-                String model = rs.getString("model");   
-                String partNum = rs.getString("partNum");
-                double qty = rs.getDouble("qty");
-                double qty_semester = rs.getDouble("qty_semester");
-                double qty_next_semester = rs.getDouble("qty_next_semester");
-                String qtyType = rs.getString("qtyType");
+                while (rs.next()) {
+                    String itemName = rs.getString("itemName");
+                    String model = rs.getString("model");   
+                    String partNum = rs.getString("partNum");
+                    double qty = rs.getDouble("qty");
+                    double qty_semester = rs.getDouble("qty_semester");
+                    double qty_next_semester = rs.getDouble("qty_next_semester");
+                    String qtyType = rs.getString("qtyType");
 
-                Consumable result = new Consumable(itemName, model, partNum, qty, qty_semester, qty_next_semester, qtyType);
-                return result;
+                    Consumable result = new Consumable(itemName, model, partNum, qty, qty_semester, qty_next_semester, qtyType);
+                    consumables.add(result);
+                }
+                
+                return consumables;
 
             }
         }
     }
 
-    public Manual getManual(String manualName) throws SQLException, ClassNotFoundException {
+    public ArrayList<Manual> getManual(String manualName) throws SQLException, ClassNotFoundException {
+        ArrayList<Manual> manuals = new ArrayList<Manual>();
         String sql = "SELECT name, model, partNum, qty, revision "
                    + "FROM manual WHERE LOWER(name) LIKE LOWER(?)";
 
@@ -102,17 +116,20 @@ public class ItemDatabase {
             ps.setString(1, "%" +  manualName + "%");
 
             try (ResultSet rs = ps.executeQuery()) {
-                if (!rs.next()) {
-                    return null;
-                }
-                String name = rs.getString("name");
-                String model = rs.getString("model");
-                String partNum = rs.getString("partNum");
-                int qty = rs.getInt("qty");
-                String revision = rs.getString("revision");
+                while (rs.next()) {
+                    String name = rs.getString("name");
+                    String model = rs.getString("model");
+                    String partNum = rs.getString("partNum");
+                    int qty = rs.getInt("qty");
+                    String revision = rs.getString("revision");
 
-                Manual result = new Manual(name, model, partNum, qty, revision);
-                return result;
+                    Manual result = new Manual(name, model, partNum, qty, revision);
+                    manuals.add(result);
+                    
+                    
+                }
+                
+                return manuals;
 
             }
         }
