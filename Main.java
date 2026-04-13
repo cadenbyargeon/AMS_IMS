@@ -924,7 +924,7 @@ public static void view(Scanner scan, ItemDatabase itemDB){
         } 
         else{
             for (int i = 0; i < foundItems.size(); i++) {
-                System.out.println(i);
+                System.out.println(i+1);
                 System.out.println(foundItems.get(i));
                 System.out.println("***************************");
             }
