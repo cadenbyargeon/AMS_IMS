@@ -520,28 +520,40 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
     switch(choice){
         case 1: 
         {
-            Non_Serialized item = itemDB.getNonSerialized(search);
+            ArrayList<Non_Serialized> returnList = itemDB.getNonSerialized(search);
+            System.out.println("Which item is the one to edit?");
+            int itemNumber = scan.nextInt();
+            Non_Serialized item = returnList.get(itemNumber-1);
             System.out.println(item);
             editValues(scan, item, choice);
             break;
         }
         case 2: 
         {
-            Serialized item = itemDB.getSerialized(search);
+            ArrayList<Serialized> returnList = itemDB.getSerialized(search);
+            System.out.println("Which item is the one to edit?");
+            int itemNumber = scan.nextInt();
+            Serialized item = returnList.get(itemNumber-1);
             System.out.println(item);
             editValues(scan, item, choice);
             break;
         }
         case 3:
         {
-            Consumable item = itemDB.getConsumable(search);
+            ArrayList<Consumable> returnList = itemDB.getConsumable(search);
+            System.out.println("Which item is the one to edit?");
+            int itemNumber = scan.nextInt();
+            Consumable item = returnList.get(itemNumber-1);
             System.out.println(item);
             editValues(scan, item, choice);
             break;
         }
         case 4:
         {
-            Manual item = itemDB.getManual(search);
+            ArrayList<Manual> returnList = itemDB.getManual(search);
+            System.out.println("Which item is the one to edit?");
+            int itemNumber = scan.nextInt();
+            Manual item = returnList.get(itemNumber-1);
             System.out.println(item);
             editValues(scan, item, choice);
             break;
