@@ -584,11 +584,9 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem){
             scan.nextLine(); // clear bad input
         }
     }
-        //search for an object here*************
-        //Print object here with numbered lines*************
         if(choice <=3){
             String basic = editBasic(scan, choice);
-            if(choice ==1){
+            if(choice == 1){
                 //name
             }
             if(choice == 2){
