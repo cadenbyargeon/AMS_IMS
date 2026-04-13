@@ -136,6 +136,14 @@ public class ItemDatabase {
     }
 
 
+//Name, model, and partnumber general
+//qty, this, next shared with non_serial/Consumable
+//Manual needs qty and rev
+//Serial needs serial
+
+
+
+
 public void non_serialized_object_to_database(Non_Serialized n)
     {
         /**************************************************

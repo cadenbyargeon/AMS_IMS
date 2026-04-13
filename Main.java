@@ -521,10 +521,17 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
         case 1: 
         {
             ArrayList<Non_Serialized> returnList = itemDB.getNonSerialized(search);
+            //System.out.println(returnList);
+            for(int i=0; i<returnList.size(); i++){
+                System.out.println(i+1);
+                System.out.println(returnList.get(i));
+            }
             System.out.println("Which item is the one to edit?");
             int itemNumber = scan.nextInt();
             Non_Serialized item = returnList.get(itemNumber-1);
-            System.out.println(item);
+            System.out.println("\n1:  Name" + item.getName()  + "\n2:  Model: " + item.getModel() + 
+            "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty() + 
+            "\n5:  Quantity for This Semester: " + item.getQtySemester() + "\n6.  Quantity for Next Smester: " + item.getQtyNextSem());
             editValues(scan, item, choice);
             break;
         }
