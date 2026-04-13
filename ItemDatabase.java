@@ -4,9 +4,11 @@ import java.util.ArrayList;
 
 public class ItemDatabase {
 
-    private static final String URL = System.getenv("URL");
-    private static final String USER = System.getenv("USER");
-    private static final String PASSWORD = System.getenv("PASSWORD");
+    private static final String URL = "jdbc:mysql://ams-ims-db-amsims.i.aivencloud.com:24455/AMS-IMS"
+        + "?sslMode=REQUIRED"
+        + "&sslCa=/workspaces/AMS_IMS/ca.pem";
+    private static final String USER = "avnadmin";
+    private static final String PASSWORD = "AVNS_gYcciwH3FiHQ6J6WzGi";
 
     private Connection getConnection() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");
