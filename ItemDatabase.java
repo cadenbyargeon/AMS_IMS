@@ -18,7 +18,7 @@ public class ItemDatabase {
     public ArrayList<Non_Serialized> getNonSerialized(String name) throws SQLException, ClassNotFoundException {
         ArrayList<Non_Serialized> nonSerializedList = new ArrayList<Non_Serialized>();
         
-        String sql = "SELECT itemName, model, partNum, qty, qty_semester, qty_next_semester "
+        String sql = "SELECT id, name, model, partNum, qty, qty_semester, qty_next_semester "
                    + "FROM non_serialized WHERE LOWER(itemName) LIKE LOWER(?)";
 
         try (Connection conn = getConnection();
@@ -49,7 +49,7 @@ public class ItemDatabase {
 
     public ArrayList<Serialized> getSerialized(String name) throws SQLException, ClassNotFoundException {
         ArrayList<Serialized> serializedList = new ArrayList<Serialized>();
-        String sql = "SELECT itemName, model, partNum, serialNum "
+        String sql = "SELECT id, name, model, partNum, serialNum "
                    + "FROM serialized WHERE LOWER(itemName) LIKE LOWER(?)";
 
         try (Connection conn = getConnection();
@@ -77,7 +77,7 @@ public class ItemDatabase {
 
     public ArrayList<Consumable> getConsumable(String name) throws SQLException, ClassNotFoundException {
         ArrayList<Consumable> consumables = new ArrayList<Consumable>();
-        String sql = "SELECT itemName, model, partNum, qty, qty_semester, qty_next_semester, qtyType "
+        String sql = "SELECT id, name, model, partNum, qty, qty_semester, qty_next_semester, qtyType "
                    + "FROM consumable WHERE LOWER(itemName) LIKE LOWER(?)";
 
         try (Connection conn = getConnection();
@@ -107,7 +107,7 @@ public class ItemDatabase {
 
     public ArrayList<Manual> getManual(String manualName) throws SQLException, ClassNotFoundException {
         ArrayList<Manual> manuals = new ArrayList<Manual>();
-        String sql = "SELECT name, model, partNum, qty, revision "
+        String sql = "SELECT id, name, model, partNum, qty, revision "
                    + "FROM manual WHERE LOWER(name) LIKE LOWER(?)";
 
         try (Connection conn = getConnection();
@@ -198,7 +198,7 @@ public void non_serialized_object_to_database(Non_Serialized n)
 
     public void changeGlobal(String column, String edit, int id){
         try{
-            String sql = "UPDATE items SET " + column + " = ? WHERE id = " + id;
+            String sql = "UPDATE items SET " + column + " = ? WHERE id = ?";
             Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, edit);
@@ -218,7 +218,7 @@ public void non_serialized_object_to_database(Non_Serialized n)
 
     public void changeQty(String column, Double edit, int id){
         try{
-            String sql = "UPDATE items SET " + column + " = ? WHERE id = " + id;
+            String sql = "UPDATE items SET " + column + " = ? WHERE id = ?";
             Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setDouble(1, edit);
