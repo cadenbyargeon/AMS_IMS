@@ -516,12 +516,12 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
     scan.nextLine();
     System.out.println("What is the item to edit?");
     String search = scan.nextLine();
+    int id = 1;
     try{
     switch(choice){
         case 1: 
         {
             ArrayList<Non_Serialized> returnList = itemDB.getNonSerialized(search);
-            //System.out.println(returnList);
             for(int i=0; i<returnList.size(); i++){
                 System.out.println(i+1);
                 System.out.println(returnList.get(i));
@@ -532,37 +532,54 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
             System.out.println("\n1:  Name" + item.getName()  + "\n2:  Model: " + item.getModel() + 
             "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty() + 
             "\n5:  Quantity for This Semester: " + item.getQtySemester() + "\n6.  Quantity for Next Smester: " + item.getQtyNextSem());
-            editValues(scan, item, choice);
+            editValues(scan, item, choice, itemDB, id);
             break;
         }
         case 2: 
         {
             ArrayList<Serialized> returnList = itemDB.getSerialized(search);
+            for(int i=0; i<returnList.size(); i++){
+                System.out.println(i+1);
+                System.out.println(returnList.get(i));
+            }
             System.out.println("Which item is the one to edit?");
             int itemNumber = scan.nextInt();
             Serialized item = returnList.get(itemNumber-1);
-            System.out.println(item);
-            editValues(scan, item, choice);
+            System.out.println("\n1:  Name" + item.getName()  + "\n2:  Model: " + item.getModel() + 
+            "\n3:  Part Number: " + item.getPartNum() + "\n4:  Serial Number: " + item.getSerialNum());
+            editValues(scan, item, choice, itemDB, id);
             break;
         }
         case 3:
         {
             ArrayList<Consumable> returnList = itemDB.getConsumable(search);
+            for(int i=0; i<returnList.size(); i++){
+                System.out.println(i+1);
+                System.out.println(returnList.get(i));
+            }
             System.out.println("Which item is the one to edit?");
             int itemNumber = scan.nextInt();
             Consumable item = returnList.get(itemNumber-1);
-            System.out.println(item);
-            editValues(scan, item, choice);
+            System.out.println("\n1:  Name" + item.getName()  + "\n2:  Model: " + item.getModel() + 
+            "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty() + item.getQtyType() +
+            "\n5:  Quantity for This Semester: " + item.getQtySemester() + item.getQtyType() + "\n6.  Quantity for Next Smester: " + 
+            item.getQtyNextSem() + item.getQtyType());
+            editValues(scan, item, choice, itemDB, id);
             break;
         }
         case 4:
         {
             ArrayList<Manual> returnList = itemDB.getManual(search);
+            for(int i=0; i<returnList.size(); i++){
+                System.out.println(i+1);
+                System.out.println(returnList.get(i));
+            }
             System.out.println("Which item is the one to edit?");
             int itemNumber = scan.nextInt();
             Manual item = returnList.get(itemNumber-1);
-            System.out.println(item);
-            editValues(scan, item, choice);
+            System.out.println("\n1:  Name" + item.getName()  + "\n2:  Model: " + item.getModel() + 
+            "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty() + "\n5.  Revision: " + item.getRevision());
+            editValues(scan, item, choice, itemDB, id);
             break;
         }
     }
@@ -571,8 +588,7 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
     }
 }
 
-public static void editValues(Scanner scan, Item_Parent item, int typeItem){
-
+public static void editValues(Scanner scan, Item_Parent item, int typeItem, ItemDatabase itemDB, int id){
     System.out.println("Which variable would you like to change?");
     int choice;
     while (true) {
@@ -588,12 +604,15 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem){
             String basic = editBasic(scan, choice);
             if(choice == 1){
                 //name
+                itemDB.changeGlobal("name", basic, id);
             }
             if(choice == 2){
                 //model
+                itemDB.changeGlobal("model", basic, id);
             }
             if(choice == 3){
                 //part number
+                itemDB.changeGlobal("partNum", basic, id);
             }
         }else{
         switch(typeItem){
@@ -603,12 +622,15 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem){
                 double newQty = editQts(scan, choice);
                 if(choice == 4){
                     //qty
+                    itemDB.changeQty("qty", newQty, id);
                 }
                 if(choice == 5){
                     //qty this sem
+                    itemDB.changeQty("qty_semester", newQty, id);
                 }
                 if(choice == 6){
                     //qty next sem
+                    itemDB.changeQty("qty_next_semester", newQty, id);
                 }
             }
 
@@ -619,6 +641,7 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem){
             {
                 String serial = editSerial(scan);
                 //serial number
+                itemDB.changeGlobal("serial", serial, id);
             }
             break;
         //consumables
@@ -627,12 +650,15 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem){
             double newQty = editQts(scan, choice);
                 if(choice == 4){
                     //qty
+                    itemDB.changeQty("qty", newQty, id);
                 }
                 if(choice == 5){
                     //qty this sem
+                    itemDB.changeQty("qty_semester", newQty, id);
                 }
                 if(choice == 6){
                     //qty next sem
+                    itemDB.changeQty("qty_next_semester", newQty, id);
                 }
             }
             break;
@@ -642,10 +668,12 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem){
             if(choice == 4){
                 Double qty = editManQty(scan);
             //qty
+            itemDB.changeQty("qty", qty, id);
             }
             if(choice ==5){
+                //rev
                 String rev = editRev(scan);
-            //rev
+                itemDB.changeGlobal("revision", rev, id);
             }
             break;
             }

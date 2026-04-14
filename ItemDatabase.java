@@ -2,6 +2,8 @@ import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 
+import com.mysql.cj.x.protobuf.MysqlxPrepare.Prepare;
+
 public class ItemDatabase {
 
     private static final String URL = System.getenv("URL");
@@ -26,7 +28,7 @@ public class ItemDatabase {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    String itemName = rs.getString("itemName");
+                    String itemName = rs.getString("name");
                     String model = rs.getString("model");   
                     String partNum = rs.getString("partNum");
                     double qty = rs.getDouble("qty");
@@ -57,7 +59,7 @@ public class ItemDatabase {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    String itemName = rs.getString("itemName");
+                    String itemName = rs.getString("name");
                     String model = rs.getString("model");   
                     String partNum = rs.getString("partNum");
                     String serialNum = rs.getString("serialNum");
@@ -85,7 +87,7 @@ public class ItemDatabase {
 
             try (ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
-                    String itemName = rs.getString("itemName");
+                    String itemName = rs.getString("name");
                     String model = rs.getString("model");   
                     String partNum = rs.getString("partNum");
                     double qty = rs.getDouble("qty");
@@ -194,4 +196,44 @@ public void non_serialized_object_to_database(Non_Serialized n)
         
     }
 
+    public void changeGlobal(String column, String edit, int id){
+        try{
+            String sql = "UPDATE items SET " + column + " = ? WHERE id = " + id;
+            Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, edit);
+            stmt.setInt(2,id);
+            int rows = stmt.executeUpdate();
+            if(rows > 0){
+                System.out.println("Item updated!");
+            }else{
+                System.out.println("Error");
+            }
+            stmt.close();
+            conn.close();
+        }catch(Exception e){
+        e.printStackTrace();
+        }
+    }
+
+    public void changeQty(String column, Double edit, int id){
+        try{
+            String sql = "UPDATE items SET " + column + " = ? WHERE id = " + id;
+            Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setDouble(1, edit);
+            stmt.setInt(2,id);
+            int rows = stmt.executeUpdate();
+            if(rows > 0){
+                System.out.println("Item updated!");
+            }else{
+                System.out.println("Error");
+            }
+            stmt.close();
+            conn.close();
+        }catch(Exception e){
+        e.printStackTrace();
+        }
+    }
+    
 }
