@@ -196,9 +196,9 @@ public void serialized_object_to_database(Serialized s)
         
     }
 
-    public void changeGlobal(String column, String edit, int id){
+    public void changeGlobal(String column, String edit, int id, String type){
         try{
-            String sql = "UPDATE items SET " + column + " = ? WHERE id = ?";
+            String sql = "UPDATE " + type + " SET " + column + " = ? WHERE id = ?";
             Connection conn = getConnection();
             System.out.println(conn.getCatalog());
             PreparedStatement stmt = conn.prepareStatement(sql);
