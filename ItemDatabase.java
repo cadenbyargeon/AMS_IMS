@@ -200,10 +200,12 @@ public void serialized_object_to_database(Serialized s)
         try{
             String sql = "UPDATE items SET " + column + " = ? WHERE id = ?";
             Connection conn = getConnection();
+            System.out.println(conn.getCatalog());
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, edit);
             stmt.setInt(2,id);
             int rows = stmt.executeUpdate();
+            System.out.println("Rows affected: " + rows);
             if(rows > 0){
                 System.out.println("Item updated!");
             }else{

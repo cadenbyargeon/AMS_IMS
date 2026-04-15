@@ -523,13 +523,14 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
         {
             ArrayList<Non_Serialized> returnList = itemDB.getNonSerialized(search);
             for(int i=0; i<returnList.size(); i++){
+                System.out.println("****************************")
                 System.out.println(i+1);
                 System.out.println(returnList.get(i));
             }
             System.out.println("Which item is the one to edit?");
             int itemNumber = scan.nextInt();
             Non_Serialized item = returnList.get(itemNumber-1);
-            System.out.println("\n1:  Name" + item.getName()  + "\n2:  Model: " + item.getModel() + 
+            System.out.println("\n1:  Name: " + item.getName()  + "\n2:  Model: " + item.getModel() + 
             "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty() + 
             "\n5:  Quantity for This Semester: " + item.getQtySemester() + "\n6.  Quantity for Next Smester: " + item.getQtyNextSem());
             editValues(scan, item, choice, itemDB, id);
@@ -545,7 +546,7 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
             System.out.println("Which item is the one to edit?");
             int itemNumber = scan.nextInt();
             Serialized item = returnList.get(itemNumber-1);
-            System.out.println("\n1:  Name" + item.getName()  + "\n2:  Model: " + item.getModel() + 
+            System.out.println("\n1:  Name: " + item.getName()  + "\n2:  Model: " + item.getModel() + 
             "\n3:  Part Number: " + item.getPartNum() + "\n4:  Serial Number: " + item.getSerialNum());
             editValues(scan, item, choice, itemDB, id);
             break;
@@ -560,7 +561,7 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
             System.out.println("Which item is the one to edit?");
             int itemNumber = scan.nextInt();
             Consumable item = returnList.get(itemNumber-1);
-            System.out.println("\n1:  Name" + item.getName()  + "\n2:  Model: " + item.getModel() + 
+            System.out.println("\n1:  Name: " + item.getName()  + "\n2:  Model: " + item.getModel() + 
             "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty() + item.getQtyType() +
             "\n5:  Quantity for This Semester: " + item.getQtySemester() + item.getQtyType() + "\n6.  Quantity for Next Smester: " + 
             item.getQtyNextSem() + item.getQtyType());
@@ -577,7 +578,7 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
             System.out.println("Which item is the one to edit?");
             int itemNumber = scan.nextInt();
             Manual item = returnList.get(itemNumber-1);
-            System.out.println("\n1:  Name" + item.getName()  + "\n2:  Model: " + item.getModel() + 
+            System.out.println("\n1:  Name: " + item.getName()  + "\n2:  Model: " + item.getModel() + 
             "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty() + "\n5.  Revision: " + item.getRevision());
             editValues(scan, item, choice, itemDB, id);
             break;
@@ -589,7 +590,7 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
 }
 
 public static void editValues(Scanner scan, Item_Parent item, int typeItem, ItemDatabase itemDB, int id){
-    System.out.println("Which variable would you like to change?");
+    System.out.println("\nWhich variable would you like to change?");
     int choice;
     while (true) {
         try {
