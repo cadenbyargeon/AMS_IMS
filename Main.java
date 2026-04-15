@@ -609,11 +609,11 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem, Item
             }
             if(choice == 2){
                 //model
-                itemDB.changeGlobal("model", basic, id);
+                itemDB.changeGlobal("model", basic, id, "non_serialized");
             }
             if(choice == 3){
                 //part number
-                itemDB.changeGlobal("partNum", basic, id);
+                itemDB.changeGlobal("partNum", basic, id, "non_serialized");
             }
         }else{
         switch(typeItem){
@@ -642,7 +642,7 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem, Item
             {
                 String serial = editSerial(scan);
                 //serial number
-                itemDB.changeGlobal("serial", serial, id);
+                itemDB.changeGlobal("serial", serial, id, "non_serialized");
             }
             break;
         //consumables
@@ -674,7 +674,7 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem, Item
             if(choice ==5){
                 //rev
                 String rev = editRev(scan);
-                itemDB.changeGlobal("revision", rev, id);
+                itemDB.changeGlobal("revision", rev, id, "non_serialized");
             }
             break;
             }
