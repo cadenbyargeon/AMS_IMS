@@ -605,7 +605,7 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem, Item
             String basic = editBasic(scan, choice);
             if(choice == 1){
                 //name
-                itemDB.changeGlobal("name", basic, id);
+                itemDB.changeGlobal("name", basic, id, "non_serialized");
             }
             if(choice == 2){
                 //model

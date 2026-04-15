@@ -218,9 +218,9 @@ public void serialized_object_to_database(Serialized s)
         }
     }
 
-    public void changeQty(String column, Double edit, int id){
+    public void changeQty(String column, Double edit, int id, String type){
         try{
-            String sql = "UPDATE items SET " + column + " = ? WHERE id = ?";
+            String sql = "UPDATE" + type + "SET " + column + " = ? WHERE id = ?";
             Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setDouble(1, edit);
