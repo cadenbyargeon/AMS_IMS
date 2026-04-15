@@ -623,15 +623,15 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem, Item
                 double newQty = editQts(scan, choice);
                 if(choice == 4){
                     //qty
-                    itemDB.changeQty("qty", newQty, id);
+                    itemDB.changeQty("qty", newQty, id, "non_serialized");
                 }
                 if(choice == 5){
                     //qty this sem
-                    itemDB.changeQty("qty_semester", newQty, id);
+                    itemDB.changeQty("qty_semester", newQty, id, "non_serialized");
                 }
                 if(choice == 6){
                     //qty next sem
-                    itemDB.changeQty("qty_next_semester", newQty, id);
+                    itemDB.changeQty("qty_next_semester", newQty, id, "non_serialized");
                 }
             }
 
@@ -651,15 +651,15 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem, Item
             double newQty = editQts(scan, choice);
                 if(choice == 4){
                     //qty
-                    itemDB.changeQty("qty", newQty, id);
+                    itemDB.changeQty("qty", newQty, id, "non_serialized");
                 }
                 if(choice == 5){
                     //qty this sem
-                    itemDB.changeQty("qty_semester", newQty, id);
+                    itemDB.changeQty("qty_semester", newQty, id, "non_serialized");
                 }
                 if(choice == 6){
                     //qty next sem
-                    itemDB.changeQty("qty_next_semester", newQty, id);
+                    itemDB.changeQty("qty_next_semester", newQty, id, "non_serialized");
                 }
             }
             break;
@@ -669,7 +669,7 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem, Item
             if(choice == 4){
                 Double qty = editManQty(scan);
             //qty
-            itemDB.changeQty("qty", qty, id);
+            itemDB.changeQty("qty", qty, id, "non_serialized");
             }
             if(choice ==5){
                 //rev
