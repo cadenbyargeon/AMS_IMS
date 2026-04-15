@@ -523,7 +523,7 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
         {
             ArrayList<Non_Serialized> returnList = itemDB.getNonSerialized(search);
             for(int i=0; i<returnList.size(); i++){
-                System.out.println("****************************")
+                System.out.println("****************************");
                 System.out.println(i+1);
                 System.out.println(returnList.get(i));
             }
