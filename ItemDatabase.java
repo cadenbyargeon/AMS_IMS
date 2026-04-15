@@ -144,7 +144,7 @@ public class ItemDatabase {
 
 
 
-public void non_serialized_object_to_database(Non_Serialized n)
+public void createNonSerialized(Non_Serialized n)
     {
         /**************************************************
          * SQL Query to insert the item into the database:
@@ -155,10 +155,11 @@ public void non_serialized_object_to_database(Non_Serialized n)
         
 
         
-    //}
+    }
 
-    /*public void serialized_object_to_database(Serialized s)
-    {
+
+public void serialized_object_to_database(Serialized s)
+{
         /**************************************************
          * SQL Query to insert the item into the database:
          * INSERT INTO non_serialized(name, model, partNum, qty, qty_semester, qty_next_semester, serialNum, alert)
@@ -167,10 +168,9 @@ public void non_serialized_object_to_database(Non_Serialized n)
         */
         
 
-        
-    }
+}
 
-    public void consumable_object_to_database(Consumable c)
+    public void createConsumable(Consumable c)
     {
         /**************************************************
          * SQL Query to insert the item into the database:
@@ -183,7 +183,7 @@ public void non_serialized_object_to_database(Non_Serialized n)
         
     }
 
-    public void manual_object_to_database(Manual m)
+    public void createManual(Manual m)
     {
         /**************************************************
          * SQL Query to insert the item into the database:
