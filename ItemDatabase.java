@@ -2,7 +2,7 @@ import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 
-import com.mysql.cj.x.protobuf.MysqlxPrepare.Prepare;
+//import com.mysql.cj.x.protobuf.MysqlxPrepare.Prepare;
 
 public class ItemDatabase {
 
@@ -19,7 +19,7 @@ public class ItemDatabase {
         ArrayList<Non_Serialized> nonSerializedList = new ArrayList<Non_Serialized>();
         
         String sql = "SELECT id, name, model, partNum, qty, qty_semester, qty_next_semester "
-                   + "FROM non_serialized WHERE LOWER(itemName) LIKE LOWER(?)";
+                   + "FROM non_serialized WHERE LOWER(name) LIKE LOWER(?)";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -50,7 +50,7 @@ public class ItemDatabase {
     public ArrayList<Serialized> getSerialized(String name) throws SQLException, ClassNotFoundException {
         ArrayList<Serialized> serializedList = new ArrayList<Serialized>();
         String sql = "SELECT id, name, model, partNum, serialNum "
-                   + "FROM serialized WHERE LOWER(itemName) LIKE LOWER(?)";
+                   + "FROM serialized WHERE LOWER(name) LIKE LOWER(?)";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -78,7 +78,7 @@ public class ItemDatabase {
     public ArrayList<Consumable> getConsumable(String name) throws SQLException, ClassNotFoundException {
         ArrayList<Consumable> consumables = new ArrayList<Consumable>();
         String sql = "SELECT id, name, model, partNum, qty, qty_semester, qty_next_semester, qtyType "
-                   + "FROM consumable WHERE LOWER(itemName) LIKE LOWER(?)";
+                   + "FROM consumable WHERE LOWER(name) LIKE LOWER(?)";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
