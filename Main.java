@@ -517,10 +517,12 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
     System.out.println("What is the item to edit?");
     String search = scan.nextLine();
     int id = 1;
+    String type;
     try{
     switch(choice){
         case 1: 
         {
+            type = "Non-Serialized";
             ArrayList<Non_Serialized> returnList = itemDB.getNonSerialized(search);
             for(int i=0; i<returnList.size(); i++){
                 System.out.println("****************************");
@@ -533,11 +535,12 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
             System.out.println("\n1:  Name: " + item.getName()  + "\n2:  Model: " + item.getModel() + 
             "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty() + 
             "\n5:  Quantity for This Semester: " + item.getQtySemester() + "\n6.  Quantity for Next Smester: " + item.getQtyNextSem());
-            editValues(scan, item, choice, itemDB, id);
+            editValues(scan, item, choice, itemDB, id, type);
             break;
         }
         case 2: 
         {
+            type = "Serialized";
             ArrayList<Serialized> returnList = itemDB.getSerialized(search);
             for(int i=0; i<returnList.size(); i++){
                 System.out.println(i+1);
@@ -548,11 +551,12 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
             Serialized item = returnList.get(itemNumber-1);
             System.out.println("\n1:  Name: " + item.getName()  + "\n2:  Model: " + item.getModel() + 
             "\n3:  Part Number: " + item.getPartNum() + "\n4:  Serial Number: " + item.getSerialNum());
-            editValues(scan, item, choice, itemDB, id);
+            editValues(scan, item, choice, itemDB, id, type);
             break;
         }
         case 3:
         {
+            type = "Consumable";
             ArrayList<Consumable> returnList = itemDB.getConsumable(search);
             for(int i=0; i<returnList.size(); i++){
                 System.out.println(i+1);
@@ -565,11 +569,12 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
             "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty() + item.getQtyType() +
             "\n5:  Quantity for This Semester: " + item.getQtySemester() + item.getQtyType() + "\n6.  Quantity for Next Smester: " + 
             item.getQtyNextSem() + item.getQtyType());
-            editValues(scan, item, choice, itemDB, id);
+            editValues(scan, item, choice, itemDB, id, type);
             break;
         }
         case 4:
         {
+            type = "Manual";
             ArrayList<Manual> returnList = itemDB.getManual(search);
             for(int i=0; i<returnList.size(); i++){
                 System.out.println(i+1);
@@ -580,7 +585,7 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
             Manual item = returnList.get(itemNumber-1);
             System.out.println("\n1:  Name: " + item.getName()  + "\n2:  Model: " + item.getModel() + 
             "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty() + "\n5.  Revision: " + item.getRevision());
-            editValues(scan, item, choice, itemDB, id);
+            editValues(scan, item, choice, itemDB, id, type);
             break;
         }
     }
@@ -589,7 +594,7 @@ public static void edit(Scanner scan, ItemDatabase itemDB){
     }
 }
 
-public static void editValues(Scanner scan, Item_Parent item, int typeItem, ItemDatabase itemDB, int id){
+public static void editValues(Scanner scan, Item_Parent item, int typeItem, ItemDatabase itemDB, int id, String type){
     System.out.println("\nWhich variable would you like to change?");
     int choice;
     while (true) {
@@ -605,15 +610,15 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem, Item
             String basic = editBasic(scan, choice);
             if(choice == 1){
                 //name
-                itemDB.changeGlobal("name", basic, id, "non_serialized");
+                itemDB.changeGlobal("name", basic, id, type);
             }
             if(choice == 2){
                 //model
-                itemDB.changeGlobal("model", basic, id, "non_serialized");
+                itemDB.changeGlobal("model", basic, id, type);
             }
             if(choice == 3){
                 //part number
-                itemDB.changeGlobal("partNum", basic, id, "non_serialized");
+                itemDB.changeGlobal("partNum", basic, id, type);
             }
         }else{
         switch(typeItem){
@@ -623,15 +628,15 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem, Item
                 double newQty = editQts(scan, choice);
                 if(choice == 4){
                     //qty
-                    itemDB.changeQty("qty", newQty, id, "non_serialized");
+                    itemDB.changeQty("qty", newQty, id, type);
                 }
                 if(choice == 5){
                     //qty this sem
-                    itemDB.changeQty("qty_semester", newQty, id, "non_serialized");
+                    itemDB.changeQty("qty_semester", newQty, id, type);
                 }
                 if(choice == 6){
                     //qty next sem
-                    itemDB.changeQty("qty_next_semester", newQty, id, "non_serialized");
+                    itemDB.changeQty("qty_next_semester", newQty, id, type);
                 }
             }
 
@@ -642,7 +647,7 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem, Item
             {
                 String serial = editSerial(scan);
                 //serial number
-                itemDB.changeGlobal("serial", serial, id, "non_serialized");
+                itemDB.changeGlobal("serial", serial, id, type);
             }
             break;
         //consumables
@@ -651,15 +656,15 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem, Item
             double newQty = editQts(scan, choice);
                 if(choice == 4){
                     //qty
-                    itemDB.changeQty("qty", newQty, id, "non_serialized");
+                    itemDB.changeQty("qty", newQty, id, type);
                 }
                 if(choice == 5){
                     //qty this sem
-                    itemDB.changeQty("qty_semester", newQty, id, "non_serialized");
+                    itemDB.changeQty("qty_semester", newQty, id, type);
                 }
                 if(choice == 6){
                     //qty next sem
-                    itemDB.changeQty("qty_next_semester", newQty, id, "non_serialized");
+                    itemDB.changeQty("qty_next_semester", newQty, id, type);
                 }
             }
             break;
@@ -669,12 +674,12 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem, Item
             if(choice == 4){
                 Double qty = editManQty(scan);
             //qty
-            itemDB.changeQty("qty", qty, id, "non_serialized");
+            itemDB.changeQty("qty", qty, id, type);
             }
             if(choice ==5){
                 //rev
                 String rev = editRev(scan);
-                itemDB.changeGlobal("revision", rev, id, "non_serialized");
+                itemDB.changeGlobal("revision", rev, id, type);
             }
             break;
             }
