@@ -1,4 +1,3 @@
-import java.io.File;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -144,53 +143,107 @@ public class ItemDatabase {
 
 
 
-public void createNonSerialized(Non_Serialized n)
+public void createNonSerialized(Non_Serialized n) throws SQLException, ClassNotFoundException
     {
-        /**************************************************
-         * SQL Query to insert the item into the database:
-         * INSERT INTO non_serialized(name, model, partNum, qty, qty_semester, qty_next_semester, alert)
-         * VALUES (n.name, n.model, n.partNum, n.qty, n.qty_semester, n.qty_next_semester, n.alert);
+         String sql = "INSERT INTO non_serialized(name, model, partNum, qty, qty_semester, qty_next_semester)" + 
+         "VALUES (?, ?, ?, ?, ?, ?)";
 
-        */ 
+         try(Connection conn = getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql))
+         {
+            ps.setString(1, n.getName());
+            ps.setString(2, n.getModel());
+            ps.setString(3, n.getPartNum());
+            ps.setDouble(4, n.getQty());
+            ps.setDouble(5, n.getQtySemester());
+            ps.setDouble(6, n.getQtyNextSem());
+
+
+
+         }
+
+         
+
+
+
+         
         
 
         
     }
 
 
-public void serialized_object_to_database(Serialized s)
+public void createSerialized(Serialized s) throws SQLException, ClassNotFoundException
 {
-        /**************************************************
-         * SQL Query to insert the item into the database:
-         * INSERT INTO non_serialized(name, model, partNum, qty, qty_semester, qty_next_semester, serialNum, alert)
-         * VALUES (s.name, s.model, s.partNum, s.qty, s.qty_semester, s.qty_next_semester, s.serialNum, s.alert);
+        String sql = "INSERT INTO serialized(name, model, partNum, serialNum)" + 
+         "VALUES (?, ?, ?, ?)";
 
-        */
+         try(Connection conn = getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql))
+         {
+            ps.setString(1, s.getName());
+            ps.setString(2, s.getModel());
+            ps.setString(3, s.getPartNum());
+            ps.setString(4, s.getSerialNum());
+
+
+
+         }
+
+         
+
+
         
 
 }
 
-    public void createConsumable(Consumable c)
+    public void createConsumable(Consumable c) throws SQLException, ClassNotFoundException
     {
-        /**************************************************
-         * SQL Query to insert the item into the database:
-         * INSERT INTO non_serialized(name, model, partNum, qty, qty_semester, qty_next_semester, qtyType, alert)
-         * VALUES (c.name, c.model, c.partNum, c.qty, c.qty_semester, c.qty_next_semester, c.qtyType, c.alert);
+        String sql = "INSERT INTO non_serialized(name, model, partNum, qty, qty_semester, qty_next_semester, qtyType)" + 
+         "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-        */ 
+         try(Connection conn = getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql))
+         {
+            ps.setString(1, c.getName());
+            ps.setString(2, c.getModel());
+            ps.setString(3, c.getPartNum());
+            ps.setDouble(4, c.getQty());
+            ps.setDouble(5, c.getQtySemester());
+            ps.setDouble(6, c.getQtyNextSem());
+            ps.setString(7, c.getQtyType());
+
+
+
+         }
+
+
+        
         
 
         
     }
 
-    public void createManual(Manual m)
+    public void createManual(Manual m) throws SQLException, ClassNotFoundException
     {
-        /**************************************************
-         * SQL Query to insert the item into the database:
-         * INSERT INTO non_serialized(name, model, partNum, qty, qty_semester, qty_next_semester, revision, alert)
-         * VALUES (m.name, m.model, m.partNum, m.qty, m.qty_semester, m.qty_next_semester, m.revision, m.alert);
+         String sql = "INSERT INTO non_serialized(name, model, partNum, qty, qty_semester, qty_next_semester, qtyType)" + 
+         "VALUES (?, ?, ?, ?, ?)";
 
-        */ 
+         try(Connection conn = getConnection();
+         PreparedStatement ps = conn.prepareStatement(sql))
+         {
+            ps.setString(1, m.getName());
+            ps.setString(2, m.getModel());
+            ps.setString(3, m.getPartNum());
+            ps.setDouble(4, m.getQty());
+            ps.setString(5, m.getRevision());
+
+
+
+         }
+
+
+        
         
 
         
