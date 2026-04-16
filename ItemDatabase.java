@@ -143,7 +143,7 @@ public class ItemDatabase {
 
 
 
-public Non_Serialized createNonSerialized(Non_Serialized n) throws SQLException, ClassNotFoundException
+public void createNonSerialized(Non_Serialized n) throws SQLException, ClassNotFoundException
     {
          String sql = "INSERT INTO non_serialized(name, model, partNum, qty, qty_semester, qty_next_semester)" + 
          "VALUES (?, ?, ?, ?, ?, ?)";
@@ -162,7 +162,7 @@ public Non_Serialized createNonSerialized(Non_Serialized n) throws SQLException,
 
          }
 
-         return n;
+         
 
 
 
@@ -173,7 +173,7 @@ public Non_Serialized createNonSerialized(Non_Serialized n) throws SQLException,
     }
 
 
-public Serialized createSerialized(Serialized s) throws SQLException, ClassNotFoundException
+public void createSerialized(Serialized s) throws SQLException, ClassNotFoundException
 {
         String sql = "INSERT INTO serialized(name, model, partNum, serialNum)" + 
          "VALUES (?, ?, ?, ?)";
@@ -190,14 +190,14 @@ public Serialized createSerialized(Serialized s) throws SQLException, ClassNotFo
 
          }
 
-         return s;
+         
 
 
         
 
 }
 
-    public Consumable createConsumable(Consumable c) throws SQLException, ClassNotFoundException
+    public void createConsumable(Consumable c) throws SQLException, ClassNotFoundException
     {
         String sql = "INSERT INTO non_serialized(name, model, partNum, qty, qty_semester, qty_next_semester, qtyType)" + 
          "VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -218,13 +218,13 @@ public Serialized createSerialized(Serialized s) throws SQLException, ClassNotFo
          }
 
 
-        return c;
+        
         
 
         
     }
 
-    public Manual createManual(Manual m) throws SQLException, ClassNotFoundException
+    public void createManual(Manual m) throws SQLException, ClassNotFoundException
     {
          String sql = "INSERT INTO non_serialized(name, model, partNum, qty, qty_semester, qty_next_semester, qtyType)" + 
          "VALUES (?, ?, ?, ?, ?)";
@@ -243,7 +243,7 @@ public Serialized createSerialized(Serialized s) throws SQLException, ClassNotFo
          }
 
 
-        return m;
+        
         
 
         
