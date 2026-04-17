@@ -158,6 +158,8 @@ public void createNonSerialized(Non_Serialized n) throws SQLException, ClassNotF
             ps.setDouble(5, n.getQtySemester());
             ps.setDouble(6, n.getQtyNextSem());
 
+            ps.executeUpdate();
+
 
 
          }
@@ -186,6 +188,8 @@ public void createSerialized(Serialized s) throws SQLException, ClassNotFoundExc
             ps.setString(3, s.getPartNum());
             ps.setString(4, s.getSerialNum());
 
+            ps.executeUpdate();
+
 
 
          }
@@ -213,6 +217,8 @@ public void createSerialized(Serialized s) throws SQLException, ClassNotFoundExc
             ps.setDouble(6, c.getQtyNextSem());
             ps.setString(7, c.getQtyType());
 
+            ps.executeUpdate();
+
 
 
          }
@@ -237,6 +243,8 @@ public void createSerialized(Serialized s) throws SQLException, ClassNotFoundExc
             ps.setString(3, m.getPartNum());
             ps.setDouble(4, m.getQty());
             ps.setString(5, m.getRevision());
+
+            ps.executeUpdate();
 
 
 
@@ -273,7 +281,7 @@ public void createSerialized(Serialized s) throws SQLException, ClassNotFoundExc
 
     public void changeQty(String column, Double edit, int id, String type){
         try{
-            String sql = "UPDATE" + type + "SET " + column + " = ? WHERE id = ?";
+            String sql = "UPDATE " + type + " SET " + column + " = ? WHERE id = ?";
             Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setDouble(1, edit);
