@@ -281,7 +281,7 @@ public void createSerialized(Serialized s) throws SQLException, ClassNotFoundExc
 
     public void changeQty(String column, Double edit, int id, String type){
         try{
-            String sql = "UPDATE" + type + "SET " + column + " = ? WHERE id = ?";
+            String sql = "UPDATE " + type + " SET " + column + " = ? WHERE id = ?";
             Connection conn = getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setDouble(1, edit);
