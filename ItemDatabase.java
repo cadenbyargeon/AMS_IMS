@@ -261,7 +261,6 @@ public void createSerialized(Serialized s) throws SQLException, ClassNotFoundExc
         try{
             String sql = "UPDATE " + type + " SET " + column + " = ? WHERE id = ?";
             Connection conn = getConnection();
-            System.out.println(conn.getCatalog());
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1, edit);
             stmt.setInt(2,id);
