@@ -1,5 +1,8 @@
 
 //import java.io.Serial;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.*;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -33,65 +36,49 @@ public class Main {
         }
 
         initialLogin(scan, userDB, itemDB);
-
-        /*
-         * User user = logIn(scan, userDB);
-         * 
-         * //menu choice selection, ran through a separate function
-         * //add if statement when user works, WIP
-         * if(user.isAdmin() == true){
-         * admin(scan, userDB);
-         * }
-         * if(user.isAdmin() == false){
-         * nonAdmin(scan);
-         * }
-         */
         scan.close();
         return;
 
     }
 
+    
+
     public static void initialLogin(Scanner scan, UserDatabase userDB, ItemDatabase itemDB) {
         while (true) {
-            System.out.print("Press any key to log in: ");
-            String input = scan.nextLine();
+        System.out.println("\n==== ALM IMS ====");
+        System.out.println("1. Login");
+        System.out.println("2. Exit");
+        System.out.print("Select an option: ");
 
-            User user = logIn(scan, userDB);
-            if (user.isAdmin() == true) {
-                admin(scan, userDB, itemDB);
-            }
-            if (user.isAdmin() == false) {
-                nonAdmin(scan, itemDB);
-            }
+        String input = scan.nextLine();
+        int choice = Integer.parseInt(input);
 
-            break;
+        switch (choice) {
+            case 1:
+                User user = logIn(scan, userDB);
 
+                if(user == null)
+                {
+                    continue;
+                }
+
+                if (user.isAdmin()) {
+                    admin(scan, userDB, itemDB);
+                } else {
+                    nonAdmin(scan, itemDB);
+                }
+                break;
+            case 2:
+                System.out.println("Exiting ALM IMS...");
+                return; // exits program
+
+            default:
+                System.out.println("Invalid selection.");
+                break;
         }
-
     }
 
-    // delete later, will change way it works
-    /*
-     * public static void processInitialOption(Scanner scan)
-     * {
-     * switch(initialChoice)
-     * {
-     * case 1: User user = logIn(scan, userDB);
-     * if(user.isAdmin() == true)
-     * {
-     * admin(scan, userDB);
-     * }
-     * if(user.isAdmin() == false)
-     * {
-     * nonAdmin(scan);
-     * }
-     * break;
-     * case 2: createAccount(scan, userDB); break;
-     * default: System.out.println("Invalid selection"); break;
-     * 
-     * }
-     * }
-     */
+    }
 
     public static void createAccount(Scanner scan, UserDatabase userDB) {
         User user = null;
@@ -107,6 +94,10 @@ public class Main {
         System.out.print("Enter the username: ");
         String username = scan.nextLine();
         System.out.println();
+        while (userDB.findUser(username) != -1) {
+            System.out.print("There is already a user with that username. Try again: ");
+            username = scan.nextLine();
+        }
 
         System.out.print("Enter the password: ");
         String password = scan.nextLine();
@@ -115,10 +106,7 @@ public class Main {
             System.out.print("Password must be at least 8 characters: ");
             password = scan.nextLine();
         }
-        while (userDB.findUser(username) != -1) {
-            System.out.print("There is already a user with that username. Try again: ");
-            username = scan.nextLine();
-        }
+        
 
         user = new NonAdministrator(firstName, lastName, username);
         user.setPassword(password);
@@ -132,8 +120,13 @@ public class Main {
     public static User logIn(Scanner scan, UserDatabase userDB) {
         try {
             while (true) {
-                System.out.print("Username: ");
+                System.out.print("Username (or type C to cancel): ");
                 String username = scan.nextLine();
+
+                if(username.equalsIgnoreCase("C"))
+                {
+                    return null;
+                }
 
                 System.out.print("Password: ");
                 String password = scan.nextLine();
@@ -172,7 +165,7 @@ public class Main {
             switch (choice) {
                 // exit
                 case 1:
-                    System.out.println("Exiting ALM IMS........");
+                    System.out.println("Logging out........");
                     run = false;
                     break;
 
@@ -222,7 +215,7 @@ public class Main {
             switch (choice) {
                 // exit
                 case 1:
-                    System.out.println("Exiting ALM IMS........");
+                    System.out.println("Logging out........");
                     run = false;
                     break;
                 // edit an item
