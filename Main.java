@@ -20,19 +20,23 @@ public class Main {
     public static final String RED = "\u001B[31m";
     public static final String GREEN = "\u001B[32m";
     public static final String YELLOW = "\u001B[33m";
+
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         boolean testUsers = true;
         UserDatabase userDB = new UserDatabase();
+        userDB.loadUsersFromFile();
         ItemDatabase itemDB = new ItemDatabase();
 
         if (testUsers) {
             Administrator testAdmin = new Administrator("admin", "admin", "admin");
             testAdmin.setPassword("admin");
             userDB.addUser(testAdmin);
+            userDB.saveUsersToFile();
             NonAdministrator testUser = new NonAdministrator("user", "user", "user");
             testUser.setPassword("user");
             userDB.addUser(testUser);
+            userDB.saveUsersToFile();
         }
 
         initialLogin(scan, userDB, itemDB);
@@ -41,42 +45,39 @@ public class Main {
 
     }
 
-    
-
     public static void initialLogin(Scanner scan, UserDatabase userDB, ItemDatabase itemDB) {
         while (true) {
-        System.out.println("\n==== ALM IMS ====");
-        System.out.println("1. Login");
-        System.out.println("2. Exit");
-        System.out.print("Select an option: ");
+            System.out.println("\n==== ALM IMS ====");
+            System.out.println("1. Login");
+            System.out.println("2. Exit");
+            System.out.print("Select an option: ");
 
-        String input = scan.nextLine();
-        int choice = Integer.parseInt(input);
+            String input = scan.nextLine();
+            int choice = Integer.parseInt(input);
 
-        switch (choice) {
-            case 1:
-                User user = logIn(scan, userDB);
+            switch (choice) {
+                case 1:
+                    User user = logIn(scan, userDB);
 
-                if(user == null)
-                {
-                    continue;
-                }
+                    if (user == null) {
+                        continue;
+                    }
 
-                if (user.isAdmin()) {
-                    admin(scan, userDB, itemDB);
-                } else {
-                    nonAdmin(scan, itemDB);
-                }
-                break;
-            case 2:
-                System.out.println("Exiting ALM IMS...");
-                return; // exits program
+                    if (user.isAdmin()) {
+                        admin(scan, userDB, itemDB);
+                    } else {
+                        nonAdmin(scan, itemDB);
+                    }
+                    break;
+                case 2:
+                    System.out.println("Exiting ALM IMS...");
+                    return; // exits program
 
-            default:
-                System.out.println("Invalid selection.");
-                break;
+                default:
+                    System.out.println("Invalid selection.");
+                    break;
+            }
         }
-    }
 
     }
 
@@ -106,11 +107,11 @@ public class Main {
             System.out.print("Password must be at least 8 characters: ");
             password = scan.nextLine();
         }
-        
 
         user = new NonAdministrator(firstName, lastName, username);
         user.setPassword(password);
         userDB.addUser(user);
+        userDB.saveUsersToFile();
 
         System.out.println(
                 user.getFirstName() + " " + user.getLastName() + " has been successfully added to the system.");
@@ -123,8 +124,7 @@ public class Main {
                 System.out.print("Username (or type C to cancel): ");
                 String username = scan.nextLine();
 
-                if(username.equalsIgnoreCase("C"))
-                {
+                if (username.equalsIgnoreCase("C")) {
                     return null;
                 }
 
@@ -248,7 +248,7 @@ public class Main {
         while (true) {
             System.out.println("========================");
             System.out.println("Select one of the following:");
-            System.out.println("1. Exit IMS");
+            System.out.println("1. Log out of IMS");
             System.out.println("2. Edit an item");
             System.out.println("3. Create an item");
             System.out.println("4. View an item");
@@ -274,7 +274,7 @@ public class Main {
         while (true) {
             System.out.println("========================");
             System.out.println("Select one of the following:");
-            System.out.println("1. Exit IMS");
+            System.out.println("1. Log out of IMS");
             System.out.println("2. Edit an item");
             System.out.println("3. Create an item");
             System.out.println("4. View an item");
@@ -353,6 +353,7 @@ public class Main {
                 }
                 user.setPassword(newPassword);
                 System.out.println(user);
+                userDB.saveUsersToFile();
                 return user;
 
             }
@@ -506,177 +507,173 @@ public class Main {
 
     }
 
-//Non - Serialized and Serialized Parts
-public static void edit(Scanner scan, ItemDatabase itemDB){
-    int choice = item_type_selection(scan);
-    scan.nextLine();
-    System.out.println("What is the item to edit?");
-    String search = scan.nextLine();
-    int id = 1;
-    try{
-    switch(choice){
-        case 1: 
-        {
-            ArrayList<Non_Serialized> returnList = itemDB.getNonSerialized(search);
-            for(int i=0; i<returnList.size(); i++){
-                System.out.println("****************************");
-                System.out.println(i+1);
-                System.out.println(returnList.get(i));
-            }
-            System.out.println("Which item is the one to edit?");
-            int itemNumber = scan.nextInt();
-            Non_Serialized item = returnList.get(itemNumber-1);
-            System.out.println("\n1:  Name: " + item.getName()  + "\n2:  Model: " + item.getModel() + 
-            "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty() + 
-            "\n5:  Quantity for This Semester: " + item.getQtySemester() + "\n6.  Quantity for Next Smester: " + item.getQtyNextSem());
-            editValues(scan, item, choice, itemDB, id);
-            break;
-        }
-        case 2: 
-        {
-            ArrayList<Serialized> returnList = itemDB.getSerialized(search);
-            for(int i=0; i<returnList.size(); i++){
-                System.out.println(i+1);
-                System.out.println(returnList.get(i));
-            }
-            System.out.println("Which item is the one to edit?");
-            int itemNumber = scan.nextInt();
-            Serialized item = returnList.get(itemNumber-1);
-            System.out.println("\n1:  Name: " + item.getName()  + "\n2:  Model: " + item.getModel() + 
-            "\n3:  Part Number: " + item.getPartNum() + "\n4:  Serial Number: " + item.getSerialNum());
-            editValues(scan, item, choice, itemDB, id);
-            break;
-        }
-        case 3:
-        {
-            ArrayList<Consumable> returnList = itemDB.getConsumable(search);
-            for(int i=0; i<returnList.size(); i++){
-                System.out.println(i+1);
-                System.out.println(returnList.get(i));
-            }
-            System.out.println("Which item is the one to edit?");
-            int itemNumber = scan.nextInt();
-            Consumable item = returnList.get(itemNumber-1);
-            System.out.println("\n1:  Name: " + item.getName()  + "\n2:  Model: " + item.getModel() + 
-            "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty() + item.getQtyType() +
-            "\n5:  Quantity for This Semester: " + item.getQtySemester() + item.getQtyType() + "\n6.  Quantity for Next Smester: " + 
-            item.getQtyNextSem() + item.getQtyType());
-            editValues(scan, item, choice, itemDB, id);
-            break;
-        }
-        case 4:
-        {
-            ArrayList<Manual> returnList = itemDB.getManual(search);
-            for(int i=0; i<returnList.size(); i++){
-                System.out.println(i+1);
-                System.out.println(returnList.get(i));
-            }
-            System.out.println("Which item is the one to edit?");
-            int itemNumber = scan.nextInt();
-            Manual item = returnList.get(itemNumber-1);
-            System.out.println("\n1:  Name: " + item.getName()  + "\n2:  Model: " + item.getModel() + 
-            "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty() + "\n5.  Revision: " + item.getRevision());
-            editValues(scan, item, choice, itemDB, id);
-            break;
-        }
-    }
-    }catch(SQLException | ClassNotFoundException e){
-    System.out.println("Database error");
-    }
-}
-
-public static void editValues(Scanner scan, Item_Parent item, int typeItem, ItemDatabase itemDB, int id){
-    System.out.println("\nWhich variable would you like to change?");
-    int choice;
-    while (true) {
+    // Non - Serialized and Serialized Parts
+    public static void edit(Scanner scan, ItemDatabase itemDB) {
+        int choice = item_type_selection(scan);
+        scan.nextLine();
+        System.out.println("What is the item to edit?");
+        String search = scan.nextLine();
+        int id = 1;
         try {
-            choice = scan.nextInt();
-            break;
-        } catch (InputMismatchException e) {
-            System.out.println("Invalid input. Enter a number.");
-            scan.nextLine(); // clear bad input
+            switch (choice) {
+                case 1: {
+                    ArrayList<Non_Serialized> returnList = itemDB.getNonSerialized(search);
+                    for (int i = 0; i < returnList.size(); i++) {
+                        System.out.println("****************************");
+                        System.out.println(i + 1);
+                        System.out.println(returnList.get(i));
+                    }
+                    System.out.println("Which item is the one to edit?");
+                    int itemNumber = scan.nextInt();
+                    Non_Serialized item = returnList.get(itemNumber - 1);
+                    System.out.println("\n1:  Name: " + item.getName() + "\n2:  Model: " + item.getModel() +
+                            "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty() +
+                            "\n5:  Quantity for This Semester: " + item.getQtySemester()
+                            + "\n6.  Quantity for Next Smester: " + item.getQtyNextSem());
+                    editValues(scan, item, choice, itemDB, id);
+                    break;
+                }
+                case 2: {
+                    ArrayList<Serialized> returnList = itemDB.getSerialized(search);
+                    for (int i = 0; i < returnList.size(); i++) {
+                        System.out.println(i + 1);
+                        System.out.println(returnList.get(i));
+                    }
+                    System.out.println("Which item is the one to edit?");
+                    int itemNumber = scan.nextInt();
+                    Serialized item = returnList.get(itemNumber - 1);
+                    System.out.println("\n1:  Name: " + item.getName() + "\n2:  Model: " + item.getModel() +
+                            "\n3:  Part Number: " + item.getPartNum() + "\n4:  Serial Number: " + item.getSerialNum());
+                    editValues(scan, item, choice, itemDB, id);
+                    break;
+                }
+                case 3: {
+                    ArrayList<Consumable> returnList = itemDB.getConsumable(search);
+                    for (int i = 0; i < returnList.size(); i++) {
+                        System.out.println(i + 1);
+                        System.out.println(returnList.get(i));
+                    }
+                    System.out.println("Which item is the one to edit?");
+                    int itemNumber = scan.nextInt();
+                    Consumable item = returnList.get(itemNumber - 1);
+                    System.out.println("\n1:  Name: " + item.getName() + "\n2:  Model: " + item.getModel() +
+                            "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty()
+                            + item.getQtyType() +
+                            "\n5:  Quantity for This Semester: " + item.getQtySemester() + item.getQtyType()
+                            + "\n6.  Quantity for Next Smester: " +
+                            item.getQtyNextSem() + item.getQtyType());
+                    editValues(scan, item, choice, itemDB, id);
+                    break;
+                }
+                case 4: {
+                    ArrayList<Manual> returnList = itemDB.getManual(search);
+                    for (int i = 0; i < returnList.size(); i++) {
+                        System.out.println(i + 1);
+                        System.out.println(returnList.get(i));
+                    }
+                    System.out.println("Which item is the one to edit?");
+                    int itemNumber = scan.nextInt();
+                    Manual item = returnList.get(itemNumber - 1);
+                    System.out.println("\n1:  Name: " + item.getName() + "\n2:  Model: " + item.getModel() +
+                            "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty()
+                            + "\n5.  Revision: " + item.getRevision());
+                    editValues(scan, item, choice, itemDB, id);
+                    break;
+                }
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            System.out.println("Database error");
         }
     }
-        if(choice <=3){
+
+    public static void editValues(Scanner scan, Item_Parent item, int typeItem, ItemDatabase itemDB, int id) {
+        System.out.println("\nWhich variable would you like to change?");
+        int choice;
+        while (true) {
+            try {
+                choice = scan.nextInt();
+                break;
+            } catch (InputMismatchException e) {
+                System.out.println("Invalid input. Enter a number.");
+                scan.nextLine(); // clear bad input
+            }
+        }
+        if (choice <= 3) {
             String basic = editBasic(scan, choice);
-            if(choice == 1){
-                //name
+            if (choice == 1) {
+                // name
                 itemDB.changeGlobal("name", basic, id, "non_serialized");
             }
-            if(choice == 2){
-                //model
+            if (choice == 2) {
+                // model
                 itemDB.changeGlobal("model", basic, id, "non_serialized");
             }
-            if(choice == 3){
-                //part number
+            if (choice == 3) {
+                // part number
                 itemDB.changeGlobal("partNum", basic, id, "non_serialized");
             }
-        }else{
-        switch(typeItem){
-        //non-serial
-        case 1:
-            {
-                double newQty = editQts(scan, choice);
-                if(choice == 4){
-                    //qty
-                    itemDB.changeQty("qty", newQty, id, "non_serialized");
+        } else {
+            switch (typeItem) {
+                // non-serial
+                case 1: {
+                    double newQty = editQts(scan, choice);
+                    if (choice == 4) {
+                        // qty
+                        itemDB.changeQty("qty", newQty, id, "non_serialized");
+                    }
+                    if (choice == 5) {
+                        // qty this sem
+                        itemDB.changeQty("qty_semester", newQty, id, "non_serialized");
+                    }
+                    if (choice == 6) {
+                        // qty next sem
+                        itemDB.changeQty("qty_next_semester", newQty, id, "non_serialized");
+                    }
                 }
-                if(choice == 5){
-                    //qty this sem
-                    itemDB.changeQty("qty_semester", newQty, id, "non_serialized");
-                }
-                if(choice == 6){
-                    //qty next sem
-                    itemDB.changeQty("qty_next_semester", newQty, id, "non_serialized");
-                }
-            }
 
-            break;
-            //pass back to DB
-        //serialized
-        case 2:
-            {
-                String serial = editSerial(scan);
-                //serial number
-                itemDB.changeGlobal("serial", serial, id, "non_serialized");
-            }
-            break;
-        //consumables
-        case 3:
-            {
-            double newQty = editQts(scan, choice);
-                if(choice == 4){
-                    //qty
-                    itemDB.changeQty("qty", newQty, id, "non_serialized");
+                    break;
+                // pass back to DB
+                // serialized
+                case 2: {
+                    String serial = editSerial(scan);
+                    // serial number
+                    itemDB.changeGlobal("serial", serial, id, "non_serialized");
                 }
-                if(choice == 5){
-                    //qty this sem
-                    itemDB.changeQty("qty_semester", newQty, id, "non_serialized");
+                    break;
+                // consumables
+                case 3: {
+                    double newQty = editQts(scan, choice);
+                    if (choice == 4) {
+                        // qty
+                        itemDB.changeQty("qty", newQty, id, "non_serialized");
+                    }
+                    if (choice == 5) {
+                        // qty this sem
+                        itemDB.changeQty("qty_semester", newQty, id, "non_serialized");
+                    }
+                    if (choice == 6) {
+                        // qty next sem
+                        itemDB.changeQty("qty_next_semester", newQty, id, "non_serialized");
+                    }
                 }
-                if(choice == 6){
-                    //qty next sem
-                    itemDB.changeQty("qty_next_semester", newQty, id, "non_serialized");
+                    break;
+                // manual
+                case 4: {
+                    if (choice == 4) {
+                        Double qty = editManQty(scan);
+                        // qty
+                        itemDB.changeQty("qty", qty, id, "non_serialized");
+                    }
+                    if (choice == 5) {
+                        // rev
+                        String rev = editRev(scan);
+                        itemDB.changeGlobal("revision", rev, id, "non_serialized");
+                    }
+                    break;
                 }
-            }
-            break;
-        //manual
-        case 4:
-            {
-            if(choice == 4){
-                Double qty = editManQty(scan);
-            //qty
-            itemDB.changeQty("qty", qty, id, "non_serialized");
-            }
-            if(choice ==5){
-                //rev
-                String rev = editRev(scan);
-                itemDB.changeGlobal("revision", rev, id, "non_serialized");
-            }
-            break;
             }
         }
     }
-}
 
     public static String editBasic(Scanner scan, int choice) {
         String editItem = "";
@@ -969,8 +966,7 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem, Item
             System.out.println(RED + "NOT ENOUGH FOR THIS SEMESTER");
         } else if (alert == 1) {
             System.out.println(YELLOW + "NOT ENOUGH FOR NEXT SEMESTER");
-        }
-        else{
+        } else {
             System.out.println(GREEN + "GOOD FOR SEMESTER.");
         }
     }
