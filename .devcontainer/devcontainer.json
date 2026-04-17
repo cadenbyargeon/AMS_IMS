@@ -1,7 +1,0 @@
-{
-    "containerEnv": {
-        "URL": "${{ secretes.URL}}",
-        "USER": "${{ secretes.USER }}",
-        "PASSWORD": "${{ secretes.PASSWORD }}"
-    }
-}
