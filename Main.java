@@ -13,6 +13,10 @@ import java.util.InputMismatchException;
  * 
  */
 public class Main {
+    public static final String RESET = "\u001B[0m";
+    public static final String RED = "\u001B[31m";
+    public static final String GREEN = "\u001B[32m";
+    public static final String YELLOW = "\u001B[33m";
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         boolean testUsers = true;
@@ -426,6 +430,7 @@ public class Main {
                         advancedNS[2]);
                 checkAlert(newItemNS.checkAlert());
                 System.out.println(newItemNS);
+                System.out.println(RESET);
                 try {
                     itemDB.createNonSerialized(newItemNS);
 
@@ -447,6 +452,7 @@ public class Main {
                         basicS[2],
                         serial);
                 System.out.println(newItemS);
+                System.out.println(RESET);
                 try {
                     itemDB.createSerialized(newItemS);
 
@@ -472,6 +478,7 @@ public class Main {
                         consume);
                 checkAlert(newItemC.checkAlert());
                 System.out.println(newItemC);
+                System.out.println(RESET);
                 try {
                     itemDB.createConsumable(newItemC);
                 } catch (SQLException e) {
@@ -492,6 +499,7 @@ public class Main {
                         Integer.parseInt(manualIn[0]),
                         manualIn[1]);
                 System.out.println(newItemM);
+                System.out.println(RESET);
                 try {
                     itemDB.createManual(newItemM);
                 } catch (SQLException e) {
@@ -965,9 +973,12 @@ public static void editValues(Scanner scan, Item_Parent item, int typeItem, Item
     // checks the alert status of an object, and prints the message associated
     public static void checkAlert(int alert) {
         if (alert == 2) {
-            System.out.println("NOT ENOUGH FOR THIS SEMESTER");
+            System.out.println(RED + "NOT ENOUGH FOR THIS SEMESTER");
         } else if (alert == 1) {
-            System.out.println("NOT ENOUGH FOR NEXT SEMESTER");
+            System.out.println(YELLOW + "NOT ENOUGH FOR NEXT SEMESTER");
+        }
+        else{
+            System.out.println(GREEN + "GOOD FOR SEMESTER.");
         }
     }
 
