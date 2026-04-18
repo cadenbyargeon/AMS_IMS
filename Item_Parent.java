@@ -2,6 +2,7 @@ public class Item_Parent{
     protected String name;
     protected String model;
     protected String partNum;
+    protected int ID;
 
 
     //constructor
@@ -27,6 +28,10 @@ public class Item_Parent{
         return partNum;
     }
 
+    public int getID(){
+        return ID;
+    }
+
 
 
     //setters
@@ -41,6 +46,10 @@ public class Item_Parent{
 
     public void setPartNum(String partNum){
         this.partNum = partNum;
+    }
+
+    public void setID(int ID){
+        this.ID = ID;
     }
 
     //for printing output

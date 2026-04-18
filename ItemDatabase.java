@@ -33,8 +33,10 @@ public class ItemDatabase {
                     double qty = rs.getDouble("qty");
                     double qty_semester = rs.getDouble("qty_semester");
                     double qty_next_semester = rs.getDouble("qty_next_semester");
+                    int id = rs.getInt("id");
 
                     Non_Serialized result = new Non_Serialized(itemName, model, partNum, qty, qty_semester, qty_next_semester);
+                    result.setID(id);
                     nonSerializedList.add(result);
 
                 }
@@ -62,8 +64,10 @@ public class ItemDatabase {
                     String model = rs.getString("model");   
                     String partNum = rs.getString("partNum");
                     String serialNum = rs.getString("serialNum");
+                    int id = rs.getInt("id");
 
                     Serialized result = new Serialized(itemName, model, partNum, serialNum);
+                    result.setID(id);
                     serializedList.add(result);
                     
 
@@ -93,8 +97,10 @@ public class ItemDatabase {
                     double qty_semester = rs.getDouble("qty_semester");
                     double qty_next_semester = rs.getDouble("qty_next_semester");
                     String qtyType = rs.getString("qtyType");
+                    int id = rs.getInt("id");
 
                     Consumable result = new Consumable(itemName, model, partNum, qty, qty_semester, qty_next_semester, qtyType);
+                    result.setID(id);
                     consumables.add(result);
                 }
                 
@@ -121,8 +127,10 @@ public class ItemDatabase {
                     String partNum = rs.getString("partNum");
                     int qty = rs.getInt("qty");
                     String revision = rs.getString("revision");
+                    int id = rs.getInt("id");
 
                     Manual result = new Manual(name, model, partNum, qty, revision);
+                    result.setID(id);
                     manuals.add(result);
                     
                     
@@ -187,7 +195,7 @@ public void createSerialized(Serialized s) throws SQLException, ClassNotFoundExc
             ps.setString(2, s.getModel());
             ps.setString(3, s.getPartNum());
             ps.setString(4, s.getSerialNum());
-
+            
             ps.executeUpdate();
 
 
@@ -265,7 +273,6 @@ public void createSerialized(Serialized s) throws SQLException, ClassNotFoundExc
             stmt.setString(1, edit);
             stmt.setInt(2,id);
             int rows = stmt.executeUpdate();
-            System.out.println("Rows affected: " + rows);
             if(rows > 0){
                 System.out.println("Item updated!");
             }else{
