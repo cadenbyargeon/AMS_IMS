@@ -36,6 +36,7 @@ public class ItemDatabase {
                     int id = rs.getInt("id");
 
                     Non_Serialized result = new Non_Serialized(itemName, model, partNum, qty, qty_semester, qty_next_semester);
+                    result.setAlert(result.checkAlert());
                     result.setID(id);
                     nonSerializedList.add(result);
 
@@ -100,6 +101,7 @@ public class ItemDatabase {
                     int id = rs.getInt("id");
 
                     Consumable result = new Consumable(itemName, model, partNum, qty, qty_semester, qty_next_semester, qtyType);
+                    result.setAlert(result.checkAlert());
                     result.setID(id);
                     consumables.add(result);
                 }

@@ -543,6 +543,7 @@ public class Main {
                             "\n5:  Quantity for This Semester: " + item.getQtySemester()
                             + "\n6.  Quantity for Next Smester: " + item.getQtyNextSem());
                     editValues(scan, item, choice, itemDB, id, "non_serialized");
+                    checkAlert(item.checkAlert());
                     break;
                 }
                 case 2: {
@@ -601,6 +602,7 @@ public class Main {
                             + "\n6.  Quantity for Next Smester: " +
                             item.getQtyNextSem() + item.getQtyType());
                     editValues(scan, item, choice, itemDB, id, "consumable");
+                    checkAlert(item.checkAlert());
                     break;
                 }
                 case 4: {
@@ -942,7 +944,7 @@ public class Main {
     }
 
     public static void view(Scanner scan, ItemDatabase itemDB) {
-        ArrayList<String> foundItems = new ArrayList<String>();
+        ArrayList<Object> foundItems = new ArrayList<>();
         System.out.println("Enter the item name: ");
         String input = scan.nextLine();
 
@@ -952,7 +954,7 @@ public class Main {
             if (consumables != null) {
                 for (Consumable c : consumables) {
                     if (c != null) {
-                        foundItems.add(c.toString());
+                        foundItems.add(c);
                     }
                 }
 
@@ -963,7 +965,7 @@ public class Main {
             if (nonSerialized != null) {
                 for (Non_Serialized n : nonSerialized) {
                     if (n != null) {
-                        foundItems.add(n.toString());
+                        foundItems.add(n);
 
                     }
                 }
@@ -974,7 +976,7 @@ public class Main {
             if (serialized != null) {
                 for (Serialized s : serialized) {
                     if (s != null) {
-                        foundItems.add(s.toString());
+                        foundItems.add(s);
 
                     }
                 }
@@ -985,7 +987,7 @@ public class Main {
             if (manuals != null) {
                 for (Manual m : manuals) {
                     if (m != null) {
-                        foundItems.add(m.toString());
+                        foundItems.add(m);
 
                     }
                 }
@@ -997,7 +999,7 @@ public class Main {
             } else {
                 for (int i = 0; i < foundItems.size(); i++) {
                     System.out.println(i + 1);
-                    System.out.println(foundItems.get(i));
+                    System.out.println(foundItems.get(i).toString());
                     System.out.println("***************************");
                 }
 
