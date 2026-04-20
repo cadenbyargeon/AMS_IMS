@@ -530,6 +530,7 @@ public class Main {
         String search = scan.nextLine();
         String edit;
         int itemNumber;
+        int select;
         try {
             switch (choice) {
                 case 1: {
@@ -563,7 +564,17 @@ public class Main {
                             "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty() +
                             "\n5:  Quantity for This Semester: " + item.getQtySemester()
                             + "\n6.  Quantity for Next Smester: " + item.getQtyNextSem());
-                    edit = editValues(scan, item, choice, itemDB, id, "non_serialized");
+                    System.out.println("\nWhich variable would you like to change?");
+                    while (true) {
+                        try {
+                            select = scan.nextInt();
+                            break;
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid input. Enter a number.");
+                            scan.nextLine(); // clear bad input
+                        }
+                    }
+                    edit = editValues(scan, item, choice, itemDB, id, "non_serialized", select);
                     item = localEditNS(choice, edit, item);
                     checkAlert(item.checkAlert());
                     System.out.println(item.toString());
@@ -595,7 +606,17 @@ public class Main {
                     int id = item.getID();
                     System.out.println("\n1:  Name: " + item.getName() + "\n2:  Model: " + item.getModel() +
                             "\n3:  Part Number: " + item.getPartNum() + "\n4:  Serial Number: " + item.getSerialNum());
-                    edit = editValues(scan, item, choice, itemDB, id, "serialized");
+                    System.out.println("\nWhich variable would you like to change?");
+                    while (true) {
+                        try {
+                            select = scan.nextInt();
+                            break;
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid input. Enter a number.");
+                            scan.nextLine(); // clear bad input
+                        }
+                    }
+                    edit = editValues(scan, item, choice, itemDB, id, "serialized", select);
                     item = localEditS(choice, edit, item);
                     System.out.println(item.toString());
                     break;
@@ -629,7 +650,17 @@ public class Main {
                             "\n5:  Quantity for This Semester: " + item.getQtySemester() + " " + item.getQtyType()
                             + "\n6.  Quantity for Next Smester: " +
                             item.getQtyNextSem() + " " +item.getQtyType());
-                    edit = editValues(scan, item, choice, itemDB, id, "consumable");
+                    System.out.println("\nWhich variable would you like to change?");
+                    while (true) {
+                        try {
+                            select = scan.nextInt();
+                            break;
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid input. Enter a number.");
+                            scan.nextLine(); // clear bad input
+                        }
+                    }
+                    edit = editValues(scan, item, choice, itemDB, id, "consumable", select);
                     item = localEditC(choice, edit, item);
                     checkAlert(item.checkAlert());
                     System.out.println(item.toString());
@@ -662,7 +693,17 @@ public class Main {
                     System.out.println("\n1:  Name: " + item.getName() + "\n2:  Model: " + item.getModel() +
                             "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty()
                             + "\n5.  Revision: " + item.getRevision());
-                    edit = editValues(scan, item, choice, itemDB, id, "manual");
+                    System.out.println("\nWhich variable would you like to change?");
+                    while (true) {
+                        try {
+                            select = scan.nextInt();
+                            break;
+                        } catch (InputMismatchException e) {
+                            System.out.println("Invalid input. Enter a number.");
+                            scan.nextLine(); // clear bad input
+                        }
+                    }
+                    edit = editValues(scan, item, choice, itemDB, id, "manual", select);
                     item = localEditM(choice, edit, item);
                     System.out.println(item.toString());
                     break;
@@ -673,18 +714,7 @@ public class Main {
         }
     }
 
-    public static String editValues(Scanner scan, Item_Parent item, int typeItem, ItemDatabase itemDB, int id, String table) {
-        System.out.println("\nWhich variable would you like to change?");
-        int choice;
-        while (true) {
-            try {
-                choice = scan.nextInt();
-                break;
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Enter a number.");
-                scan.nextLine(); // clear bad input
-            }
-        }
+    public static String editValues(Scanner scan, Item_Parent item, int typeItem, ItemDatabase itemDB, int id, String table, int choice) {
         if (choice <= 3) {
             String basic = editBasic(scan, choice);
             if (choice == 1) {
