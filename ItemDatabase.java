@@ -307,4 +307,23 @@ public void createSerialized(Serialized s) throws SQLException, ClassNotFoundExc
         }
     }
     
+    public void changeQty(String column, int edit, int id, String type){
+        try{
+            String sql = "UPDATE " + type + " SET " + column + " = ? WHERE id = ?";
+            Connection conn = getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, edit);
+            stmt.setInt(2,id);
+            int rows = stmt.executeUpdate();
+            if(rows > 0){
+                System.out.println("Item updated!");
+            }else{
+                System.out.println("Error");
+            }
+            stmt.close();
+            conn.close();
+        }catch(Exception e){
+        e.printStackTrace();
+        }
+    }
 }

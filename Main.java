@@ -52,8 +52,23 @@ public class Main {
             System.out.println("2. Exit");
             System.out.print("Select an option: ");
 
-            String input = scan.nextLine();
-            int choice = Integer.parseInt(input);
+            //String input = scan.nextLine();
+            int choice;
+
+            while (true) {
+                try {
+                    choice = Integer.parseInt(scan.nextLine());
+
+                    if (choice == 1 || choice == 2) {
+                        break; // valid input, exit loop
+                    } else {
+                        System.out.println("Invalid choice. Please enter 1 or 2.");
+                    }
+
+                } catch (NumberFormatException e) {
+                    System.out.println("Invalid input. Please enter a number (1 or 2).");
+                }
+            }
 
             switch (choice) {
                 case 1:
@@ -513,6 +528,7 @@ public class Main {
         scan.nextLine();
         System.out.println("What is the item to edit?");
         String search = scan.nextLine();
+        String edit;
         int itemNumber;
         try {
             switch (choice) {
@@ -522,16 +538,21 @@ public class Main {
                         System.out.println("No item matching that name.");
                         return;
                     }
+                    System.out.println("****************************");
                     for (int i = 0; i < returnList.size(); i++) {
-                        System.out.println("****************************");
                         System.out.println(i + 1);
                         System.out.println(returnList.get(i));
+                        System.out.println("****************************");
                     }
                     while (true) {
                         try {
-                            System.out.println("Which item is the one to edit?");
+                            System.out.println("Which item is the one to edit? Input its ID number.");
                             itemNumber = Integer.parseInt(scan.nextLine());
-                            break; 
+                            if(itemNumber<= returnList.size() && itemNumber > 0){
+                                break; 
+                            }else{
+                                System.out.println("Enter a number between 0 and " + returnList.size());
+                            }
                         } catch (NumberFormatException e) {
                             System.out.println("Invalid input. Please enter a valid integer.");
                         }
@@ -542,8 +563,11 @@ public class Main {
                             "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty() +
                             "\n5:  Quantity for This Semester: " + item.getQtySemester()
                             + "\n6.  Quantity for Next Smester: " + item.getQtyNextSem());
-                    editValues(scan, item, choice, itemDB, id, "non_serialized");
+                    edit = editValues(scan, item, choice, itemDB, id, "non_serialized");
+                    item = localEditNS(choice, edit, item);
                     checkAlert(item.checkAlert());
+                    System.out.println(item.toString());
+                    System.out.println(RESET);
                     break;
                 }
                 case 2: {
@@ -552,10 +576,11 @@ public class Main {
                         System.out.println("No item matching that name.");
                         return;
                     }
+                    System.out.println("****************************");
                     for (int i = 0; i < returnList.size(); i++) {
-                        System.out.println("****************************"); 
                         System.out.println(i + 1);
                         System.out.println(returnList.get(i));
+                        System.out.println("****************************");
                     }
                     while (true) {
                         try {
@@ -570,7 +595,9 @@ public class Main {
                     int id = item.getID();
                     System.out.println("\n1:  Name: " + item.getName() + "\n2:  Model: " + item.getModel() +
                             "\n3:  Part Number: " + item.getPartNum() + "\n4:  Serial Number: " + item.getSerialNum());
-                    editValues(scan, item, choice, itemDB, id, "serialized");
+                    edit = editValues(scan, item, choice, itemDB, id, "serialized");
+                    item = localEditS(choice, edit, item);
+                    System.out.println(item.toString());
                     break;
                 }
                 case 3: {
@@ -579,10 +606,11 @@ public class Main {
                         System.out.println("No item matching that name.");
                         return;
                     }
+                    System.out.println("****************************");
                     for (int i = 0; i < returnList.size(); i++) {
-                        System.out.println("****************************");
                         System.out.println(i + 1);
                         System.out.println(returnList.get(i));
+                        System.out.println("****************************");
                     }
                     while (true) {
                         try {
@@ -596,13 +624,16 @@ public class Main {
                     Consumable item = returnList.get(itemNumber - 1);
                     int id = item.getID();
                     System.out.println("\n1:  Name: " + item.getName() + "\n2:  Model: " + item.getModel() +
-                            "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty()
+                            "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty() + " " 
                             + item.getQtyType() +
-                            "\n5:  Quantity for This Semester: " + item.getQtySemester() + item.getQtyType()
+                            "\n5:  Quantity for This Semester: " + item.getQtySemester() + " " + item.getQtyType()
                             + "\n6.  Quantity for Next Smester: " +
-                            item.getQtyNextSem() + item.getQtyType());
-                    editValues(scan, item, choice, itemDB, id, "consumable");
+                            item.getQtyNextSem() + " " +item.getQtyType());
+                    edit = editValues(scan, item, choice, itemDB, id, "consumable");
+                    item = localEditC(choice, edit, item);
                     checkAlert(item.checkAlert());
+                    System.out.println(item.toString());
+                    System.out.println(RESET);
                     break;
                 }
                 case 4: {
@@ -611,10 +642,11 @@ public class Main {
                         System.out.println("No item matching that name.");
                         return;
                     }
+                    System.out.println("****************************");
                     for (int i = 0; i < returnList.size(); i++) {
-                        System.out.println("****************************");
                         System.out.println(i + 1);
                         System.out.println(returnList.get(i));
+                        System.out.println("****************************");
                     }
                     while (true) {
                         try {
@@ -630,7 +662,9 @@ public class Main {
                     System.out.println("\n1:  Name: " + item.getName() + "\n2:  Model: " + item.getModel() +
                             "\n3:  Part Number: " + item.getPartNum() + "\n4:  Quantity: " + item.getQty()
                             + "\n5.  Revision: " + item.getRevision());
-                    editValues(scan, item, choice, itemDB, id, "manual");
+                    edit = editValues(scan, item, choice, itemDB, id, "manual");
+                    item = localEditM(choice, edit, item);
+                    System.out.println(item.toString());
                     break;
                 }
             }
@@ -639,7 +673,7 @@ public class Main {
         }
     }
 
-    public static void editValues(Scanner scan, Item_Parent item, int typeItem, ItemDatabase itemDB, int id, String table) {
+    public static String editValues(Scanner scan, Item_Parent item, int typeItem, ItemDatabase itemDB, int id, String table) {
         System.out.println("\nWhich variable would you like to change?");
         int choice;
         while (true) {
@@ -656,76 +690,93 @@ public class Main {
             if (choice == 1) {
                 // name
                 itemDB.changeGlobal("name", basic, id, table);
+                item.setName(basic);
             }
             if (choice == 2) {
                 // model
                 itemDB.changeGlobal("model", basic, id, table);
+                item.setModel(basic);
             }
             if (choice == 3) {
                 // part number
                 itemDB.changeGlobal("partNum", basic, id, table);
+                item.setPartNum(basic);
             }
+            return basic;
         } else {
             switch (typeItem) {
                 // non-serial
                 case 1: {
                     double newQty = editQts(scan, choice);
+                    Non_Serialized NS = (Non_Serialized) item;
                     if (choice == 4) {
                         // qty
                         itemDB.changeQty("qty", newQty, id, table);
+                        NS.setQty(newQty);
                     }
                     if (choice == 5) {
                         // qty this sem
                         itemDB.changeQty("qty_semester", newQty, id, table);
+                        NS.setQtySemester(newQty);
                     }
                     if (choice == 6) {
                         // qty next sem
                         itemDB.changeQty("qty_next_semester", newQty, id, table);
+                        NS.setQtyNextSem(newQty);
                     }
+                    return String.valueOf(newQty);
                 }
-
-                    break;
-                // pass back to DB
                 // serialized
                 case 2: {
+                    Serialized S = (Serialized) item;
                     String serial = editSerial(scan);
                     // serial number
                     itemDB.changeGlobal("serial", serial, id, table);
+                    S.setSerialNum(serial);
+                    return serial;
                 }
-                    break;
                 // consumables
                 case 3: {
+                    Consumable C = (Consumable) item;
                     double newQty = editQts(scan, choice);
                     if (choice == 4) {
                         // qty
                         itemDB.changeQty("qty", newQty, id, table);
+                        C.setQty(newQty);
                     }
                     if (choice == 5) {
                         // qty this sem
                         itemDB.changeQty("qty_semester", newQty, id, table);
+                        C.setQtySemester(newQty);
                     }
                     if (choice == 6) {
                         // qty next sem
                         itemDB.changeQty("qty_next_semester", newQty, id, table);
+                        C.setQtyNextSem(newQty);
                     }
+                    return String.valueOf(newQty);
                 }
-                    break;
                 // manual
                 case 4: {
+                    Manual M = (Manual) item;
                     if (choice == 4) {
-                        Double qty = editManQty(scan);
+                        int qty = editManQty(scan);
                         // qty
                         itemDB.changeQty("qty", qty, id, table);
+                        M.setQty(qty);
+                        return String.valueOf(qty);
                     }
                     if (choice == 5) {
                         // rev
                         String rev = editRev(scan);
                         itemDB.changeGlobal("revision", rev, id, table);
+                        M.setRevision(rev);
+                        return rev;
                     }
-                    break;
                 }
             }
         }
+        return null;
     }
 
     public static String editBasic(Scanner scan, int choice) {
@@ -763,20 +814,20 @@ public class Main {
         return rev;
     }
 
-    public static double editManQty(Scanner scan) {
-        double qty;
+    public static int editManQty(Scanner scan) {
+        int qty;
         System.out.println("What is the new quantity?");
         while (true) {
             try {
-                qty = scan.nextDouble();
+                qty = scan.nextInt();
                 while (qty < 0) {
                     System.out.println("Please enter a positive number: ");
-                    qty = scan.nextDouble();
+                    qty = scan.nextInt();
                 }
                 scan.nextLine();
                 break;
             } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Enter a number.");
+                System.out.println("Invalid input. Please enter a number.");
                 scan.nextLine();
             }
         }
@@ -795,49 +846,57 @@ public class Main {
                         while (qty < 0) {
                             System.out.println("Please enter a positive number: ");
                             qty = scan.nextDouble();
+
                         }
+                        qtyReturned = qty;
                         scan.nextLine();
                         break;
                     } catch (InputMismatchException e) {
                         System.out.println("Invalid input. Enter a number.");
                         scan.nextLine();
                     }
-                    qtyReturned = qty;
                 }
                 break;
             case 2:
-                double qtyThis = 0;
+                System.out.println("What is the new quantity required per semester?");
                 while (true) {
-                    System.out.println("What is the new quantity for this semester?");
+                    double qtyThis = 0;
                     try {
                         qtyThis = scan.nextDouble();
+                        while (qtyThis < 0) {
+                            System.out.println("Please enter a positive number: ");
+                            qtyThis = scan.nextDouble();
+                        }
+                        qtyReturned = qtyThis;
                         scan.nextLine();
                         break;
                     } catch (InputMismatchException e) {
                         System.out.println("Invalid input. Enter a number.");
                         scan.nextLine();
                     }
-                    qtyReturned = qtyThis;
                 }
                 break;
             case 3:
-                double qtyNext = 0;
+                System.out.println("What is the new quantity required for next Semester?");
                 while (true) {
-                    System.out.println("What is the new quantity for next semester?");
+                    double qtyNext = 0;
                     try {
                         qtyNext = scan.nextDouble();
+                        while (qtyNext < 0) {
+                            System.out.println("Please enter a positive number: ");
+                            qtyNext = scan.nextDouble();
+                        }
+                        qtyReturned = qtyNext;
                         scan.nextLine();
                         break;
                     } catch (InputMismatchException e) {
                         System.out.println("Invalid input. Enter a number.");
                         scan.nextLine();
                     }
-                    qtyReturned = qtyNext;
                 }
                 break;
         }
         return qtyReturned;
-
     }
 
     // Stores data in a string[], the int for qty is set to a string, then back to
@@ -1015,7 +1074,9 @@ public class Main {
 
     // checks the alert status of an object, and prints the message associated
     public static void checkAlert(int alert) {
-        if (alert == 2) {
+        if(alert == 3){
+            System.out.println(RED + "****THERE IS NO MORE OF THIS ITEM****");
+        }else if (alert == 2) {
             System.out.println(RED + "NOT ENOUGH FOR THIS SEMESTER");
         } else if (alert == 1) {
             System.out.println(YELLOW + "NOT ENOUGH FOR NEXT SEMESTER");
@@ -1024,4 +1085,90 @@ public class Main {
         }
     }
 
+    public static Non_Serialized localEditNS (int choice, String edit, Non_Serialized item){
+        switch (choice) {
+            case 1:
+                item.setName(edit);
+                break;
+            case 2: 
+                item.setModel(edit);
+                break;
+            case 3: 
+                item.setPartNum(edit);
+                break;
+            case 4:
+                item.setQty(Double.parseDouble(edit));
+                break;
+            case 5:
+                item.setQtySemester(Double.parseDouble(edit));
+                break;
+            case 6:
+                item.setQtyNextSem(Double.parseDouble(edit));
+                break;
+        }
+        return item;
+    }
+
+    public static Serialized localEditS (int choice, String edit, Serialized item){
+        switch (choice) {
+            case 1:
+                item.setName(edit);
+                break;
+            case 2: 
+                item.setModel(edit);
+                break;
+            case 3: 
+                item.setPartNum(edit);
+                break;
+            case 4:
+                item.setSerialNum(edit);
+                break;
+        }
+        return item;
+    }
+
+    public static Consumable localEditC (int choice, String edit, Consumable item){
+        switch (choice) {
+            case 1:
+                item.setName(edit);
+                break;
+            case 2: 
+                item.setModel(edit);
+                break;
+            case 3: 
+                item.setPartNum(edit);
+                break;
+            case 4:
+                item.setQty(Double.parseDouble(edit));
+                break;
+            case 5:
+                item.setQtySemester(Double.parseDouble(edit));
+                break;
+            case 6:
+                item.setQtyNextSem(Double.parseDouble(edit));
+                break;
+        }
+        return item;
+    }
+
+    public static Manual localEditM (int choice, String edit, Manual item){
+        switch (choice) {
+            case 1:
+                item.setName(edit);
+                break;
+            case 2: 
+                item.setModel(edit);
+                break;
+            case 3: 
+                item.setPartNum(edit);
+                break;
+            case 4:
+                item.setQty((Integer.parseInt(edit)));
+                break;
+            case 5:
+                item.setRevision(edit);
+                break;
+        }
+        return item;
+    }
 }

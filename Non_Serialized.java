@@ -61,6 +61,10 @@ public class Non_Serialized extends Item_Parent {
     //checkAlert() is ran after every qty setter to update if any information changes
     public int checkAlert(){
         if (qty<qty_next_semester){
+            if(qty ==0){
+                this.alert = 3;
+                return alert;
+            }
             if(qty<qty_semester){
                 this.alert = 2;
                 return alert;
