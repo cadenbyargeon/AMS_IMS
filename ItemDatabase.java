@@ -102,6 +102,7 @@ public class ItemDatabase {
 
                     Consumable result = new Consumable(itemName, model, partNum, qty, qty_semester, qty_next_semester, qtyType);
                     result.setAlert(result.checkAlert());
+                    System.out.println(result.getAlert());
                     result.setID(id);
                     consumables.add(result);
                 }

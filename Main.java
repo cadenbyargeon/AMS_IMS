@@ -1053,12 +1053,29 @@ public class Main {
 
             }
 
+            ArrayList<Item_Parent> allItems = new ArrayList<>();
+            allItems.addAll(consumables);
+            allItems.addAll(nonSerialized);
+            allItems.addAll(serialized);
+            allItems.addAll(manuals);
+
             if (foundItems.isEmpty()) {
                 System.out.println("Item not found.");
             } else {
                 for (int i = 0; i < foundItems.size(); i++) {
+                    Item_Parent currentItem = allItems.get(i);
                     System.out.println(i + 1);
-                    System.out.println(foundItems.get(i).toString());
+                    //System.out.println(allItems.get(i).toString());
+                    if (currentItem instanceof Non_Serialized) {
+                        Non_Serialized NS = (Non_Serialized) currentItem;
+                        checkAlert(NS.getAlert());
+                    }
+                    if (currentItem instanceof Consumable) {
+                        Consumable C = (Consumable) currentItem;
+                        checkAlert(C.getAlert());
+                    }
+                    System.out.println(allItems.get(i).toString());
+                    System.out.println(RESET);
                     System.out.println("***************************");
                 }
 
