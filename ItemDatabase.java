@@ -214,7 +214,7 @@ public void createSerialized(Serialized s) throws SQLException, ClassNotFoundExc
 
     public void createConsumable(Consumable c) throws SQLException, ClassNotFoundException
     {
-        String sql = "INSERT INTO non_serialized(name, model, partNum, qty, qty_semester, qty_next_semester, qtyType)" + 
+        String sql = "INSERT INTO consumable(name, model, partNum, qty, qty_semester, qty_next_semester, qtyType)" + 
          "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
          try(Connection conn = getConnection();
@@ -243,7 +243,7 @@ public void createSerialized(Serialized s) throws SQLException, ClassNotFoundExc
 
     public void createManual(Manual m) throws SQLException, ClassNotFoundException
     {
-         String sql = "INSERT INTO non_serialized(name, model, partNum, qty, qty_semester, qty_next_semester, qtyType)" + 
+         String sql = "INSERT INTO manual(name, model, partNum, qty, revision)" + 
          "VALUES (?, ?, ?, ?, ?)";
 
          try(Connection conn = getConnection();
