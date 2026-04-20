@@ -575,7 +575,7 @@ public class Main {
                         }
                     }
                     edit = editValues(scan, item, choice, itemDB, id, "non_serialized", select);
-                    item = localEditNS(choice, edit, item);
+                    item = localEditNS(select, edit, item);
                     checkAlert(item.checkAlert());
                     System.out.println(item.toString());
                     System.out.println(RESET);
@@ -617,7 +617,7 @@ public class Main {
                         }
                     }
                     edit = editValues(scan, item, choice, itemDB, id, "serialized", select);
-                    item = localEditS(choice, edit, item);
+                    item = localEditS(select, edit, item);
                     System.out.println(item.toString());
                     break;
                 }
@@ -661,7 +661,7 @@ public class Main {
                         }
                     }
                     edit = editValues(scan, item, choice, itemDB, id, "consumable", select);
-                    item = localEditC(choice, edit, item);
+                    item = localEditC(select, edit, item);
                     checkAlert(item.checkAlert());
                     System.out.println(item.toString());
                     System.out.println(RESET);
@@ -704,7 +704,7 @@ public class Main {
                         }
                     }
                     edit = editValues(scan, item, choice, itemDB, id, "manual", select);
-                    item = localEditM(choice, edit, item);
+                    item = localEditM(select, edit, item);
                     System.out.println(item.toString());
                     break;
                 }
